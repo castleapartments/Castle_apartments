@@ -103,6 +103,9 @@
     color: #f5f5f5;
     font-weight: 500;
   }
+  .lang-logo img {
+    max-width: 100%;
+  }
   </style>
 </head>
 <body  style="background-image: url('/static/reykjavik-fjord-mountains-sunset-iceland.jpg'); background-size: cover; background-position: top center;height:100vh;background-attachment: fixed;">
@@ -110,8 +113,8 @@
   <nav class="col-md-2 d-none d-md-block "></nav>
   <nav class="col-md-10 ml-sm-auto col-lg-10 px-4 navbar fixed-top navbar-expand-lg navbar-light bg-light navbar-color-on-scroll navbar-transparent" color-on-scroll="100" >
     <div class="container">
-      <a class="navbar-brand" href="/">
-        <img class="brand_logo" src="{% static 'logo_mini_dark.png'%}" width="109" height="40" alt="Castle apartments - find you new shithole here!">
+      <a class="navbar-brand " href="/">
+        <img class="brand_logo d-block d-md-none" src="{% static 'logo_mini_dark.png'%}" width="109" height="40" alt="Castle apartments - find you new shithole here!">
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="sr-only">Toggle navigation</span>
@@ -168,6 +171,9 @@
     <nav class="col-md-2 d-none d-md-block bg-purpletrans sidebar">
       <div class="sidebar-sticky">
         <ul class="nav flex-column">
+            <a class="navbar-brand" href="/" style="padding-top:25px;padding-bottom:20px;text-align:center;">
+              <img class="brand_logo" src="{% static 'logo_light.png'%}" style="max-width:100%;" alt="Castle apartments - find you new shithole here!">
+            </a>
             <li class="nav-item">
               <a class="nav-link active" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
