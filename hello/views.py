@@ -66,5 +66,7 @@ class PersonUpdateView(UpdateView):
     success_url = reverse_lazy('person_list')    
 
 def login(request):
-    # return HttpResponse('Hello from Python!')
     return render(request, "login.html")
+
+def signup(request):
+    return render(request, "signup.html")    
