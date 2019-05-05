@@ -3,10 +3,12 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
+<div class="page-header header-filter">
 <div class="container">
     <div class="row">
         <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
             <form method="post" novalidate>
               {% csrf_token %}
               <div class="row">
@@ -20,6 +22,8 @@
             </form>
           </div>
         </div>
-    </div>
+    </div></div>
+  </div>
+</div>
 </div>
 {% endblock %}
