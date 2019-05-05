@@ -6,14 +6,29 @@
 <title>Python Getting Started on Heroku</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="{% static 'css/material-kit.css'%}">
+  
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+ <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+   -->
+  <script src="{% static 'js/core/bootstrap-material-design.min.js'%}" type="text/javascript"></script>
+  <script src="{% static 'js/plugins/moment.min.js'%}" type="text/javascript"></script>
+  <script src="{% static 'js/plugins/bootstrap-datetimepicker.js'%}" type="text/javascript"></script>
+  <script src="{% static 'js/plugins/nouislider.min.js'%}" type="text/javascript"></script>
+ 
+  <script src="{% static 'js/material-kit.js'%}" type="text/javascript"></script>
+
   <style type="text/css">
+    .content_div {
+      /*padding-top: 100px;*/
+    }
     .jumbotron {
         background: #532f8c;
         color: white;
-        padding-bottom: 80px
+        padding-bottom: 80px;
+       
     }
     .jumbotron .btn-primary {
         background: #845ac7;
@@ -67,8 +82,7 @@
 }
 
 #page-content-wrapper {
-  min-width: 100vw;
-  margin-top: 70px;
+  min-width: 100vw;  
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -89,11 +103,41 @@
     margin-left: -15rem;
   }
 }
+.navbar-transparent .brand_logo {
+  display: block;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: url(/static/logo_mini_light.png) no-repeat;
+  width: 109px; /* Width of new image */
+  height: 40px; /* Height of new image */
+  padding-left: 109px;
+}
+.nav-item i {
+  margin-top: -7px;
+    top: 3px;
+    position: relative;
+    margin-right: 3px;
+    font-size: 1.25rem;
+    max-width: 24px;
+    vertical-align: middle;
+}
+#nav_sign_btn {
+    color: #f8f9fa;
+    background-color: transparent !important;
+    background-image: none;
+    border-color: #f8f9fa !important;
+    border: 1px solid !important;
+    padding: 0.40625rem 1.25rem !important;
+}
+.card-login .form {
+    min-height: initial;
+    padding-bottom: 40px;
+}
   </style>
 </head>
 <body>
 
-    <div class="d-flex" id="wrapper">
+    <div class="d-flex" id="wrapper" style="background-image: url('/static/reykjavik-fjord-mountains-sunset-iceland.jpg'); background-size: cover; background-position: top center;height:100vh;background-attachment: fixed;">
 
         <!-- Sidebar -->
         <div class="bg-light border-right" id="sidebar-wrapper">
@@ -114,10 +158,10 @@
 
 
 
-        <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light navbar-color-on-scroll navbar-transparent" color-on-scroll="100" >
           <div class="container">
           <a class="navbar-brand" href="/">
-            <img src="{% static 'logo_mini.png'%}" width="109" height="40" alt="Castle apartments - find you new shithole here!">
+            <img class="brand_logo" src="{% static 'logo_mini_dark.png'%}" width="109" height="40" alt="Castle apartments - find you new shithole here!">
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -138,24 +182,29 @@
                 <a class="nav-link" href="#"><i class="fas fa-chess-rook"></i> About us</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="#" id="menu-toggle"><i class="fas fa-cog"></i> Settings</a>
+                  <a class="nav-link" href="#" id="menu-toggle"><i class="fas fa-cog "></i> Settings</a>
               </li>
-              <!--
+              
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Dropdown
+                  <i class="fas fa-cog"></i> Settings
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="/people/">People</a>
+                  <a class="dropdown-item" href="/cards/">apartments</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="#">Something else here</a>
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
+                  <a class="nav-link" href="/login/" id="menu-toggle"><i class="fas fa-user-circle"></i> Sign in</a>
+              </li>
+              <li class="nav-item">
+                  <a id="nav_sign_btn" class="nav-link btn btn-sm btn-outline-light" href="/login/" id="menu-toggle"> Sign up</a>
               </li>
             </ul>
+            
+            <!--
             <form class="form-inline my-2 my-lg-0">
               <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -164,10 +213,12 @@
           </div>
         </div>
         </nav>
-
-      {% block content %}{% endblock %}
-
+        <div >
+          <div class="content_div">
+            {% block content %}{% endblock %}
+          </div>
         </div>
+      </div>
         <!-- /#page-content-wrapper -->
 
   </div>
