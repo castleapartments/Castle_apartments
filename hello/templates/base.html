@@ -105,9 +105,10 @@
   }
   </style>
 </head>
-<body>
+<body  style="background-image: url('/static/reykjavik-fjord-mountains-sunset-iceland.jpg'); background-size: cover; background-position: top center;height:100vh;background-attachment: fixed;">
   <!-- Navigation -->
-  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light navbar-color-on-scroll navbar-transparent" color-on-scroll="100" >
+  <nav class="col-md-2 d-none d-md-block "></nav>
+  <nav class="col-md-10 ml-sm-auto col-lg-10 px-4 navbar fixed-top navbar-expand-lg navbar-light bg-light navbar-color-on-scroll navbar-transparent" color-on-scroll="100" >
     <div class="container">
       <a class="navbar-brand" href="/">
         <img class="brand_logo" src="{% static 'logo_mini_dark.png'%}" width="109" height="40" alt="Castle apartments - find you new shithole here!">
@@ -146,10 +147,10 @@
           </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/login/" id="menu-toggle"><i class="fas fa-user-circle"></i> Sign in</a>
+            <a class="nav-link" href="/login/"><i class="fas fa-user-circle"></i> Sign in</a>
         </li>
         <li class="nav-item">
-            <a id="nav_sign_btn" class="nav-link btn btn-sm btn-outline-light" href="/login/" id="menu-toggle"> Sign up</a>
+            <a id="nav_sign_btn" class="nav-link btn btn-sm btn-outline-light" href="/login/" > Sign up</a>
         </li>
       </ul>
       <!--
@@ -162,7 +163,7 @@
   </div>
 </nav>
 
-<div class="container-fluid" style="background-image: url('/static/reykjavik-fjord-mountains-sunset-iceland.jpg'); background-size: cover; background-position: top center;height:100vh;background-attachment: fixed;">
+<div class="container-fluid">
   <div class="row">
     <nav class="col-md-2 d-none d-md-block bg-purpletrans sidebar">
       <div class="sidebar-sticky">
