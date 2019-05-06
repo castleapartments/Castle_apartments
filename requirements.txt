@@ -1,10 +1,5 @@
 django
 gunicorn
 django-heroku
-<<<<<<< HEAD
 django-crispy-forms
-requests
 psycopg2
-=======
-django-crispy-forms
->>>>>>> 6dcbde286add200e71c00359c9d4a77cc6a7600f
