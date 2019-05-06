@@ -13,14 +13,16 @@ class UserProfile(models.Model):
     lastName = models.CharField(max_length=50, blank=True, null=True, default='')
     email = models.CharField(max_length=50, blank=True, null=True, default='')
     phone = models.CharField(max_length=50, blank=True, null=True, default='')
-    ssn = models.IntegerField(blank=True, null=True, default='')
+    ssn = models.IntegerField(blank=True, null=True, default=0, unique=True)
     streetName = models.CharField(max_length=50, blank=True, null=True, default='')
-    streetNumber = models.IntegerField(blank=True, null=True, default='')
-    postalCode = models.IntegerField(blank=True, null=True, default='')
-    creditCardNumber = models.IntegerField(blank=True, null=True, default='')
-    creditCardSecurityNumber = models.IntegerField(blank=True, null=True, default='')
+    streetNumber = models.IntegerField(blank=True, null=True, default=0)
+    postalCode = models.IntegerField(blank=True, null=True, default=0)
+    
+    creditCardNumber = models.IntegerField(blank=True, null=True, default=0, unique=True)
+    creditCardSecurityNumber = models.IntegerField(blank=True, null=True, default=0)
     creditCardNameOnCard = models.CharField(max_length=50, blank=True, null=True, default='')
     creditCardExpiry = models.DateField(blank=True, null=True)
+    
     cityID = models.ForeignKey('location.City', blank=True, null=True, on_delete=models.PROTECT, default='')
     countryID = models.ForeignKey('location.Country', blank=True, null=True, on_delete=models.PROTECT, default='')
 

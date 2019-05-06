@@ -6,7 +6,8 @@ django.setup()
 
 from faker import Faker
 import random
-from myfirstapp.models import ApartmentType, ApartmentTypeApartment, ImageApartment, User, SearchHistory, City, Country, Role, Image
+#from .models import ApartmentType, ApartmentTypeApartment, ImageApartment, UserProfile, SearchHistory, City, Country, Image
+from .models import Country
 
 fakegen = Faker()
 
@@ -18,19 +19,16 @@ types = ['Single Family', 'Condo', 'Townhouse', 'Multi-Family', 'Farms / Land', 
 roles = ['Customer','Agent','Administrator']
 
 
-
 def add_country():
-    country = Country.objects.get_or_create(countryName=random.choice(countries))[0]
-    country.save()
-    return country
+    for item in countries:
+        country = Country(countryName=item)
+        country.save()
 
-def add_roles():
-    role = Role.objects.get_or_create(roleName=random.choice(roles))[0]
-    role.save()
-    return role
+
 
 def populate(n = 5):
-    add_roles()
+    add_country()
+    #add_cities()
     #for entry in range(n):
     #    fake_name = fakegen.name()
     #    tmp_name = fake_name.split()
@@ -59,3 +57,10 @@ def populate(n = 5):
     #    imageID = models.ForeignKey('Image', on_delete=models.CASCADE)
     #    cityID = models.ForeignKey('City', on_delete=models.CASCADE)
     #    countryID = models.ForeignKey('Country', on_delete=models.CASCADE)
+
+def main():
+    populate(1)
+
+if __name__ == "__main__":
+    main()
+    

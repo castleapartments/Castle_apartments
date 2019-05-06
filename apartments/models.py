@@ -19,10 +19,16 @@ class Apartment(models.Model):
     countryID = models.ForeignKey('location.Country', on_delete=models.PROTECT)
     registrationDate = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.streetName + " " + self.streetNumber
+
 class ApartmentType(models.Model):
     apartmentTypeID = models.AutoField(primary_key=True)
-    apartmentTypeName = models.CharField(max_length=50)
+    apartmentTypeName = models.CharField(max_length=50, unique=True)
     apartmentTypeCreated = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.apartmentTypeName
 
 class ApartmentTypeApartment(models.Model):
     apartmentTypeID = models.ForeignKey('ApartmentType', on_delete=models.CASCADE)
@@ -31,8 +37,11 @@ class ApartmentTypeApartment(models.Model):
 
 class ApartmentFeature(models.Model):
     apartmentFeatureID = models.AutoField(primary_key=True)
-    apartmentFeatureName = models.CharField(max_length=50)
+    apartmentFeatureName = models.CharField(max_length=50, unique=True)
     apartmentFeatureCreated = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.apartmentFeatureName
 
 class ApartmentFeatureApartment(models.Model):
     apartmentFeatureID = models.ForeignKey('ApartmentFeature', on_delete=models.CASCADE)

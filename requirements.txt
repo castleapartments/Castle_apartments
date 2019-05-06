@@ -4,3 +4,4 @@ django-heroku
 django-crispy-forms
 psycopg2
 faker
+pillow
