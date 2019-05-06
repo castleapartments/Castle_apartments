@@ -4,8 +4,8 @@ from django.contrib import admin
 
 admin.autodiscover()
 
-import hello.views
-from hello.views import PersonListView, PersonCreateView, PersonUpdateView, CardListView, CardUpdateView, CardCreateView
+import base.views
+from base.views import PersonListView, PersonCreateView, PersonUpdateView, CardListView, CardUpdateView, CardCreateView
 # To add a new path, first import the app:
 # import blog
 #
@@ -15,10 +15,10 @@ from hello.views import PersonListView, PersonCreateView, PersonUpdateView, Card
 # Learn more here: https://docs.djangoproject.com/en/2.1/topics/http/urls/
 
 urlpatterns = [
-    path("", hello.views.index, name="index"),
-    path("login/", hello.views.login, name="login"),
-    path("signup/", hello.views.signup, name="signup"),
-    path("db/", hello.views.db, name="db"),
+    path("", base.views.index, name="index"),
+    path("login/", base.views.login, name="login"),
+    path("signup/", base.views.signup, name="signup"),
+    path("db/", base.views.db, name="db"),
     path("apartments/", include('apartments.urls')),
     path("admin/", admin.site.urls),
     path('cards/', CardListView.as_view(), name='card_list'),

@@ -4,8 +4,8 @@ from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
 
 
-from hello.models import Person, Card
-from hello.forms import PersonForm, CardForm
+from base.models import Person, Card
+from base.forms import PersonForm, CardForm
 
 
 from .models import Greeting
@@ -17,7 +17,6 @@ from .models import Greeting
 # Create your views here.
 
 def index(request):
-    # return HttpResponse('Hello from Python!')
     return render(request, "index.html")
 
 def db(request):
@@ -50,13 +49,13 @@ class CardCreateView(CreateView):
 class CardUpdateView(UpdateView):
     model = Card
     form_class = CardForm
-    template_name = 'hello/card_update_form.html'
+    template_name = 'base/card_update_form.html'
     success_url = reverse_lazy('card_list')    
 
 class PersonUpdateView(UpdateView):
     model = Person
     form_class = PersonForm
-    template_name = 'hello/person_update_form.html'
+    template_name = 'base/person_update_form.html'
     success_url = reverse_lazy('person_list')    
 
 def login(request):
