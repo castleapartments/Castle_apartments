@@ -4,7 +4,7 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
-from hello.models import Person, Card
+from base.models import Person, Card
 
 
 class PersonForm(forms.ModelForm):

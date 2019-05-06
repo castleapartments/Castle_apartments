@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends '_base.html' %}
 
 {% load crispy_forms_tags %}
 
 {% block title %}
-Castle Apartments - Create a new user
+Castle Apartments - Create Card
 {% endblock %}
 
 {% block content %}
@@ -19,19 +19,15 @@ Castle Apartments - Create a new user
                 <div class="col-6">
                   {{ form.name|as_crispy_field }}
                 </div>
-                <div class="col-6">
-                  {{ form.email|as_crispy_field }}
-                </div>
+               
               </div>
-              {{ form.job_title|as_crispy_field }}
-              {{ form.bio|as_crispy_field }}
-              <button type="submit" class="btn btn-success">Save person</button>
+
+              <button type="submit" class="btn btn-success">Save card</button>
             </form>
           </div>
         </div>
-      </div>
-      </div>
-    </div>
+    </div></div>
+  </div>
 </div>
 </div>
 {% endblock %}

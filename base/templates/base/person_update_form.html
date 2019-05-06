@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends '_base.html' %}
 
 {% load crispy_forms_tags %}
 
 {% block title %}
-Castle Apartments - Update Card
+Castle Apartments - Update user
 {% endblock %}
 
 {% block content %}
@@ -15,8 +15,9 @@ Castle Apartments - Update Card
                 <div class="card-body">
           {% crispy form %}
         </div>
-      </div>        </div>
+      </div>
     </div>
+  </div>
 </div>
 </div>
 {% endblock %}
