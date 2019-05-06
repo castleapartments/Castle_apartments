@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
 
-import requests
 
 from hello.models import Person, Card
 from hello.forms import PersonForm, CardForm
@@ -20,12 +19,7 @@ from .models import Greeting
 def index(request):
     # return HttpResponse('Hello from Python!')
     return render(request, "index.html")
-"""
-def index(request):
-    r = requests.get('http://httpbin.org/status/418')
-    print(r.text)
-    return HttpResponse('<pre>' + r.text + '</pre>')
-"""
+
 def db(request):
 
     greeting = Greeting()
@@ -66,5 +60,7 @@ class PersonUpdateView(UpdateView):
     success_url = reverse_lazy('person_list')    
 
 def login(request):
-    # return HttpResponse('Hello from Python!')
     return render(request, "login.html")
+
+def signup(request):
+    return render(request, "signup.html")    

@@ -17,6 +17,7 @@ from hello.views import PersonListView, PersonCreateView, PersonUpdateView, Card
 urlpatterns = [
     path("", hello.views.index, name="index"),
     path("login/", hello.views.login, name="login"),
+    path("signup/", hello.views.signup, name="signup"),
     path("db/", hello.views.db, name="db"),
     path("admin/", admin.site.urls),
     path('cards/', CardListView.as_view(), name='card_list'),
