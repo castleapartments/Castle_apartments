@@ -19,6 +19,7 @@ urlpatterns = [
     path("login/", hello.views.login, name="login"),
     path("signup/", hello.views.signup, name="signup"),
     path("db/", hello.views.db, name="db"),
+    path("apartments/", include('apartments.urls')),
     path("admin/", admin.site.urls),
     path('cards/', CardListView.as_view(), name='card_list'),
     path('cards/<int:pk>/edit/', CardUpdateView.as_view(), name='card_edit'),
