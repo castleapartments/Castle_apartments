@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
+    #"django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -155,6 +155,3 @@ STATICFILES_DIRS = (
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 django_heroku.settings(locals())
-
-MEDIA_URL = 'http://127.0.0.1:8000/media/'
-MEDIA_ROOT = './image/'
