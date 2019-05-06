@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "crispy_forms",
     "hello",
+    "userprofile",
+    "location"
 ]
 
 MIDDLEWARE = [
@@ -87,7 +89,7 @@ WSGI_APPLICATION = "gettingstarted.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Castle_apartments',                      
+        'NAME': 'castle_apartments',                      
         'USER': 'castle',
         'PASSWORD': 'castle.123',
         'HOST': '',
