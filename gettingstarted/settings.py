@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     "hello",
     "userprofile",
     "location",
-    "apartments"
+    "apartments",
+    "image",
+    "searchhistory"
 ]
 
 MIDDLEWARE = [

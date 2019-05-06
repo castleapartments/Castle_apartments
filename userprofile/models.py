@@ -26,3 +26,7 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.firstName + " " + self.lastName
+
+class UserProfileImage(models.Model):
+    user = models.ForeignKey('userprofile.UserProfile', on_delete=models.PROTECT)
+    image = models.ForeignKey('image.Image', on_delete=models.PROTECT)
