@@ -11,7 +11,6 @@ from django.contrib.auth.models import User
 from userprofile.models import UserProfile
 from django.contrib.auth.models import Group
 
-
 fakegen = Faker()
 
 #-------------------------------- COUNTRIES and CITIES
@@ -60,13 +59,6 @@ def add_types():
 #-------------------------------- IMAGES
 
 #-------------------------------- USERS and PROFILES
-
-#user = User.objects.create_user(username='john',
-#                                 email='jlennon@beatles.com',
-#                                 password='glass onion')
-
-#my_group = Group.objects.get(name='my_group_name') 
-#my_group.user_set.add(your_user)
 
 def create_user(group):
         profile = fakegen.profile()
