@@ -3,14 +3,14 @@ import django
 from faker import Faker
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ca.settings')
 django.setup()
+import random
 
 from django.core.management.base import BaseCommand
 from location.models import Country, City
-from apartments.models import Apartment, ApartmentFeature, ApartmentType
+from apartments.models import Apartment
 from django.contrib.auth.models import User
 from userprofile.models import UserProfile
 from django.contrib.auth.models import Group
-
 
 fakegen = Faker()
 
@@ -39,15 +39,15 @@ def add_cities():
 #-------------------------------- FEATURES and TYPES
 features = ['Balcony', 'Elevator','Available Now', 'Private Shed', 'Garden', 'Private Storage', 'Private Parking', 'Wheelchair Access']
 types = ['Single Family', 'Condo', 'Townhouse', 'Multi-Family', 'Farms / Land', 'Commercial Property', 'Other']
-def add_feature(item):
-    feature = ApartmentFeature.objects.get_or_create(apartmentFeatureName=item)
-    if feature == False:
-        feature.save()
-
-def add_type(item):
-    apartmenttype = ApartmentType.objects.get_or_create(apartmentTypeName=item)
-    if apartmenttype == False:
-        apartmenttype.save()
+#def add_feature(item):
+#    feature = ApartmentFeature.objects.get_or_create(apartmentFeatureName=item)
+#    if feature == False:
+#        feature.save()
+#
+#def add_type(item):
+#    apartmenttype = ApartmentType.objects.get_or_create(apartmentTypeName=item)
+#    if apartmenttype == False:
+#        apartmenttype.save()
 
 def add_features():
     for item in features:
@@ -60,13 +60,6 @@ def add_types():
 #-------------------------------- IMAGES
 
 #-------------------------------- USERS and PROFILES
-
-#user = User.objects.create_user(username='john',
-#                                 email='jlennon@beatles.com',
-#                                 password='glass onion')
-
-#my_group = Group.objects.get(name='my_group_name') 
-#my_group.user_set.add(your_user)
 
 def create_user(group):
         profile = fakegen.profile()
@@ -99,51 +92,92 @@ def create_user(group):
         
         city = fakegen.city()
         country = fakegen.country()
-        add_city(city)
-        add_country(country)
-        city = City.objects.get(cityName=city)
-        country = Country.objects.get(countryName=country)
 
         if city and country and user:
                 userprofile = UserProfile.objects.create(
                         user=user, 
                         sex=sex, 
-                        firstName=firstname, 
-                        lastName=lastname, 
+                        first_name=firstname, 
+                        last_name=lastname, 
                         email=mail, 
                         phone=phone_number, 
                         ssn=ssn, 
-                        streetName=streetName, 
-                        streetNumber=streetNumber, 
-                        postalCode=postalCode, 
-                        creditCardNumber=creditcard_number, 
-                        creditCardProvider=creditcard_provider, 
-                        creditCardSecurityNumber=creditcard_security, 
-                        creditCardNameOnCard=name, 
-                        creditCardExpiry=creditcard_expiry, 
+                        street_name=streetName, 
+                        street_number=streetNumber, 
+                        postal_code=postalCode, 
+                        credit_card_number=creditcard_number, 
+                        credit_card_provider=creditcard_provider, 
+                        credit_card_security_number=creditcard_security, 
+                        credit_card_name_on_card=name, 
+                        credit_card_expiry=creditcard_expiry, 
                         city=city, 
-                        country=country)
+                        country=country,
+                        photo_main="")
                 userprofile.save()
+
+def create_users(total, max_total, groupname):
+        if total < max_total:
+                temp_count = total
+                while temp_count < max_total:
+                        create_user(groupname)
+                        temp_count += 1
 
 def add_user():
         #accounts = User.objects.count()
-        employees = User.objects.filter(groups__name='Employee').count()
-        administrators = User.objects.filter(groups__name='Administrator').count()
-        customers = User.objects.filter(groups__name='Customer').count()
+        total_employees = User.objects.filter(groups__name='Employee').count()
+        total_administrators = User.objects.filter(groups__name='Administrator').count()
+        total_customers = User.objects.filter(groups__name='Customer').count()
 
-        create_user('Employee')   
-
-        #print(employees)
-        #print(administrators)
-        #print(customers)
-        
+        create_users(total_administrators, 5, "Administrator")
+        create_users(total_employees, 15, "Employee")
+        create_users(total_customers, 100, "Customer")        
 
 #-------------------------------- APARTMENTS and IMAGES
 
+def add_apartment():
+        postcode = fakegen.postalcode()
+        street_name = fakegen.street_name()
+        street_number = fakegen.randomize_nb_elements(number=100, le=False, ge=False, min=None, max=None)
 
+        city = fakegen.city()
+        country = fakegen.country()
+        add_city(city)
+        add_country(country)
+        city = City.objects.get(cityName=city)
+        country = Country.objects.get(countryName=country)
 
-#add_countries()
-#add_cities()
+        size = random.randint(30, 250)
+        rooms = random.randint(2, 5)
+        description = fakegen.text()
+        price = random.randint(10000000, 100000000)
+        approved = fakegen.pybool()
+        if approved == True:
+                approval_date = fakegen.date_this_month(before_today=True, after_today=False)
+        if approved == True:
+                sold = fakegen.pybool()
+                sold_date = fakegen.date_this_month(before_today=True, after_today=False)
+        photo_main = ""
+
+        apartment = Apartment.objects.create(
+                street_name = street_name,
+                street_number = street_number,
+                postcode = postcode,
+                city = "",
+                country = "",
+                size = size,
+                rooms = rooms,
+                description = description,
+                price = price,
+                approved = approved,
+                approval_date = approval_date,
+                sold = sold,
+                sold_date = sold_date,
+                photo_main = photo_main)
+        apartment.save()
+
+add_countries()
+add_cities()
 #add_features()
 #add_types()
 add_user()
+#add_apartment()
