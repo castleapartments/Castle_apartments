@@ -1,55 +1,32 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
+
 class Apartment(models.Model):
-    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.PROTECT)
-    
-    apartmentID = models.AutoField(primary_key=True)
-    streetName = models.CharField(max_length=50, blank=True, null=True, default='')
-    streetNumber = models.IntegerField(blank=True, null=True, default='')
-    postalCode = models.IntegerField(blank=True, null=True, default='')
-    size = models.IntegerField(blank=True, null=True, default='')
-    rooms = models.IntegerField(blank=True, null=True, default='')
+    apartment_id = models.AutoField(primary_key=True)
+    add_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
+    # owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT)
+    # owner = models.OneToOneField(User, null=True, blank=True, on_delete=models.PROTECT)
+    # realtor = models.OneToOneField(User, null=True, blank=True, on_delete=models.PROTECT)
+
+    street_name = models.CharField(max_length=100, default='')
+    street_number = models.CharField(max_length=10, default='')
+    postcode = models.CharField(max_length=50, default='')
+    city = models.CharField(max_length=50, default='')
+    country = models.CharField(max_length=50, default='')
+
+    size = models.IntegerField(default=0)
+    rooms = models.IntegerField(default=0)
     description = models.TextField(blank=True, null=True, default='')
-    price = models.IntegerField(blank=True, null=True, default='')
-    approved = models.BooleanField()
-    sold = models.BooleanField()
-    onSaleDate = models.DateField()
-    cityID = models.ForeignKey('location.City', on_delete=models.PROTECT)
-    countryID = models.ForeignKey('location.Country', on_delete=models.PROTECT)
-    registrationDate = models.DateTimeField(auto_now_add=True)
+    price = models.IntegerField(default=0)
+
+    approved = models.BooleanField(default=False)
+    approval_date = models.DateTimeField(blank=True, null=True)
+
+    sold = models.BooleanField(default=False)
+    sold_date = models.DateField(null=True, blank=True)
+    photo_main = models.ImageField(upload_to='photos', null=True, blank=True)
 
     def __str__(self):
-        return self.streetName + " " + self.streetNumber
-
-class ApartmentType(models.Model):
-    apartmentTypeID = models.AutoField(primary_key=True)
-    apartmentTypeName = models.CharField(max_length=50, unique=True)
-    apartmentTypeCreated = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.apartmentTypeName
-
-class ApartmentTypeApartment(models.Model):
-    apartmentTypeID = models.ForeignKey('ApartmentType', on_delete=models.CASCADE)
-    apartmentID = models.ForeignKey('apartments.Apartment', on_delete=models.CASCADE)
-    apartmentTypeApartmentCreated = models.DateTimeField(auto_now_add=True)
-
-class ApartmentFeature(models.Model):
-    apartmentFeatureID = models.AutoField(primary_key=True)
-    apartmentFeatureName = models.CharField(max_length=50, unique=True)
-    apartmentFeatureCreated = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.apartmentFeatureName
-
-class ApartmentFeatureApartment(models.Model):
-    apartmentFeatureID = models.ForeignKey('ApartmentFeature', on_delete=models.CASCADE)
-    apartmentID = models.ForeignKey('apartments.Apartment', on_delete=models.CASCADE)
-    apartmentFeatureApartmentCreated = models.DateTimeField(auto_now_add=True)
-
-class ImageApartment(models.Model):
-    imageID = models.ForeignKey('image.Image', on_delete=models.CASCADE)
-    apartmentID = models.ForeignKey('apartments.Apartment', on_delete=models.CASCADE)
-    imageApartmentCreated = models.DateTimeField(auto_now_add=True)
+        return f'{self.street_name} {self.street_number}'
