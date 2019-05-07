@@ -5,7 +5,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 import base.views
-from base.views import PersonListView, PersonCreateView, PersonUpdateView, CardListView, CardUpdateView, CardCreateView
+from base.views import PersonListView, PersonCreateView, PersonUpdateView, CardListView, CardUpdateView, CardCreateView, PersonAndCardListView
 # To add a new path, first import the app:
 # import blog
 #
@@ -21,6 +21,7 @@ urlpatterns = [
     path("db/", base.views.db, name="db"),
     path("apartments/", include('apartments.urls')),
     path("admin/", admin.site.urls),
+    path("pc/", PersonAndCardListView.as_view(),  name="pc_list"),
     path('cards/', CardListView.as_view(), name='card_list'),
     path('cards/<int:pk>/edit/', CardUpdateView.as_view(), name='card_edit'),
     path('cards/add', CardCreateView.as_view(), name='card_add'),

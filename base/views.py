@@ -58,6 +58,18 @@ class PersonUpdateView(UpdateView):
     template_name = 'base/person_update_form.html'
     success_url = reverse_lazy('person_list')    
 
+class PersonAndCardListView(ListView):
+    context_object_name = 'pc_list'    
+    template_name = 'base/pc_list.html'
+    queryset = Person.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(PersonAndCardListView, self).get_context_data(**kwargs)
+        context['persons'] = Person.objects.all()
+        context['cards'] = Card.objects.all()
+        # And so on for more models
+        return context
+
 def login(request):
     return render(request, "login.html")
 
