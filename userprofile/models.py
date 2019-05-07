@@ -23,7 +23,7 @@ class UserProfile(models.Model):
     streetNumber = models.IntegerField(blank=True, null=True, default=0)
     postalCode = models.IntegerField(blank=True, null=True, default=0)
     
-    creditCardNumber = models.IntegerField(blank=True, null=True, default=0, unique=True)
+    creditCardNumber = models.CharField(max_length=150, blank=True, null=True, default='', unique=True)
     creditCardProvider = models.CharField(max_length=150, blank=True, null=True, default='')
     creditCardSecurityNumber = models.IntegerField(blank=True, null=True, default=0)
     creditCardNameOnCard = models.CharField(max_length=150, blank=True, null=True, default='')

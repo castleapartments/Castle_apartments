@@ -125,25 +125,29 @@ def create_user(group):
                         country=country)
                 userprofile.save()
 
+def create_users(total, max_total, groupname):
+        if total < max_total:
+                temp_count = total
+                while temp_count < max_total:
+                        create_user(groupname)
+                        temp_count += 1
+
 def add_user():
         #accounts = User.objects.count()
-        employees = User.objects.filter(groups__name='Employee').count()
-        administrators = User.objects.filter(groups__name='Administrator').count()
-        customers = User.objects.filter(groups__name='Customer').count()
+        total_employees = User.objects.filter(groups__name='Employee').count()
+        total_administrators = User.objects.filter(groups__name='Administrator').count()
+        total_customers = User.objects.filter(groups__name='Customer').count()
 
-        create_user('Employee')   
-
-        #print(employees)
-        #print(administrators)
-        #print(customers)
-        
+        create_users(total_administrators, 5, "Administrator")
+        create_users(total_employees, 15, "Employee")
+        create_users(total_customers, 100, "Customer")        
 
 #-------------------------------- APARTMENTS and IMAGES
 
 
 
-#add_countries()
-#add_cities()
-#add_features()
-#add_types()
+add_countries()
+add_cities()
+add_features()
+add_types()
 add_user()
