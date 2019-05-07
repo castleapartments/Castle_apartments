@@ -1,0 +1,124 @@
+
+.jumbotron {
+    background: #532f8c;
+    color: white;
+    padding-bottom: 80px;
+    
+}
+.jumbotron .btn-primary {
+    background: #845ac7;
+    border-color: #845ac7
+}
+.jumbotron .btn-primary:hover {
+    background: #7646c1
+}
+.jumbotron p {
+    color: #d9ccee;
+    max-width: 75%;
+    margin: 1em auto 2em
+}
+.navbar+.jumbotron {
+    margin-top: -20px
+}
+.jumbotron .lang-logo {
+    display: block;
+}
+.jumbotron .lang-logo img {
+    max-width: 100%
+}
+
+body {
+    overflow-x: hidden;
+    background-image: url('/static/reykjavik-fjord-mountains-sunset-iceland.jpg'); 
+    background-size: cover; 
+    background-position: top center;
+    height:100vh;
+    background-attachment: fixed;
+}
+.navbar-transparent .brand_logo {
+    display: block;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background: url(/static/logo_mini_light.png) no-repeat;
+    width: 109px; /* Width of new image */
+    height: 40px; /* Height of new image */
+    padding-left: 109px;
+}
+#navbarSupportedContent .nav-item i {
+    margin-top: -7px;
+    top: 3px;
+    position: relative;
+    margin-right: 3px;
+    font-size: 1.25rem;
+    max-width: 24px;
+    vertical-align: middle;
+}
+#nav_sign_btn {
+    color: #555555;
+    background-color: transparent !important;
+    background-image: none;
+    border-color: #f8f9fa !important;
+    border: 1px solid !important;
+    padding: 0.40625rem 1.25rem !important;
+}
+.navbar-transparent #nav_sign_btn{
+    color:#f8f9fa;
+}
+.card-login .form {
+    min-height: initial;
+    padding-bottom: 40px;
+}
+.bg-purpletrans {
+    background-color: #532f8c;
+    background: linear-gradient(60deg, #ab47bc85, #7b1fa285);
+    min-height: 100vh;
+    max-width: 157px;
+    padding: 80px 15px 0;
+}
+.bg-purpletrans a {
+    color: #f5f5f5;
+    font-weight: 300;
+    font-size: .8rem;
+}
+.bg-purpletrans .nav-link:hover {
+    background-color: #ffffff1c;
+}
+.lang-logo img {
+    max-width: 100%;
+}
+.input-group-text .fab, .input-group-text .fas {
+    font-size: 24px;
+}
+.input-group-selection {
+    border: 0;
+    color: #aaaaaa;
+    line-height: 1.1;
+    width: 100%;
+    border-bottom: 1px solid #d2d2d2;
+    height: 36px;
+}
+.flexnowrapfix {
+    flex-wrap: nowrap;
+}
+.card-login .card-header {
+    text-transform: uppercase;
+}
+#menu-side-bar {
+    text-align: center;
+    font-size: 1rem;
+}
+#menu-side-bar i {
+    font-size:1.5rem;
+}
+#menu-side-bar .nav-link {
+    padding: 0.5rem 0rem;
+}
+.main-content {
+    padding:80px 0 0 !important;
+    margin: 0px!important;
+    background: rgba(0, 0, 0, 0.5);
+}
+.ca-sidebar {
+    padding:0;
+    background: rgba(0, 0, 0, 0.5);
+}
