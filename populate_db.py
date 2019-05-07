@@ -3,10 +3,11 @@ import django
 from faker import Faker
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ca.settings')
 django.setup()
+import random
 
 from django.core.management.base import BaseCommand
 from location.models import Country, City
-from apartments.models import Apartment, ApartmentFeature, ApartmentType
+from apartments.models import Apartment
 from django.contrib.auth.models import User
 from userprofile.models import UserProfile
 from django.contrib.auth.models import Group
@@ -38,15 +39,15 @@ def add_cities():
 #-------------------------------- FEATURES and TYPES
 features = ['Balcony', 'Elevator','Available Now', 'Private Shed', 'Garden', 'Private Storage', 'Private Parking', 'Wheelchair Access']
 types = ['Single Family', 'Condo', 'Townhouse', 'Multi-Family', 'Farms / Land', 'Commercial Property', 'Other']
-def add_feature(item):
-    feature = ApartmentFeature.objects.get_or_create(apartmentFeatureName=item)
-    if feature == False:
-        feature.save()
-
-def add_type(item):
-    apartmenttype = ApartmentType.objects.get_or_create(apartmentTypeName=item)
-    if apartmenttype == False:
-        apartmenttype.save()
+#def add_feature(item):
+#    feature = ApartmentFeature.objects.get_or_create(apartmentFeatureName=item)
+#    if feature == False:
+#        feature.save()
+#
+#def add_type(item):
+#    apartmenttype = ApartmentType.objects.get_or_create(apartmentTypeName=item)
+#    if apartmenttype == False:
+#        apartmenttype.save()
 
 def add_features():
     for item in features:
@@ -136,10 +137,50 @@ def add_user():
 
 #-------------------------------- APARTMENTS and IMAGES
 
+def add_apartment():
+        postcode = fakegen.postalcode()
+        street_name = fakegen.street_name()
+        street_number = fakegen.randomize_nb_elements(number=100, le=False, ge=False, min=None, max=None)
 
+        city = fakegen.city()
+        country = fakegen.country()
+        add_city(city)
+        add_country(country)
+        city = City.objects.get(cityName=city)
+        country = Country.objects.get(countryName=country)
+
+        size = random.randint(30, 250)
+        rooms = random.randint(2, 5)
+        description = fakegen.text()
+        price = random.randint(10000000, 100000000)
+        approved = fakegen.pybool()
+        if approved == True:
+                approval_date = fakegen.date_this_month(before_today=True, after_today=False)
+        if approved == True:
+                sold = fakegen.pybool()
+                sold_date = fakegen.date_this_month(before_today=True, after_today=False)
+        photo_main = ""
+
+        apartment = Apartment.objects.create(
+                street_name = street_name,
+                street_number = street_number,
+                postcode = postcode,
+                city = "",
+                country = "",
+                size = size,
+                rooms = rooms,
+                description = description,
+                price = price,
+                approved = approved,
+                approval_date = approval_date,
+                sold = sold,
+                sold_date = sold_date,
+                photo_main = photo_main)
+        apartment.save()
 
 add_countries()
 add_cities()
-add_features()
-add_types()
+#add_features()
+#add_types()
 add_user()
+add_apartment()
