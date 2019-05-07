@@ -26,7 +26,7 @@ class Apartment(models.Model):
 
     sold = models.BooleanField(default=False)
     sold_date = models.DateField(null=True, blank=True)
-    photo_main = models.ImageField(upload_to='photos', null=True, blank=True)
+    photo_main = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.street_name} {self.street_number}'

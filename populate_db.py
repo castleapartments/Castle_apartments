@@ -92,30 +92,27 @@ def create_user(group):
         
         city = fakegen.city()
         country = fakegen.country()
-        add_city(city)
-        add_country(country)
-        city = City.objects.get(cityName=city)
-        country = Country.objects.get(countryName=country)
 
         if city and country and user:
                 userprofile = UserProfile.objects.create(
                         user=user, 
                         sex=sex, 
-                        firstName=firstname, 
-                        lastName=lastname, 
+                        first_name=firstname, 
+                        last_name=lastname, 
                         email=mail, 
                         phone=phone_number, 
                         ssn=ssn, 
-                        streetName=streetName, 
-                        streetNumber=streetNumber, 
-                        postalCode=postalCode, 
-                        creditCardNumber=creditcard_number, 
-                        creditCardProvider=creditcard_provider, 
-                        creditCardSecurityNumber=creditcard_security, 
-                        creditCardNameOnCard=name, 
-                        creditCardExpiry=creditcard_expiry, 
+                        street_name=streetName, 
+                        street_number=streetNumber, 
+                        postal_code=postalCode, 
+                        credit_card_number=creditcard_number, 
+                        credit_card_provider=creditcard_provider, 
+                        credit_card_security_number=creditcard_security, 
+                        credit_card_name_on_card=name, 
+                        credit_card_expiry=creditcard_expiry, 
                         city=city, 
-                        country=country)
+                        country=country,
+                        photo_main="")
                 userprofile.save()
 
 def create_users(total, max_total, groupname):
@@ -183,4 +180,4 @@ add_cities()
 #add_features()
 #add_types()
 add_user()
-add_apartment()
+#add_apartment()
