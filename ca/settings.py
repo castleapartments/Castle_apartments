@@ -157,4 +157,4 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 django_heroku.settings(locals())
 
 MEDIA_URL = 'http://127.0.0.1:8000/media/'
-MEDIA_ROOT = './image/'
+MEDIA_ROOT = './image/media/'
