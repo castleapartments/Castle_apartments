@@ -3,8 +3,8 @@
 <html lang="en">
   <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>{% block title %}{% endblock %}</title>
   <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png'%}">
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png'%}">
@@ -14,150 +14,29 @@
   <link rel="shortcut icon" href="{%  static 'favicon/favicon.ico' %}">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
-  <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  --><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="{% static 'css/material-kit.css'%}">
+  <link rel="stylesheet" href="{% static 'css/ca.css'%}">
 
- <!--  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-   -->
-  
-   <script src="{% static 'js/core/jquery.min.js'%}" type="text/javascript"></script>
-   <script src="{% static 'js/core/popper.min.js'%}" type="text/javascript"></script>
+  <script src="{% static 'js/core/jquery.min.js'%}" type="text/javascript"></script>
+  <script src="{% static 'js/core/popper.min.js'%}" type="text/javascript"></script>
   <script src="{% static 'js/core/bootstrap-material-design.min.js'%}" type="text/javascript"></script>
   <script src="{% static 'js/plugins/moment.min.js'%}" type="text/javascript"></script>
   <script src="{% static 'js/plugins/bootstrap-datetimepicker.js'%}" type="text/javascript"></script>
-  <script src="{% static 'js/plugins/nouislider.min.js'%}" type="text/javascript"></script>
- 
+  <script src="{% static 'js/plugins/nouislider.min.js'%}" type="text/javascript"></script> 
   <script src="{% static 'js/material-kit.js'%}" type="text/javascript"></script>
 
-  <style type="text/css">
-
-    .jumbotron {
-        background: #532f8c;
-        color: white;
-        padding-bottom: 80px;
-       
-    }
-    .jumbotron .btn-primary {
-        background: #845ac7;
-        border-color: #845ac7
-    }
-    .jumbotron .btn-primary:hover {
-        background: #7646c1
-    }
-    .jumbotron p {
-        color: #d9ccee;
-        max-width: 75%;
-        margin: 1em auto 2em
-    }
-    .navbar+.jumbotron {
-        margin-top: -20px
-    }
-    .jumbotron .lang-logo {
-        display: block;/*
-        background: #b01302;
-        border-radius: 50%;
-        overflow: hidden;
-        width: 100px;
-        height: 100px;
-        margin: auto;
-        border: 2px solid white */
-    }
-    .jumbotron .lang-logo img {
-        max-width: 100%
-    }
-
-    body {
-  overflow-x: hidden;
-}
-  .navbar-transparent .brand_logo {
-    display: block;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    background: url(/static/logo_mini_light.png) no-repeat;
-    width: 109px; /* Width of new image */
-    height: 40px; /* Height of new image */
-    padding-left: 109px;
-  }
-  #navbarSupportedContent .nav-item i {
-    margin-top: -7px;
-      top: 3px;
-      position: relative;
-      margin-right: 3px;
-      font-size: 1.25rem;
-      max-width: 24px;
-      vertical-align: middle;
-  }
-  #nav_sign_btn {
-      color: #f8f9fa;
-      background-color: transparent !important;
-      background-image: none;
-      border-color: #f8f9fa !important;
-      border: 1px solid !important;
-      padding: 0.40625rem 1.25rem !important;
-  }
-  .card-login .form {
-      min-height: initial;
-      padding-bottom: 40px;
-  }
-  .bg-purpletrans {
-    background-color: #532f8c;
-    background: linear-gradient(60deg, #ab47bc85, #7b1fa285);
-    min-height: 100vh;
-    max-width: 157px;
-    padding: 70px 15px 0;
-  }
-  .bg-purpletrans a {
-    color: #f5f5f5;
-    font-weight: 300;
-    font-size: .8rem;
-  }
-  .bg-purpletrans .nav-link:hover {
-    background-color: #ffffff1c;
-  }
-  .lang-logo img {
-    max-width: 100%;
-  }
-  .input-group-text .fab, .input-group-text .fas {
-    font-size: 24px;
-  }
-  .input-group-selection {
-    border: 0;
-    color: #aaaaaa;
-    line-height: 1.1;
-    width: 100%;
-    border-bottom: 1px solid #d2d2d2;
-    height: 36px;
-    
-  }
-  .flexnowrapfix {
-    flex-wrap: nowrap;
-  }
-  .card-login .card-header {
-    text-transform: uppercase;
-  }
-  #menu-side-bar {
-    text-align: center;
-    font-size: 1rem;
-  }
-  #menu-side-bar i {
-    font-size:1.5rem;
-  }
-  #menu-side-bar .nav-link {
-    padding: 0.5rem 0rem;
-  }
-  </style>
 </head>
-<body  style="background-image: url('/static/reykjavik-fjord-mountains-sunset-iceland.jpg'); background-size: cover; background-position: top center;height:100vh;background-attachment: fixed;">
-  <!-- Navigation 
-  <nav class="col-md-2 d-none d-md-block "></nav>-->
-  <nav class="col-md-12 ml-sm-auto col-lg-12 px-4 navbar fixed-top navbar-expand-lg navbar-light bg-light navbar-color-on-scroll navbar-transparent" color-on-scroll="100" >
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="col-md-12 ml-sm-auto col-lg-12 px-4 navbar fixed-top navbar-expand-lg navbar-light bg-light navbar-color-on-scroll navbar-transparent" color-on-scroll="100">
     <div class="container">
-      <a class="navbar-brand " href="/">
-        <img class="brand_logo d-block d-md-none" src="{% static 'logo_mini_dark.png'%}" width="109" height="40" alt="Castle apartments - find you new shithole here!">
+      <a class="navbar-brand" href="/">
+        <img class="brand_logo d-block" src="{% static 'logo_mini_dark.png'%}" width="109" height="40" alt="Castle apartments - find you new shithole here!">
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="sr-only">Toggle navigation</span>
@@ -166,134 +45,128 @@
           <span class="navbar-toggler-icon"></span>
       </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">
-        <!--
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>                
-        </li>
-        -->
-        <li class="nav-item">
-            <a class="nav-link" href="/apartments/search"><i class="fas fa-search"></i> Apartments</a>
-        </li>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+              <a class="nav-link" href="/apartments/search"><i class="fas fa-search"></i> Apartments</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-chess-rook"></i> About us</a>
+          </li>
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-cog"></i> Settings
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/people/">People</a>
+              <a class="dropdown-item" href="/cards/">apartments</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/login/"><i class="fas fa-user-circle"></i> Sign in</a>
+          </li>
+          <li class="nav-item">
+              <a id="nav_sign_btn" class="nav-link btn btn-sm btn-outline-light" href="/signup/"> Sign up</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- Side bar -->
+      <nav class="col-md-2 d-none d-md-block sidebar ca-sidebar">
+        <div class="sidebar-sticky sticky-top">
+          <ul class="nav flex-column bg-purpletrans " id="menu-side-bar">
+              <!--
+              <a class="navbar-brand" href="/" style="padding-top:25px;padding-bottom:20px;text-align:center;">
+                <img class="brand_logo" src="{% static 'logo_light.png'%}" style="max-width:100%;" alt="Castle apartments - find you new shithole here!">
+              </a>
+              -->
+              <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <div class="menu-icon">
+                      <i class="fas fa-user-circle"></i>
+                    </div>
+                    Profile <span class="sr-only">(current)</span>
+                  </a>
+                </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <div class="menu-icon">
+                        <i class="fas fa-money-bill-alt"></i>
+                    </div>
+                    Payment
+                  </a>
+                </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/apartments">
+                    <div class="menu-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    Apartments
+                  </a>
+                </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <div class="menu-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    Settings
+                  </a>
+                </li>              
+              <li class="nav-item">
+                  <a class="nav-link" href="/apartments">
+                    <div class="menu-icon">
+                        <i class="fas fa-clinic-medical"></i>
+                    </div>
+                    Apartment list
+                  </a>
+                </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <div class="menu-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    Sales
+                  </a>
+                </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <div class="menu-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    Messages
+                  </a>
+                </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <div class="menu-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    Users
+                  </a>
+                </li>              
+                
+            </ul>
+        </div>
+      </nav>
+    
+      <!-- Main Content -->
+      <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4 main-content">
         
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fas fa-chess-rook"></i> About us</a>
-        </li>
-        
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-cog"></i> Settings
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="/people/">People</a>
-            <a class="dropdown-item" href="/cards/">apartments</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/login/"><i class="fas fa-user-circle"></i> Sign in</a>
-        </li>
-        <li class="nav-item">
-            <a id="nav_sign_btn" class="nav-link btn btn-sm btn-outline-light" href="/signup/"> Sign up</a>
-        </li>
-      </ul>
-      <!--
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-      -->
+        {% block content %}{% endblock %}
+
+      </main>
+      
     </div>
   </div>
-</nav>
-
-<div class="container-fluid">
-  <div class="row">
-    <nav class="col-md-2 d-none d-md-block sidebar" style="padding:0;    background: rgba(0, 0, 0, 0.5);">
-      <div class="sidebar-sticky sticky-top">
-        <ul class="nav flex-column bg-purpletrans " id="menu-side-bar">
-            <a class="navbar-brand" href="/" style="padding-top:25px;padding-bottom:20px;text-align:center;">
-              <img class="brand_logo" src="{% static 'logo_light.png'%}" style="max-width:100%;" alt="Castle apartments - find you new shithole here!">
-            </a>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <div class="menu-icon">
-                    <i class="fas fa-user-circle"></i>
-                  </div>
-                  Profile <span class="sr-only">(current)</span>
-                </a>
-              </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <div class="menu-icon">
-                      <i class="fas fa-money-bill-alt"></i>
-                  </div>
-                  Payment
-                </a>
-              </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/apartments">
-                  <div class="menu-icon">
-                      <i class="fas fa-home"></i>
-                  </div>
-                  Apartments
-                </a>
-              </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <div class="menu-icon">
-                      <i class="fas fa-cog"></i>
-                  </div>
-                  Settings
-                </a>
-              </li>              
-            <li class="nav-item">
-                <a class="nav-link" href="/apartments">
-                  <div class="menu-icon">
-                      <i class="fas fa-clinic-medical"></i>
-                  </div>
-                  Apartment list
-                </a>
-              </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <div class="menu-icon">
-                      <i class="fas fa-chart-pie"></i>
-                  </div>
-                  Sales
-                </a>
-              </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <div class="menu-icon">
-                      <i class="fas fa-envelope"></i>
-                  </div>
-                  Messages
-                </a>
-              </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <div class="menu-icon">
-                      <i class="fas fa-users"></i>
-                  </div>
-                  Users
-                </a>
-              </li>              
-              
-          </ul>
-      </div>
-    </nav>
-  
-    <!-- Main Content -->
-    <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4" style="margin:0px !important;padding:0px !important;">
-      
-      {% block content %}{% endblock %}
-
-    </main>
-    
-  </div>
-</div>
 </body>
 </html>
