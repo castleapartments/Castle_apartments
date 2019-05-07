@@ -5,3 +5,4 @@ django-crispy-forms
 psycopg2
 faker
 pillow
+psycopg2-binary

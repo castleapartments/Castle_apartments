@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Apartment(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.PROTECT)
+    
     apartmentID = models.AutoField(primary_key=True)
     streetName = models.CharField(max_length=50, blank=True, null=True, default='')
     streetNumber = models.IntegerField(blank=True, null=True, default='')
