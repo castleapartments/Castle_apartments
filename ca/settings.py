@@ -158,3 +158,5 @@ django_heroku.settings(locals())
 
 MEDIA_URL = 'http://127.0.0.1:8000/media/'
 MEDIA_ROOT = './image/media/'
+
+LOGIN_URL = 'base/login'

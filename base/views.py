@@ -1,8 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
 
+from django.contrib.auth import authenticate, login, logout
+#from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 
 from base.models import Person, Card
 from base.forms import PersonForm, CardForm
@@ -70,8 +73,29 @@ class PersonAndCardListView(ListView):
         # And so on for more models
         return context
 
-def login(request):
-    return render(request, "login.html")
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+        
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse_lazy('index'))
+            else:
+                return HttpResponse("ACCOUNT NOT ACTIVE")
+        else:
+            print("Someone tried to login and failed!")
+            return HttpResponse("Invalid login details supplied!")
+    else:
+        return render(request, "login.html")
+
+
+#login is used internally
+#def login(request):
+#    return render(request, "login.html")
 
 def signup(request):
     return render(request, "signup.html")

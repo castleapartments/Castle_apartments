@@ -16,7 +16,7 @@ from base.views import PersonListView, PersonCreateView, PersonUpdateView, CardL
 
 urlpatterns = [
     path("", base.views.index, name="index"),
-    path("login/", base.views.login, name="login"),
+    path("login/", base.views.user_login, name="login"),
     path("signup/", base.views.signup, name="signup"),
     path("db/", base.views.db, name="db"),
     path("apartments/", include('apartments.urls')),

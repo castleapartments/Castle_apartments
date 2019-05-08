@@ -37,4 +37,4 @@ class UserProfile(models.Model):
     #country = models.ForeignKey('location.Country', blank=True, null=True, on_delete=models.PROTECT, default='')
 
     def __str__(self):
-        return self.firstName + " " + self.lastName
+        return self.first_name + " " + self.last_name
