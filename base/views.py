@@ -70,9 +70,8 @@ class PersonAndCardListView(ListView):
         # And so on for more models
         return context
 
-@login_required
-def special_login(request):
-    return HttpResponse("You are logged in")
+def forget_password(request):
+    return HttpResponse("You need to create me!! :)")
 
 @login_required
 def user_logout(request):
