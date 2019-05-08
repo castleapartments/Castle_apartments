@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
+from django.contrib import messages
 
 from django.contrib.auth import authenticate, login, logout
 #from django.core.urlresolvers import reverse
@@ -92,8 +93,9 @@ def user_login(request):
             else:
                 return HttpResponse("ACCOUNT NOT ACTIVE")
         else:
-            print("Someone tried to login and failed!")
-            return HttpResponse("Invalid login details supplied!")
+
+            messages.error(request,'username or password not correct')
+            return redirect('login')
     else:
         return render(request, "login.html")
 
@@ -113,6 +115,8 @@ def signup(request):
             user.save()
 
             registered = True
+            messages.info(request,'Welcome!')
+            return redirect('index')
         else:
             print(user_form.errors)
     else:
