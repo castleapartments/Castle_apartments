@@ -1,0 +1,137 @@
+{% extends "_base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+Castle Apartments - Login
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 ml-auto mr-auto">
+            <div class="card card-login">
+                <form class="form" method="" action="">
+                    <div class="card-header card-header-primary text-center">
+                        <h4 class="card-title">Profile</h4>
+                    </div>
+                    <p class="description text-center">&nbsp;</p>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center">
+                            <img src="http://www.facetheforce.today/random/200" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
+                            <input type="submit" class="btn btn-primary btn-link btn-wd btn-lg" name="" value="Upload">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">                
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">face</i>
+                                    </span>
+                                    </div>
+                                    <input type="text" id="fname" name="fname" class="form-control" placeholder="First name...">
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">face</i>
+                                        </span>
+                                    </div>
+                                    <input type="text" id="lname" name="lname" class="form-control" placeholder="Last name...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">  
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-phone"></i>
+                                    </span>
+                                    </div>
+                                    <input type="text" id="phone" id="phone" class="form-control" placeholder="Phone number...">
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">mail</i>
+                                    </span>
+                                    </div>
+                                    <input type="email" id="email" name="email" class="form-control" placeholder="Email...">
+                                </div>    
+                            </div>
+                        </div>               
+                        <div class="row">
+                            <div class="col-md-6">  
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-home"></i>
+                                    </span>
+                                    </div>
+                                    <input type="text" id="address" name="address" class="form-control" placeholder="Address...">
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fab fa-slack-hash"></i>
+                                    </span>
+                                    </div>
+                                    <input type="text" id="street_number" id="street_number" class="form-control" placeholder="Street number...">
+                                </div>  
+                            </div>
+                        </div>         
+                        
+                        <div class="row">
+                            <div class="col-md-6">                                     
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-city"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" id="city" name="city" class="form-control" placeholder="City...">
+                                </div>
+                            </div>                                
+                            <div class="col-md-6"> 
+                                <div class="input-group">
+                                    <div class="input-group-prepend ">
+                                        <span class="input-group-text">
+                                            <i class="fab fa-slack-hash"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" id="zip" name="zip" class="form-control" placeholder="Zip...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group flexnowrapfix">
+                            <div class="input-group-prepend" style="width:100%">
+                                <span class="input-group-text">
+                                        <i class="fas fa-globe-europe"></i>
+                                </span>
+                                
+                                <select class="input-group-selection" id="country" name="country">
+                                    <option value="">Country...</option>
+                                    <option value="1">country 2...</option>
+                                    <option value="2">country 1...</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer text-center">
+                        <input type="submit" class="btn btn-primary btn-link btn-wd btn-lg" name="" value="Update profile">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

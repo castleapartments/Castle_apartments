@@ -122,3 +122,6 @@ def signup(request):
 
 #def signup(request):
 #    return render(request, "signup.html")
+@login_required
+def profile(request):
+    return render(request, "profile.html")

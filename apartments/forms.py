@@ -10,8 +10,10 @@ class ApartmentForm(forms.ModelForm):
 
         self.helper = FormHelper
         self.helper.formMethod = 'post'
+        self.helper.label_class = 'bmd-label-floating'
 
         self.helper.layout = Layout(
+                  
             Row(
                 Column('street_name', css_class='form-group col-md-6 mb-0'),
                 Column('street_number', css_class='form-group col-md-6 mb-0')),

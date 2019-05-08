@@ -22,6 +22,7 @@ urlpatterns = [
     path("logout/", base.views.user_logout, name="logout"),
     path("signup/", base.views.signup, name="signup"),
     path("db/", base.views.db, name="db"),
+    path("profile/", base.views.profile, name="profile"),
     path("apartments/", include('apartments.urls')),
     path("admin/", admin.site.urls),
     path("pc/", PersonAndCardListView.as_view(),  name="pc_list"),
