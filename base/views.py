@@ -8,13 +8,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from base.models import Person, Card
-from base.forms import PersonForm, CardForm
+from base.forms import UserForm, PersonForm, CardForm
 
 
 from .models import Greeting
-
-
-
 
 
 # Create your views here.
@@ -107,5 +104,22 @@ def user_login(request):
 #    return render(request, "login.html")
 
 def signup(request):
+    registered = False
+    if request.method == "POST":
+        user_form = UserForm(data=request.POST)
+
+        if user_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+
+            registered = True
+        else:
+            print(user_form.errors)
+    else:
+        user_form = UserForm()
+
     return render(request, "signup.html")
 
+#def signup(request):
+#    return render(request, "signup.html")

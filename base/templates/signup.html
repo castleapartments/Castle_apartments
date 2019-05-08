@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title %}
-Castle Apartments - Login
+Castle Apartments - Signup
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,9 @@ Castle Apartments - Login
             <div class="row">
             <div class="col-lg-4 col-md-6 ml-auto mr-auto">
                 <div class="card card-login">
-                <form class="form" method="" action="">
+                <form class="form" method="post" action="{% url 'signup' %}">
+                    {% csrf_token %}                 
+                    {{ user_form.as_p }}
                     <div class="card-header card-header-primary text-center">
                     <h4 class="card-title">Sign up</h4>
                     </div>
@@ -26,7 +28,7 @@ Castle Apartments - Login
                                         <i class="material-icons">face</i>
                                     </span>
                                     </div>
-                                    <input type="text" id="fname" name="fname" class="form-control" placeholder="First name...">
+                                    <input type="text" id="fname" name="first_name" class="form-control" placeholder="First name...">
                                 </div>
                             </div>
                             <div class="col-md-5"> 
@@ -36,18 +38,18 @@ Castle Apartments - Login
                                             <i class="fas fa-jedi"></i>
                                         </span>
                                     </div>
-                                    <input type="text" id="lname" name="lname" class="form-control" placeholder="Last name...">
+                                    <input type="text" id="lname" name="last_name" class="form-control" placeholder="Last name...">
                                 </div>
                             </div>
                         </div>
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fab fa-slack-hash"></i>
-                            </span>
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">account_circle</i>
+                                </span>
+                                </div>
+                                <input type="username" id="username" name="username" class="form-control" placeholder="Username...">
                             </div>
-                            <input type="text" id="ssn" id="ssn" class="form-control" placeholder="Ssn...">
-                        </div>
                         <div class="input-group">
                             <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -64,54 +66,10 @@ Castle Apartments - Login
                             </div>
                             <input type="password" id="password" name="password" class="form-control" placeholder="Password...">
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fas fa-home"></i>
-                            </span>
-                            </div>
-                            <input type="text" id="address" name="address" class="form-control" placeholder="Address...">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-9"> 
-                                
-                        <div class="input-group">
-                                <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fas fa-city"></i>
-                                </span>
-                                </div>
-                                <input type="text" id="city" name="city" class="form-control" placeholder="City...">
-                            </div>
-                            </div>
-                            
-                            <div class="col-md-3"> 
-                                <div class="input-group">
-                                    <div class="input-group-prepend d-block d-md-none">
-                                    <span class="input-group-text">
-                                        <i class="fab fa-old-republic"></i>
-                                    </span>
-                                    </div>
-                                    <input type="text" id="zip" name="zip" class="form-control" placeholder="Zip...">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-group flexnowrapfix">
-                            <div class="input-group-prepend" style="width:100%">
-                                <span class="input-group-text">
-                                        <i class="fas fa-globe-europe"></i>
-                                </span>
-                                
-                                <select class="input-group-selection" id="country" name="country">
-                                    <option value="">Country...</option>
-                                    <option value="1">country 2...</option>
-                                    <option value="2">country 1...</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
                     <div class="footer text-center">
-                    <a href="#pablo" class="btn btn-primary btn-link btn-wd btn-lg">Register</a>
+
+                    <input type="submit" class="btn btn-primary btn-link btn-wd btn-lg" name="" value="Register">
                     </div>
                 </form>
                 </div>
