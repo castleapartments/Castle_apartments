@@ -17,6 +17,10 @@ from base.views import PersonListView, PersonCreateView, PersonUpdateView, CardL
 urlpatterns = [
     path("", base.views.index, name="index"),
     path("login/", base.views.user_login, name="login"),
+    
+    # Only to test if the login is successfull
+    path("test_login/", base.views.special_login, name="special"), 
+    path("logout/", base.views.user_logout, name="logout"),
     path("signup/", base.views.signup, name="signup"),
     path("db/", base.views.db, name="db"),
     path("apartments/", include('apartments.urls')),
@@ -29,3 +33,4 @@ urlpatterns = [
     path('people/add/', PersonCreateView.as_view(), name='person_add'),
     path('people/<int:pk>/edit/', PersonUpdateView.as_view(), name='person_edit'),
 ]
+

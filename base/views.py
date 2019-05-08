@@ -73,6 +73,15 @@ class PersonAndCardListView(ListView):
         # And so on for more models
         return context
 
+@login_required
+def special_login(request):
+    return HttpResponse("You are logged in")
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse_lazy('index'))
+
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')

@@ -66,12 +66,17 @@
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
           </li>
+          {% if user.is_authenticated %}
           <li class="nav-item">
-              <a class="nav-link" href="/login/"><i class="fas fa-user-circle"></i> Sign in</a>
+              <a class="nav-link" href="/logout/"><i class="fas fa-user-circle"></i> Sign out</a>
           </li>
+          {% else %}
+          <li class="nav-item">            
+              <a class="nav-link" href="/login/"><i class="fas fa-user-circle"></i> Sign in</a>  
           <li class="nav-item">
               <a id="nav_sign_btn" class="nav-link btn btn-sm btn-outline-light" href="/signup/"> Sign up</a>
           </li>
+          {% endif %}
         </ul>
       </div>
     </div>
