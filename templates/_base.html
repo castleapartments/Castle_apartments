@@ -85,10 +85,10 @@
     </div>
   </nav>
 
-  {% if user.is_authenticated %}
+  
   <div class="container-fluid">
     <div class="row">
-
+      {% if user.is_authenticated %}
       <!-- Side bar -->
       <nav class="col-md-2 d-none d-md-block sidebar ca-sidebar">
         <div class="sidebar-sticky sticky-top">
@@ -168,8 +168,11 @@
       </nav>
       {% endif %}
       <!-- Main Content -->
+      {% if user.is_authenticated %}
       <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4 main-content">
-        
+      {% else %}
+      <main role="main" class="col-md-12 ml-sm-auto col-lg-12 px-4 main-content">
+      {% endif %}
         {% block content %}{% endblock %}
 
       </main>
