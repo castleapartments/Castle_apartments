@@ -6,34 +6,46 @@ Castle Apartments - All cards
 
 {% block content %}
 <div class="album py-5" style="min-height: 100vh;">
-    <div class="container">
-        <p>
-            <a href="{% url 'card_add' %}" class="btn btn-primary">Add card</a>
-        </p>
-        <div class="row">
-            
-              {% for card in cards %}
-              <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <img src="http://www.facetheforce.today/random/200?r={{ card.name }}">
-                    <div class="card-body">
-                        <h3><a href="{% url 'card_edit' card.pk %}">{{ card.name }}</a></h3>
-                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                      <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                        </div>
-                        <small class="text-muted">9 mins</small>
-                      </div>
-                    </div>
+  <div class="container">
+    <p>
+      <a href="{% url 'card_add' %}" class="btn btn-primary">Add card</a>
+    </p>
+    <div class="row">
+      {% for card in cards %}
+        <div class="col-sm-6 col-md-6 col-lg-4">
+          <a href="{% url 'card_edit' card.pk %}">
+            <div class="card mb-4 shadow-sm">
+              <div class="card-header card-header-primary text-center ch-fix">
+                <h6 class="card-title ct-fix">{{ card.name }}</h6>
+              </div>  
+              <div class="apartment_img" style="background-image: url(http://www.facetheforce.today/random/200)">
+              </div>
+              <div class="card-body">
+                <h3>{{ card.name }}</h3>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <span class="badge badge-pill badge-secondary">Default</span>
+                    <span class="badge badge-pill badge-primary">Primary</span>
+                    <span class="badge badge-pill badge-info">Info</span>
+                    <span class="badge badge-pill badge-success">Success</span>
+                    <span class="badge badge-pill badge-warning">Warning</span>
+                    <span class="badge badge-pill badge-danger">Danger</span>
+                    <span class="badge badge-pill badge-rose">Rose</span>
+                <div class="d-flex justify-content-between align-items-center">
+                    
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                   </div>
+                  <small class="text-muted">9 mins</small>
                 </div>
-              {% empty %}
-                <p>No data</p>
-              {% endfor %}
-             
+              </div>
+            </div>
+          </a>
         </div>
+        {% empty %}
+          <p>No data</p>
+      {% endfor %}
     </div>
   </div>
+</div>
 {% endblock %}
