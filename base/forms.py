@@ -25,6 +25,7 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = (
+                'user',
                 'sex',
                 'email',
                 'phone',
@@ -36,6 +37,12 @@ class ProfileForm(forms.ModelForm):
                 'country',
                 'photo_main'
             )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Save profile'))            
 
 class PersonForm(forms.ModelForm):
     class Meta:
@@ -58,7 +65,3 @@ class CardForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Save card'))
-
-class CustomForm(forms.Form):
-    class Meta:
-        fields = CountryField().formfield()

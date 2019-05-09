@@ -1,9 +1,11 @@
 {% extends "_base.html" %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block title %}
 Castle Apartments - Profile
 {% endblock %}
+
 
 {% block content %}
 {% if user.is_authenticated %}
@@ -12,7 +14,7 @@ Castle Apartments - Profile
         <div class="col-lg-8 col-md-10 ml-auto mr-auto">
             <div class="card card-login">
                 <form class="form" method="post" action="{% url 'profile' %}">
-                {% csrf_token %}
+                    {% csrf_token %}
                     <div class="card-header card-header-primary text-center">
                         <h4 class="card-title">Profile</h4>
                     </div>
@@ -20,7 +22,8 @@ Castle Apartments - Profile
                     <div class="card-body">
                         <div class="d-flex justify-content-center">
                             <img src="http://www.facetheforce.today/random/200" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
-                            <input type="submit" class="btn btn-primary btn-link btn-wd btn-lg" name="" value="Upload">
+                            
+                            {{ form.photo_main|as_crispy_field }}
                         </div>
 
                         <div class="row">
@@ -31,7 +34,8 @@ Castle Apartments - Profile
                                         <i class="fas fa-phone"></i>
                                     </span>
                                     </div>
-                                    <input type="text" id="phone" id="phone" class="form-control" placeholder="Phone number...">
+                                    {{ form.phone|as_crispy_field }}
+                                    
                                 </div>
                             </div>
                             <div class="col-md-6"> 
@@ -41,7 +45,8 @@ Castle Apartments - Profile
                                         <i class="material-icons">mail</i>
                                     </span>
                                     </div>
-                                    <input type="email" id="email" name="email" class="form-control" placeholder="Email...">
+                                    
+                                    {{ form.email|as_crispy_field }}
                                 </div>    
                             </div>
                         </div>               
@@ -53,7 +58,8 @@ Castle Apartments - Profile
                                         <i class="fas fa-home"></i>
                                     </span>
                                     </div>
-                                    <input type="text" id="address" name="address" class="form-control" placeholder="Address...">
+                                    
+                                    {{ form.street_name|as_crispy_field }}
                                 </div>
                             </div>
                             <div class="col-md-6"> 
@@ -63,7 +69,8 @@ Castle Apartments - Profile
                                         <i class="fab fa-slack-hash"></i>
                                     </span>
                                     </div>
-                                    <input type="text" id="street_number" id="street_number" class="form-control" placeholder="Street number...">
+                                    
+                                    {{ form.street_number|as_crispy_field }}
                                 </div>  
                             </div>
                         </div>         
@@ -76,7 +83,8 @@ Castle Apartments - Profile
                                             <i class="fas fa-city"></i>
                                         </span>
                                     </div>
-                                    <input type="text" id="city" name="city" class="form-control" placeholder="City...">
+                                    {{ form.city|as_crispy_field }}
+                                    
                                 </div>
                             </div>                                
                             <div class="col-md-6"> 
@@ -86,7 +94,8 @@ Castle Apartments - Profile
                                             <i class="fab fa-slack-hash"></i>
                                         </span>
                                     </div>
-                                    <input type="text" id="postalcode" name="postalcode" class="form-control" placeholder="Postalcode...">
+                                    {{ form.postal_code|as_crispy_field }}
+                                    
                                 </div>
                             </div>
                         </div>
