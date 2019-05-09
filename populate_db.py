@@ -9,7 +9,7 @@ from django.core.management.base import BaseCommand
 from location.models import Country, City
 from apartments.models import Apartment
 from django.contrib.auth.models import User
-from userprofile.models import UserProfile
+from base.models import UserProfile
 from django.contrib.auth.models import Group
 
 fakegen = Faker()

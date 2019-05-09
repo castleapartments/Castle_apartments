@@ -109,6 +109,5 @@ venv.bak/
 # Exclude all migration files
 apartments/migrations
 location/migrations
-userprofile/migrations
 image/migrations
 searchhistory/migrations

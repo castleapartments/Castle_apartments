@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
-from base.models import Person, Card
+from base.models import Person, Card, UserProfile
 
 
 class UserForm(forms.ModelForm):
@@ -20,6 +20,22 @@ class UserForm(forms.ModelForm):
     #    self.helper = FormHelper()
     #    self.helper.form_method = 'post'
     #    self.helper.add_input(Submit('submit', 'Save person'))
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = (
+                'sex',
+                'email',
+                'phone',
+                'ssn',
+                'street_name',
+                'street_number',
+                'postal_code',
+                'city',
+                'country',
+                'photo_main'
+            )
 
 class PersonForm(forms.ModelForm):
     class Meta:
@@ -45,4 +61,4 @@ class CardForm(forms.ModelForm):
 
 class CustomForm(forms.Form):
     class Meta:
-        country = CountryField().formfield()
+        fields = CountryField().formfield()

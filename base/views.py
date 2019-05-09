@@ -7,9 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 #from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
-from base.models import Person, Card
-from base.forms import UserForm, PersonForm, CardForm
-
+from base.models import Person, Card, UserProfile
+from base.forms import UserForm, PersonForm, CardForm, ProfileForm
 
 from .models import Greeting
 
@@ -124,4 +123,13 @@ def signup(request):
 #    return render(request, "signup.html")
 @login_required
 def profile(request):
+    if request.method == "POST":
+        profile_form = ProfileForm(data=request.POST)
+
+        if profile_form.is_valid():
+            profile = profile_form.save()
+        else:
+            print(profile_form.errors)
+    else:
+        profile_form = ProfileForm()
     return render(request, "profile.html")
