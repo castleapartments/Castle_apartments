@@ -3,13 +3,13 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="page-header header-filter">
   <div class="container">
+      <div class="col-md-12 card text-center">
       {% if user.is_authenticated %}
           {% crispy form form.helper %}
       {% else %}
           <h1>Unauthorized!</h1>
       {% endif %}
+      </div>
   </div>
-</div>
 {% endblock %}

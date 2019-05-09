@@ -3,7 +3,30 @@
 {% block content %}
 <div class="page-header">
   <div class="container">
-      <h1>apartments/list</h1>
+    {% if apartments %}
+      <div class="row">
+      {% for apartment in apartments %}
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header card-header-primary text-center">
+                  <h4 class="card-title">{{ apartment.street_name }} {{ apartment.street_number }} - {{ apartment.postcode }} {{ apartment.city }}</h4>
+                </div>
+                {% if apartment.photo_main %}
+                <img class="card-img-top" src="{{ apartment.photo_main.url }}">
+                {% else %}
+                <img class="card-img-top" src="">
+                {% endif %}
+                <div class="card-body">
+                    {{ apartment.street_name }} {{ apartment.street_number }}
+                    <p></p>
+                </div>
+            </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% else %}
+      <div class="col-md-12 card text-center"><h1>No Apartments Available!</h1></div>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
