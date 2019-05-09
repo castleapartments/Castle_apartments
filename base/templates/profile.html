@@ -49,8 +49,30 @@ Castle Apartments - Profile
                                     {{ form.email|as_crispy_field }}
                                 </div>    
                             </div>
-                        </div>               
-                        <div class="row">
+
+                            <div class="col-md-6">  
+                                <div class="input-group input-group-select">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-venus-mars"></i>
+                                    </span>
+                                    </div>
+                                    {{ form.sex|as_crispy_field }}
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fab fa-slack-hash"></i>
+                                    </span>
+                                    </div>
+                                    
+                                    {{ form.ssn|as_crispy_field }}
+                                </div>    
+                            </div>
+
                             <div class="col-md-6">  
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -73,9 +95,7 @@ Castle Apartments - Profile
                                     {{ form.street_number|as_crispy_field }}
                                 </div>  
                             </div>
-                        </div>         
-                        
-                        <div class="row">
+
                             <div class="col-md-6">                                     
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -99,7 +119,7 @@ Castle Apartments - Profile
                                 </div>
                             </div>
                         </div>
-                        <div class="input-group flexnowrapfix">
+                        <div class="input-group input-group-select">
                             <div class="input-group-prepend" style="width:100%">
                                 <span class="input-group-text">
                                         <i class="fas fa-globe-europe"></i>

@@ -141,3 +141,36 @@ body {
   min-height:240px;
   width:100%
 }
+.card h4 {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    font-size: 1rem;
+}
+.card hr {
+    margin-top: 0.1rem;
+    margin-bottom: 0.1rem;
+}
+.card .card-text-bolder {
+    font-weight: 500;
+}
+.form-group {
+    width:100%
+}
+.input-group {
+    flex-wrap: nowrap;
+}
+.card-login .input-group {
+    padding-bottom: none;
+ }
+ .card-login .input-group-select {
+    margin: 26px 0 0 0;
+ }
+ .card-login .input-group-select select {
+    margin: 0;
+    padding: 0;
+    height: 37px;
+    width: 100%;
+ }
+ .card-login .input-group-select label {
+    padding: 0;
+ }

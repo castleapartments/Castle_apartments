@@ -21,15 +21,20 @@ Castle Apartments - All cards
               <div class="apartment_img" style="background-image: url(http://www.facetheforce.today/random/200)">
               </div>
               <div class="card-body">
-                <h3>{{ card.name }}</h3>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <span class="badge badge-pill badge-secondary">Default</span>
-                    <span class="badge badge-pill badge-primary">Primary</span>
-                    <span class="badge badge-pill badge-info">Info</span>
-                    <span class="badge badge-pill badge-success">Success</span>
-                    <span class="badge badge-pill badge-warning">Warning</span>
+                <h4>Price: <span class="card-text-bolder">47.000.000</span></h4>
+                <hr/>
+                <h4>Type: <span class="card-text-bolder">Single Family</span></h4>
+                <hr/>
+               
+                <span class="badge badge-pill badge-secondary">Elevator</span>
+                    <span class="badge badge-pill badge-primary">Wheelchair</span>
+                    <span class="badge badge-pill badge-info">Garage</span>
+                    <span class="badge badge-pill badge-success">Garden</span>
+                    <span class="badge badge-pill badge-warning">Patio</span>
                     <span class="badge badge-pill badge-danger">Danger</span>
                     <span class="badge badge-pill badge-rose">Rose</span>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                {% if user.is_staff %}
                 <div class="d-flex justify-content-between align-items-center">
                     
                   <div class="btn-group">
@@ -38,6 +43,7 @@ Castle Apartments - All cards
                   </div>
                   <small class="text-muted">9 mins</small>
                 </div>
+                {% endif %}
               </div>
             </div>
           </a>
