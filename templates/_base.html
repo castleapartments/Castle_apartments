@@ -33,135 +33,14 @@
 <body>
 
   <!-- Navigation -->
-  <nav class="col-md-12 ml-sm-auto col-lg-12 px-4 navbar fixed-top navbar-expand-lg navbar-light bg-light navbar-color-on-scroll navbar-transparent" color-on-scroll="100">
-    <div class="container">
-      <a class="navbar-brand" href="/">
-        <img class="brand_logo d-block" src="{% static 'logo_mini_dark.png'%}" width="109" height="40" alt="Castle apartments - find you new shithole here!">
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="navbar-toggler-icon"></span>
-          <span class="navbar-toggler-icon"></span>
-          <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-              <a class="nav-link" href="/apartments/search"><i class="fas fa-search"></i> Apartments</a>
-          </li>
-          
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-chess-rook"></i> About us</a>
-          </li>
-          
-          {% if user.is_authenticated %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-cog"></i> Settings
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/people/">People</a>
-              <a class="dropdown-item" href="/cards/">apartments</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
-          {% endif %}
-          
-          {% if user.is_authenticated %}
-          <li class="nav-item">
-              <a class="nav-link" href="/logout/"><i class="fas fa-user-circle"></i> Sign out</a>
-          </li>
-          {% else %}
-          <li class="nav-item">            
-              <a class="nav-link" href="/login/"><i class="fas fa-user-circle"></i> Sign in</a>  
-          <li class="nav-item">
-              <a id="nav_sign_btn" class="nav-link btn btn-sm btn-outline-light" href="/signup/"> Sign up</a>
-          </li>
-          {% endif %}
-        </ul>
-      </div>
-    </div>
-  </nav>
+  {% include '_topnav.html' %}
 
   
   <div class="container-fluid">
     <div class="row">
       {% if user.is_authenticated %}
-      <!-- Side bar -->
-      <nav class="col-md-2 d-none d-md-block sidebar ca-sidebar">
-        <div class="sidebar-sticky sticky-top">
-          <ul class="nav flex-column bg-purpletrans " id="menu-side-bar">
-              <!--
-              <a class="navbar-brand" href="/" style="padding-top:25px;padding-bottom:20px;text-align:center;">
-                <img class="brand_logo" src="{% static 'logo_light.png'%}" style="max-width:100%;" alt="Castle apartments - find you new shithole here!">
-              </a>
-              -->
-              <li class="nav-item">
-                  
-                  <a class="nav-link" href="{% url 'profile' %}">
-                    <div class="menu-icon">
-                      <i class="fas fa-user-circle"></i>
-                    </div>
-                    Profile <span class="sr-only">(current)</span>
-                  </a>
-                </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <div class="menu-icon">
-                        <i class="fas fa-money-bill-alt"></i>
-                    </div>
-                    Payment
-                  </a>
-                </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="/apartments">
-                    <div class="menu-icon">
-                        <i class="fas fa-home"></i>
-                    </div>
-                    Apartments
-                  </a>
-                </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <div class="menu-icon">
-                        <i class="fas fa-cog"></i>
-                    </div>
-                    Settings
-                  </a>
-                </li>
-              
-              {% if user.is_staff %}        
-              <li class="nav-item">
-                  <a class="nav-link" href="/apartments">
-                    <div class="menu-icon">
-                        <i class="fas fa-clinic-medical"></i>
-                    </div>
-                    Apartment list
-                  </a>
-              </li>
-              
-              <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <div class="menu-icon">
-                        <i class="fas fa-chart-pie"></i>
-                    </div>
-                    Sales
-                  </a>
-                </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <div class="menu-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    Messages
-                  </a>
-              </li>                
-              {% endif %}
-            </ul>
-        </div>
-      </nav>
+        <!-- Side bar -->
+        {% include '_sidemenu.html' %}
       {% endif %}
       <!-- Main Content -->
       {% if user.is_authenticated %}
@@ -169,7 +48,8 @@
       {% else %}
       <main role="main" class="col-md-12 ml-sm-auto col-lg-12 px-4 main-content">
       {% endif %}
-        {% block content %}{% endblock %}
+
+      {% block content %}{% endblock %}
 
       </main>
       
