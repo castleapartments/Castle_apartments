@@ -134,13 +134,21 @@ def profile(request):
             # I would problably need to pass the userid of the 
             # current user who is logged on to this form so it can save the foreign key
             # but how can I get the current user logged on
-            current_user = request.user
-            profile = profile_form.save()
+            
+            profile = profile_form.save(commit=False)
+            profile.user = request.user
             profile.save()
+            
             messages.info(request,'Profile Saved!')
-            return redirect('index')
+            #return redirect('index')
+            return HttpResponse(profile.user.username)
         else:
-            print(profile_form.errors)
+            
+            return HttpResponse(profile_form.errors)
     else:
         profile_form = ProfileForm()
     return render(request, "profile.html", { 'form': profile_form })
+
+def test(request):
+    current_user = request.user
+    return HttpResponse(current_user.username)

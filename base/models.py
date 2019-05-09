@@ -16,14 +16,14 @@ class Card(models.Model):
 
 class UserProfile(models.Model):        
     SEX_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female')
+        ('Male', 'Male'),
+        ('Female', 'Female')
     )
 
     # required to associate Author model with User model (Important)
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
 
-    sex = models.CharField(max_length=15, default="Male", choices=SEX_CHOICES)
+    sex = models.CharField(max_length=15, default="Male", blank=True, null=True, choices=SEX_CHOICES)
     email = models.CharField(max_length=150, blank=True, null=True, default='')
     phone = models.CharField(max_length=150, blank=True, null=True, default='')
     ssn = models.CharField(max_length=150, blank=True, null=True, default='', unique=True)
@@ -37,12 +37,12 @@ class UserProfile(models.Model):
     credit_card_name_on_card = models.CharField(max_length=150, blank=True, null=True, default='')
     credit_card_expiry = models.DateField(blank=True, null=True)
     
-    city = models.CharField(max_length=50, default='')
-    country = models.CharField(max_length=50, default='')
+    city = models.CharField(max_length=50, default='', blank=True, null=True)
+    country = models.CharField(max_length=50, default='', blank=True, null=True)
 
     photo_main = models.ImageField(null=True, blank=True)
     #city = models.ForeignKey('location.City', blank=True, null=True, on_delete=models.PROTECT, default='')
     #country = models.ForeignKey('location.Country', blank=True, null=True, on_delete=models.PROTECT, default='')
 
     def __str__(self):
-        return self.first_name + " " + self.last_name
+        return "Username : " + self.user.username + " - Name : " +self.user.first_name + " " + self.user.last_name
