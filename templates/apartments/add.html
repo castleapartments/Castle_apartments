@@ -5,7 +5,11 @@
 {% block content %}
 <div class="page-header header-filter">
   <div class="container">
-      {% crispy form form.helper %}
+      {% if user.is_authenticated %}
+          {% crispy form form.helper %}
+      {% else %}
+          <h1>Unauthorized!</h1>
+      {% endif %}
   </div>
 </div>
 {% endblock %}

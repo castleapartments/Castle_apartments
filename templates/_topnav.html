@@ -1,0 +1,52 @@
+{% load staticfiles %}
+  <nav class="col-md-12 ml-sm-auto col-lg-12 px-4 navbar fixed-top navbar-expand-lg navbar-light bg-light navbar-color-on-scroll navbar-transparent" color-on-scroll="100">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img class="brand_logo d-block" src="{% static 'logo_mini_dark.png'%}" width="109" height="40" alt="Castle apartments - find you new shithole here!">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+              <a class="nav-link" href="{% url 'search_apartments' %}"><i class="fas fa-search"></i> Apartments</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-chess-rook"></i> About us</a>
+          </li>
+
+          {% if user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-cog"></i> Settings
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/people/">People</a>
+              <a class="dropdown-item" href="/cards/">apartments</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          {% endif %}
+
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+              <a class="nav-link" href="/logout/"><i class="fas fa-user-circle"></i> Sign out</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+              <a class="nav-link" href="/login/"><i class="fas fa-user-circle"></i> Sign in</a>
+          <li class="nav-item">
+              <a id="nav_sign_btn" class="nav-link btn btn-sm btn-outline-light" href="/signup/"> Sign up</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>

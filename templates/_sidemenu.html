@@ -1,0 +1,71 @@
+{% load staticfiles %}
+      <nav class="col-md-2 d-none d-md-block sidebar ca-sidebar">
+        <div class="sidebar-sticky sticky-top">
+          <ul class="nav flex-column bg-purpletrans " id="menu-side-bar">
+              <!--
+              <a class="navbar-brand" href="/" style="padding-top:25px;padding-bottom:20px;text-align:center;">
+                <img class="brand_logo" src="{% static 'logo_light.png'%}" style="max-width:100%;" alt="Castle apartments - find you new shithole here!">
+              </a>
+              -->
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'profile' %}">
+                    <div class="menu-icon">
+                      <i class="fas fa-user-circle"></i>
+                    </div>
+                    Profile <span class="sr-only">(current)</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'search_apartments' %}">
+                    <div class="menu-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    Search Apartments
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'add_apartment' %}">
+                    <div class="menu-icon">
+                        <i class="fas fa-clinic-medical"></i>
+                    </div>
+                    Add Apartment
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <div class="menu-icon">
+                        <i class="fas fa-money-bill-alt"></i>
+                    </div>
+                    Payment
+                  </a>
+                </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <div class="menu-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    Settings
+                  </a>
+                </li>
+
+              {% if user.is_staff %}
+              <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <div class="menu-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    Sales
+                  </a>
+                </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <div class="menu-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    Messages
+                  </a>
+              </li>
+              {% endif %}
+            </ul>
+        </div>
+      </nav>
