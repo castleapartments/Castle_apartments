@@ -23,7 +23,7 @@ Castle Apartments - Login
                     <div class="input-group">
                         <div class="input-group-prepend">
                         <span class="input-group-text">
-                            <i class="material-icons">mail</i>
+                            <i class="material-icons">account_circle</i>
                         </span>
                         </div>
                         <input name="username" type="username" class="form-control" placeholder="Username...">
@@ -42,10 +42,29 @@ Castle Apartments - Login
                     <input type="submit" class="btn btn-primary btn-link btn-wd btn-lg" name="" value="Get Started">
                     </div>
                 </form>
+                <div class="text-center">
+                    <p>New to Castle apartments?<a href="{% url 'signup' %}" ><strong> SIGN UP</strong></a></p>
                 </div>
-            </div>
+                <div class="text-center">
+                    <p>Forgot your password?<a href="{% url 'forget_password' %}" ><strong> RESET PASSWORD</strong></a></p>
+                </div>
+               
             </div>
         </div>
     </div>
+    {% for message in messages %}
+    <div class="alert alert-danger">
+        <div class="container">
+            <div class="alert-icon">
+                <i class="material-icons">error_outline</i>
+            </div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true"><i class="material-icons">clear</i></span>
+            </button>
+            <b>Login Failure:</b>{{ message }}.
+        </div>
+    </div>
+    <div class="clearfix"></div>
 
+    {% endfor %}
 {% endblock %}

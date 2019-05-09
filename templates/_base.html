@@ -55,6 +55,7 @@
             <a class="nav-link" href="#"><i class="fas fa-chess-rook"></i> About us</a>
           </li>
           
+          {% if user.is_authenticated %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-cog"></i> Settings
@@ -66,6 +67,8 @@
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
           </li>
+          {% endif %}
+          
           {% if user.is_authenticated %}
           <li class="nav-item">
               <a class="nav-link" href="/logout/"><i class="fas fa-user-circle"></i> Sign out</a>
@@ -85,7 +88,7 @@
   
   <div class="container-fluid">
     <div class="row">
-
+      {% if user.is_authenticated %}
       <!-- Side bar -->
       <nav class="col-md-2 d-none d-md-block sidebar ca-sidebar">
         <div class="sidebar-sticky sticky-top">
@@ -96,7 +99,8 @@
               </a>
               -->
               <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  
+                  <a class="nav-link" href="{% url 'profile' %}">
                     <div class="menu-icon">
                       <i class="fas fa-user-circle"></i>
                     </div>
@@ -126,7 +130,9 @@
                     </div>
                     Settings
                   </a>
-                </li>              
+                </li>
+              
+              {% if user.is_staff %}        
               <li class="nav-item">
                   <a class="nav-link" href="/apartments">
                     <div class="menu-icon">
@@ -134,7 +140,8 @@
                     </div>
                     Apartment list
                   </a>
-                </li>
+              </li>
+              
               <li class="nav-item">
                   <a class="nav-link" href="#">
                     <div class="menu-icon">
@@ -150,23 +157,18 @@
                     </div>
                     Messages
                   </a>
-                </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <div class="menu-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    Users
-                  </a>
-                </li>              
-                
+              </li>                
+              {% endif %}
             </ul>
         </div>
       </nav>
-    
+      {% endif %}
       <!-- Main Content -->
+      {% if user.is_authenticated %}
       <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4 main-content">
-        
+      {% else %}
+      <main role="main" class="col-md-12 ml-sm-auto col-lg-12 px-4 main-content">
+      {% endif %}
         {% block content %}{% endblock %}
 
       </main>

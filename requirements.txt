@@ -6,3 +6,4 @@ psycopg2
 faker
 pillow
 psycopg2-binary
+django-countries

@@ -122,3 +122,22 @@ body {
     padding:0;
     background: rgba(0, 0, 0, 0.5);
 }
+.ch-fix {
+    position: absolute !important;
+    min-width: 90% !important;
+    margin: -17px 5% !important;
+    padding: 2% !important;
+}
+.ct-fix {
+    padding: 0 !important;
+    margin: 0 !important;
+    font-weight: 100;
+}
+.apartment_img {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #464646;
+  min-height:240px;
+  width:100%
+}

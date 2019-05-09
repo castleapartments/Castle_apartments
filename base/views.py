@@ -1,20 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
+from django.contrib import messages
 
 from django.contrib.auth import authenticate, login, logout
 #from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
 from base.models import Person, Card
-from base.forms import PersonForm, CardForm
+from base.forms import UserForm, PersonForm, CardForm
 
 
 from .models import Greeting
-
-
-
 
 
 # Create your views here.
@@ -73,9 +71,8 @@ class PersonAndCardListView(ListView):
         # And so on for more models
         return context
 
-@login_required
-def special_login(request):
-    return HttpResponse("You are logged in")
+def forget_password(request):
+    return HttpResponse("You need to create me!! :)")
 
 @login_required
 def user_logout(request):
@@ -96,8 +93,9 @@ def user_login(request):
             else:
                 return HttpResponse("ACCOUNT NOT ACTIVE")
         else:
-            print("Someone tried to login and failed!")
-            return HttpResponse("Invalid login details supplied!")
+
+            messages.error(request,'username or password not correct')
+            return redirect('login')
     else:
         return render(request, "login.html")
 
@@ -107,5 +105,27 @@ def user_login(request):
 #    return render(request, "login.html")
 
 def signup(request):
+    registered = False
+    if request.method == "POST":
+        user_form = UserForm(data=request.POST)
+
+        if user_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+
+            registered = True
+            messages.info(request,'Welcome!')
+            return redirect('index')
+        else:
+            print(user_form.errors)
+    else:
+        user_form = UserForm()
+
     return render(request, "signup.html")
 
+#def signup(request):
+#    return render(request, "signup.html")
+@login_required
+def profile(request):
+    return render(request, "profile.html")
