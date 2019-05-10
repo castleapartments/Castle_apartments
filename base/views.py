@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 from django.contrib.auth import authenticate, login, logout
 #from django.core.urlresolvers import reverse
@@ -58,6 +59,7 @@ class PersonUpdateView(UpdateView):
     template_name = 'base/person_update_form.html'
     success_url = reverse_lazy('person_list')    
 
+
 class PersonAndCardListView(ListView):
     context_object_name = 'pc_list'    
     template_name = 'base/pc_list.html'
@@ -71,6 +73,7 @@ class PersonAndCardListView(ListView):
         return context
 
 def forget_password(request):
+    # Needs to be implemented
     return HttpResponse("You need to create me!! :)")
 
 @login_required
@@ -107,15 +110,25 @@ def signup(request):
     registered = False
     if request.method == "POST":
         user_form = UserForm(data=request.POST)
+        profile_form = ProfileForm(data=request.POST)
 
         if user_form.is_valid():
-            user = user_form.save()
+            user = user_form.save(commit=False)
             user.set_password(user.password)
+            username = user.username
             user.save()
 
+            
+            find_user = User.objects.get(username=username)
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
+
             registered = True
+            
             messages.info(request,'Welcome!')
             return redirect('index')
+
         else:
             print(user_form.errors)
     else:
@@ -131,23 +144,26 @@ def profile(request):
         profile_form = ProfileForm(data=request.POST)
 
         if profile_form.is_valid():
-            # I would problably need to pass the userid of the 
-            # current user who is logged on to this form so it can save the foreign key
-            # but how can I get the current user logged on
             
             profile = profile_form.save(commit=False)
             profile.user = request.user
             profile.save()
             
+            # Needs some box to notify that it was succesfully saved
             messages.info(request,'Profile Saved!')
-            #return redirect('index')
-            return HttpResponse(profile.user.username)
+            return redirect('index')
         else:
-            
             return HttpResponse(profile_form.errors)
     else:
         profile_form = ProfileForm()
     return render(request, "profile.html", { 'form': profile_form })
+
+
+class profileupdateview(UpdateView):
+    model = UserProfile
+    form_class = ProfileForm
+    template_name = 'profile.html'
+    success_url = reverse_lazy('profile')   
 
 def test(request):
     current_user = request.user
