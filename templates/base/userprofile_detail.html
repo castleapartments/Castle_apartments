@@ -1,0 +1,192 @@
+{% extends "_base.html" %}
+{% load staticfiles %}
+
+
+{% block title %}
+Castle Apartments - Profile
+{% endblock %}
+
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+            <div class="card card-login" id="profile-card">
+                    {% csrf_token %}
+                    <div class="card-header card-header-primary text-center">
+                        <h4 class="card-title">{{user.first_name}} {{user.last_name}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center profile-image">
+                            <img src="http://www.facetheforce.today/random/200" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">  
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-phone"></i>
+                                    </span>
+                                </div>
+                                <div class="content">
+                                        <span class="input-content-title">
+                                    Phone:
+                                        </span>
+                                    <span class="input-content">
+                                    {{userprofile.phone}}
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12"> 
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">mail</i>
+                                    </span>
+                                </div>
+                                <div class="content">
+                                        <span class="input-content-title">
+                                    Email:
+                                        </span>
+                                    <span class="input-content">
+                                    {{userprofile.email}}
+                                    </span>
+                                    </div>                                    
+                                </div>    
+                            </div>
+                            <div class="col-md-12">  
+                                <div class="input-group input-group-select">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-venus-mars"></i>
+                                    </span>
+                                </div>
+                                <div class="content">
+                                        <span class="input-content-title">
+                                    Gender:
+                                        </span>
+                                    <span class="input-content">
+                                    {{userprofile.sex}}
+                                    </span>
+                                    </div>     
+                                </div>
+                            </div>
+                            <div class="col-md-12"> 
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fab fa-slack-hash"></i>
+                                        </span>
+                                    </div>
+                                    <div class="content">
+                                            <span class="input-content-title">
+                                        Ssn:
+                                            </span>
+                                        <span class="input-content">
+                                        {{userprofile.ssn}}
+                                        </span>
+                                    </div>              
+                                </div>    
+                            </div>
+
+                            <div class="col-md-12">  
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-home"></i>
+                                    </span>
+                                </div>
+                                <div class="content">
+                                    <span class="input-content-title">
+                                    Address:
+                                    </span>
+                                    <span class="input-content">
+                                    {{userprofile.street_name}}
+                                    </span>
+                                    </div>                     
+                                </div>
+                            </div>
+                            <div class="col-md-12"> 
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fab fa-slack-hash"></i>
+                                    </span>
+                                </div>
+                                <div class="content">
+                                        <span class="input-content-title">
+                                    Street number:
+                                        </span>
+                                    <span class="input-content">
+                                    {{userprofile.street_number}}
+                                    </span>
+                                    </div>                   
+                                </div>  
+                            </div>
+
+                            <div class="col-md-12">                                     
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-city"></i>
+                                        </span>
+                                    </div>
+                                    <div class="content">
+                                            <span class="input-content-title">
+                                        City:
+                                            </span>
+                                        <span class="input-content">
+                                        {{userprofile.city}}
+                                        </span>
+                                    </div>    
+                                </div>
+                            </div>                                
+                            <div class="col-md-12"> 
+                                <div class="input-group">
+                                    <div class="input-group-prepend ">
+                                        <span class="input-group-text">
+                                            <i class="fab fa-slack-hash"></i>
+                                        </span>
+                                    </div>
+                                    <div class="content">
+                                            <span class="input-content-title">
+                                        Zip:
+                                            </span>
+                                        <span class="input-content">
+                                        {{userprofile.postal_code}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>                        
+                            <div class="col-md-12"> 
+                                <div class="input-group">
+                                    <div class="input-group-prepend ">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-globe-europe"></i>
+                                        </span>
+                                    </div>
+                                    <div class="content">
+                                            <span class="input-content-title">
+                                        Country:
+                                            </span>
+                                        <span class="input-content">
+                                        {{userprofile.country}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer text-center">
+                            <input type="submit" class="btn btn-primary btn-link btn-wd btn-lg" name="" value="Edit profile">
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -206,3 +206,18 @@ body {
         padding-left: 1.5rem;
     }
 }
+#profile-card .input-group {
+    margin: 0;
+}
+#profile-card .input-group i {
+    font-size: 1rem;
+}
+#profile-card .input-group-prepend {
+    min-width: 60px;
+}
+#profile-card .content .input-content {
+    font-weight: 600;
+}
+#profile-card .profile-image {
+    margin:15px 0;
+}

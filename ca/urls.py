@@ -6,7 +6,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 import base.views
-from base.views import PersonListView, PersonCreateView, PersonUpdateView, CardListView, CardUpdateView, CardCreateView, PersonAndCardListView
+from base.views import PersonListView, PersonCreateView, PersonUpdateView,\
+        CardListView, CardUpdateView, CardCreateView, PersonAndCardListView, ProfileDetailView
 
 urlpatterns = [
     path("", base.views.index, name="index"),
@@ -15,9 +16,9 @@ urlpatterns = [
     path("forget_password/", base.views.forget_password, name="forget_password"),
     path("logout/", base.views.user_logout, name="logout"),
     path("signup/", base.views.signup, name="signup"),
-    path("db/", base.views.db, name="db"),
     path('users/', include('django.contrib.auth.urls')),
     path("profile/", base.views.profile, name="profile"),
+    path("profile/<int:pk>", ProfileDetailView.as_view(), name="userprofile_detail"),
     path("apartments/", include('apartments.urls')),
     path("admin/", admin.site.urls),
     path("pc/", PersonAndCardListView.as_view(),  name="pc_list"),
