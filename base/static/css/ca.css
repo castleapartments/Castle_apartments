@@ -190,3 +190,19 @@ body {
 .card p.description {
     padding: 0 15px;
 }
+#navbarSupportedContent .dropdown-item {
+    padding-left: .5rem;
+}
+#navbarSupportedContent .dropdown-item i {
+    margin-right: 6px;
+}
+@media (max-width: 768px) {
+    .navbar .dropdown.show .dropdown-menu, .navbar .dropdown .dropdown-menu {
+        height: initial;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+    }
+    #navbarSupportedContent .dropdown-item {
+        padding-left: 1.5rem;
+    }
+}
