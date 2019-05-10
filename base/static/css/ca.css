@@ -187,3 +187,6 @@ body {
 .card-body-set-psw label {
     display: block;
 }
+.card p.description {
+    padding: 0 15px;
+}
