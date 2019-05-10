@@ -73,8 +73,12 @@ class PersonAndCardListView(ListView):
         return context
 
 def forget_password(request):
+<<<<<<< HEAD
     # Needs to be implemented
     return HttpResponse("You need to create me!! :)")
+=======
+    return redirect('/users/password_reset/')
+>>>>>>> d30b52ab9c0878ea693bd0f05cb9d37eba10ee0e
 
 @login_required
 def user_logout(request):
@@ -97,7 +101,7 @@ def user_login(request):
         else:
 
             messages.error(request,'username or password not correct')
-            return redirect('login')
+            return redirect('/login/')
     else:
         return render(request, "login.html")
 

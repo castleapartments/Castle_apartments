@@ -1,9 +1,15 @@
 from django.shortcuts import render
+
+from .models import Apartment
 from .forms import ApartmentForm
 
 
 def list(request):
-    return render(request, 'apartments/list.html')
+    apartments = Apartment.objects.all()
+    context = {
+        'apartments': apartments
+    }
+    return render(request, 'apartments/list.html', context)
 
 
 def search(request):

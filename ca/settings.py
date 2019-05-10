@@ -138,24 +138,45 @@ USE_L10N = True
 USE_TZ = True
 
 
+#PUT USER AND PASS IN .env - so that credentials are not commited on github.
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+EMAIL_PORT = 25
+EMAIL_USE_TLS = True
+
+
+"""
+# Nice to have for development - will save emails as txt docs instead 
+# of sending them.
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+"""
+
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.0/howto/static-files/
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_TMP = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-
-os.makedirs(STATIC_TMP, exist_ok=True)
-os.makedirs(STATIC_ROOT, exist_ok=True)
-# Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+# STATIC_TMP = os.path.join(BASE_DIR, 'static')
+
+# Media folder
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+# os.makedirs(STATIC_TMP, exist_ok=True)
+# os.makedirs(STATIC_ROOT, exist_ok=True)
+
+# Extra places for collectstatic to find static files.
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 django_heroku.settings(locals())
 
-MEDIA_URL = 'http://127.0.0.1:8000/media/'
-MEDIA_ROOT = './image/media/'
-
 LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = "/"
+
+
+    

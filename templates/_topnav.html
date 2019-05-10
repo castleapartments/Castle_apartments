@@ -1,5 +1,5 @@
 {% load staticfiles %}
-  <nav class="col-md-12 ml-sm-auto col-lg-12 px-4 navbar fixed-top navbar-expand-lg navbar-light bg-light navbar-color-on-scroll navbar-transparent" color-on-scroll="100">
+  <nav class="col-md-12 ml-sm-auto col-lg-12 px-4 navbar fixed-top navbar-expand-md navbar-light bg-light navbar-color-on-scroll navbar-transparent" color-on-scroll="100">
     <div class="container">
       <a class="navbar-brand" href="/">
         <img class="brand_logo d-block" src="{% static 'logo_mini_dark.png'%}" width="109" height="40" alt="Castle apartments - find you new shithole here!">
@@ -22,22 +22,47 @@
           </li>
 
           {% if user.is_authenticated %}
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown d-md-none ">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-cog"></i> Settings
+              <i class="fab fa-fort-awesome-alt"></i> Options
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/people/">People</a>
-              <a class="dropdown-item" href="/cards/">apartments</a>
+              <a class="dropdown-item" href="{% url 'profile' %}">
+                <i class="fas fa-user-circle"></i>
+                Profile
+              </a>
+              <a class="dropdown-item" href="{% url 'add_apartment' %}">
+                  <i class="fas fa-clinic-medical"></i>
+                  Add apartment
+              </a>
+              <a class="dropdown-item" href="{% url 'add_apartment' %}">
+                  <i class="fas fa-money-bill-alt"></i>
+                  Payment
+              </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <a class="dropdown-item" href="{% url 'add_apartment' %}">
+                  <i class="fas fa-cog"></i>
+                  Settings
+              </a>
+              
+              {% if user.is_staff %}
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'add_apartment' %}">
+                  <i class="fas fa-chart-pie"></i>
+                  Sales
+              </a>
+              <a class="dropdown-item" href="{% url 'add_apartment' %}">
+                  <i class="fas fa-envelope"></i>
+                  Messages
+              </a>
+              {% endif %}
             </div>
           </li>
           {% endif %}
 
           {% if user.is_authenticated %}
           <li class="nav-item">
-              <a class="nav-link" href="/logout/"><i class="fas fa-user-circle"></i> Sign out</a>
+              <a class="nav-link" href="/logout/"><i class="fas fa-sign-out-alt"></i> Sign out</a>
           </li>
           {% else %}
           <li class="nav-item">
