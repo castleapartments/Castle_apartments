@@ -175,6 +175,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 django_heroku.settings(locals())
 
-
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = "/"
+
+
+    
