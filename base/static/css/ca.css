@@ -181,4 +181,6 @@ body {
      align-self: center;
      margin-left: 30px;
  }
- }
+.card-body-set-psw p {
+    text-align: center !important
+}
