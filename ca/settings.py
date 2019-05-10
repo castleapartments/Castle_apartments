@@ -138,6 +138,23 @@ USE_L10N = True
 USE_TZ = True
 
 
+#PUT USER AND PASS IN .env - so that credentials are not commited on github.
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+EMAIL_PORT = 25
+EMAIL_USE_TLS = True
+
+
+"""
+# Nice to have for development - will save emails as txt docs instead 
+# of sending them.
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+"""
+
 # Static files (CSS, JavaScript, Images)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
@@ -160,3 +177,4 @@ django_heroku.settings(locals())
 
 
 LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = "/"
