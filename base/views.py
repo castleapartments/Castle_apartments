@@ -4,6 +4,7 @@ from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.views.generic.edit import FormView
 
 from django.contrib.auth import authenticate, login, logout
 #from django.core.urlresolvers import reverse
@@ -73,12 +74,7 @@ class PersonAndCardListView(ListView):
         return context
 
 def forget_password(request):
-<<<<<<< HEAD
-    # Needs to be implemented
-    return HttpResponse("You need to create me!! :)")
-=======
     return redirect('/users/password_reset/')
->>>>>>> d30b52ab9c0878ea693bd0f05cb9d37eba10ee0e
 
 @login_required
 def user_logout(request):
@@ -122,7 +118,8 @@ def signup(request):
             username = user.username
             user.save()
 
-            
+            # After the user is created the profile must be created
+            # Start by searching the user to get the User instance
             find_user = User.objects.get(username=username)
             profile = profile_form.save(commit=False)
             profile.user = user
@@ -140,34 +137,47 @@ def signup(request):
 
     return render(request, "signup.html")
 
-#def signup(request):
-#    return render(request, "signup.html")
-@login_required
-def profile(request):
-    if request.method == "POST":
-        profile_form = ProfileForm(data=request.POST)
-
-        if profile_form.is_valid():
-            
-            profile = profile_form.save(commit=False)
-            profile.user = request.user
-            profile.save()
-            
-            # Needs some box to notify that it was succesfully saved
-            messages.info(request,'Profile Saved!')
-            return redirect('index')
-        else:
-            return HttpResponse(profile_form.errors)
-    else:
-        profile_form = ProfileForm()
-    return render(request, "profile.html", { 'form': profile_form })
-
-
-class profileupdateview(UpdateView):
+class profileupdate(UpdateView):
     model = UserProfile
     form_class = ProfileForm
     template_name = 'profile.html'
-    success_url = reverse_lazy('profile')   
+    success_url = reverse_lazy('profile')  
+
+@login_required
+def profile1(request):
+    if request.method == "POST":
+        profile_form = ProfileForm(data=request.POST)
+    return render(request, "profile.html", { 'form': profile_form })
+
+@login_required
+def profile(FormView):
+    template_name = 'profile.html'
+    form_class = UserForm
+
+    def form_valid(self, form)
+        return super().form_valid(form)
+
+
+#@login_required
+#def profile(request):
+#    if request.method == "POST":
+#        profile_form = ProfileForm(data=request.POST)
+#
+#        if profile_form.is_valid():
+#            
+#            profile = profile_form.save(commit=False)
+#            profile.user = request.user
+#            profile.save()
+#            
+#            # Needs some box to notify that it was succesfully saved
+#            messages.info(request,'Profile Saved!')
+#            return redirect('index')
+#        else:
+#            return HttpResponse(profile_form.errors)
+#    else:
+#        profile_form = ProfileForm()
+#    return render(request, "profile.html", { 'form': profile_form })
+ 
 
 def test(request):
     current_user = request.user
