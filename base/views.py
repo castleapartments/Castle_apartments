@@ -141,7 +141,9 @@ def profile1(request):
     return render(request, "profile.html", { 'form': profile_form })
 
 @login_required
-def profile(FormView):
+def profile(request):
+    if request.method == "POST":
+        profile_form = ProfileForm(data=request.POST)
 
         if profile_form.is_valid():
             
@@ -160,15 +162,6 @@ def profile(FormView):
     else:
         profile_form = ProfileForm()
     return render(request, "profile_edit.html", { 'form': profile_form })
-
-class profileupdateview(UpdateView):
-    model = UserProfile
-    form_class = ProfileForm
-    template_name = 'profile.html'
-    form_class = UserForm
-
-    def form_valid(self, form)
-        return super().form_valid(form)
 
 
 #@login_required
