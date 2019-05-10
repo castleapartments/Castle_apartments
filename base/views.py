@@ -1,33 +1,26 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.models import User
 
+
 from django.contrib.auth import authenticate, login, logout
 #from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from base.models import Person, Card, UserProfile
 from base.forms import UserForm, PersonForm, CardForm, ProfileForm
 
-from .models import Greeting
 
 
 # Create your views here.
 
 def index(request):
     return render(request, "index.html")
-
-def db(request):
-
-    greeting = Greeting()
-    greeting.save()
-
-    greetings = Greeting.objects.all()
-
-    return render(request, "db.html", {"greetings": greetings})
 
 class PersonListView(ListView):
     model = Person
@@ -59,7 +52,6 @@ class PersonUpdateView(UpdateView):
     template_name = 'base/person_update_form.html'
     success_url = reverse_lazy('person_list')    
 
-
 class PersonAndCardListView(ListView):
     context_object_name = 'pc_list'    
     template_name = 'base/pc_list.html'
@@ -73,12 +65,7 @@ class PersonAndCardListView(ListView):
         return context
 
 def forget_password(request):
-<<<<<<< HEAD
-    # Needs to be implemented
-    return HttpResponse("You need to create me!! :)")
-=======
     return redirect('/users/password_reset/')
->>>>>>> d30b52ab9c0878ea693bd0f05cb9d37eba10ee0e
 
 @login_required
 def user_logout(request):
@@ -132,7 +119,6 @@ def signup(request):
             
             messages.info(request,'Welcome!')
             return redirect('index')
-
         else:
             print(user_form.errors)
     else:
@@ -155,19 +141,31 @@ def profile(request):
             
             # Needs some box to notify that it was succesfully saved
             messages.info(request,'Profile Saved!')
-            return redirect('index')
+            #return redirect('index')
+            return redirect('/profile/{}'.format(profile.id))
+            return HttpResponse(profile.user.username)
         else:
+            
             return HttpResponse(profile_form.errors)
     else:
         profile_form = ProfileForm()
-    return render(request, "profile.html", { 'form': profile_form })
-
+    return render(request, "profile_edit.html", { 'form': profile_form })
 
 class profileupdateview(UpdateView):
     model = UserProfile
     form_class = ProfileForm
     template_name = 'profile.html'
     success_url = reverse_lazy('profile')   
+
+@method_decorator(login_required, name='dispatch')
+class ProfileDetailView(LoginRequiredMixin, DetailView):
+    model = UserProfile
+    def get_queryset(self):
+        try:
+            return UserProfile.objects.filter(user_id=self.request.user.id)
+        except UserProfile.DoesNotExist:
+            return redirect('/profile')
+
 
 def test(request):
     current_user = request.user
