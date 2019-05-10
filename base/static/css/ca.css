@@ -182,5 +182,8 @@ body {
      margin-left: 30px;
  }
 .card-body-set-psw p {
-    text-align: center !important
+    text-align: center !important;
+}
+.card-body-set-psw label {
+    display: block;
 }
