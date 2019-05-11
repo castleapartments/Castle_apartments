@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
-from base.models import Person, Card, UserProfile
+from base.models import Person, Card, UserProfile, UserCreditCard
 
 
 class UserForm(forms.ModelForm):
@@ -56,7 +56,7 @@ class PersonForm(forms.ModelForm):
 
 class CreditCardForm(forms.ModelForm):
     class Meta:
-        model = Person
+        model = UserCreditCard
         fields = ('credit_card_number', 'credit_card_provider', 'credit_card_security_number', 'credit_card_name_on_card','credit_card_expiry')
 
     def __init__(self, *args, **kwargs):
