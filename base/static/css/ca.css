@@ -246,3 +246,10 @@ body {
 .apart-buy-div {
     padding-top:20px;
 }
+.apartment-price {
+    font-weight: 600;
+}
+.list-group .feature {
+    font-weight: 600;
+    padding-left: 6px;
+}
