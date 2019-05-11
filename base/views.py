@@ -217,6 +217,22 @@ class ProfileDetailView(LoginRequiredMixin, TestUserCanViewUser, DetailView):
     model = UserProfile
 
     def get_object(self):
+        
+        # IF a superuser is created via cmd-line, the profile does not excist. 
+        # This should rectify that.
+        if self.request.user.is_superuser:
+            if User.objects.filter(id = self.kwargs['pk']).exists():
+                try:
+                    userprofiletest = UserProfile.objects.get(user_id=self.kwargs['pk'])
+                except UserProfile.DoesNotExist:
+                    profile = UserProfile()
+                    profile.user_id = self.request.user.id
+                    profile.country = "US"
+                    profile.sex ="Male"
+                    profile.email = self.request.user.email
+                    profile.ssn = 12345678
+                    profile.save()
+
         return UserProfile.objects.get(user_id=self.kwargs['pk'])
 
 
