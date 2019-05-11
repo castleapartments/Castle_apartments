@@ -130,7 +130,11 @@ Castle Apartments - Profile
                                 {% get_countries as countries %}
                                 <select class="input-group-selection" id="country" name="country">
                                 {% for country in countries %}
+                                    {% if form.country.value == country.code  %}
+                                    <option value="{{ country.code }}" selected >{{ country.name }}</option>
+                                    {% else %}
                                     <option value="{{ country.code }}">{{ country.name }}</option>
+                                    {% endif %}
                                 {% endfor %}
                                 </select>
                             </div>
