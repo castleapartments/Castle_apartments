@@ -33,8 +33,7 @@ class ProfileForm(forms.ModelForm):
                 'street_number',
                 'postal_code',
                 'city',
-                'country',
-                'photo_main'
+                'country'
             )
 
     def __init__(self, *args, **kwargs):
