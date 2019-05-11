@@ -203,11 +203,14 @@ class ProfileUpdateView(UpdateView):
 @method_decorator(login_required, name='dispatch')
 class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = UserProfile
+    """
     def get_queryset(self):
         try:
-            return UserProfile.objects.filter(user_id=self.request.user.id)
+            print(self.request.user.id)
+            return UserProfile.objects.filter(user_id=1)
         except UserProfile.DoesNotExist:
             return redirect('/profile')
+    """
 
 class TestUserIsSuper(UserPassesTestMixin):
     def test_func(self):
