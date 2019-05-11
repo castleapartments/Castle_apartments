@@ -1,32 +1,52 @@
 {% extends '_base.html' %}
 
 {% block content %}
-<div class="page-header">
+<div class="album py-5" style="min-height: 100vh;">
   <div class="container">
-    {% if apartments %}
-      <div class="row">
+    <div class="row">
       {% for apartment in apartments %}
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header card-header-primary text-center">
-                  <h4 class="card-title">{{ apartment.street_name }} {{ apartment.street_number }} - {{ apartment.postcode }} {{ apartment.city }}</h4>
-                </div>
-                {% if apartment.photo_main %}
-                <img class="card-img-top" src="{{ apartment.photo_main.url }}">
-                {% else %}
-                <img class="card-img-top" src="">
-                {% endif %}
-                <div class="card-body">
-                    {{ apartment.street_name }} {{ apartment.street_number }}
-                    <p></p>
-                </div>
+        <div class="col-sm-6 col-md-6 col-lg-4">
+          <a href="#">
+            <div class="card mb-4 shadow-sm">
+              <div class="card-header card-header-primary text-center ch-fix">
+                <h6 class="card-title ct-fix">{{ apartment }}</h6>
+              </div>
+              {% if apartment.photo_main %}
+              <div class="apartment_img" style="background-image: url({{ apartment.photo_main.url }})">
+              {% else %}
+              <div class="apartment_img" style="background-image: url(/media/no_image.png)">
+              {% endif %}
+              </div>
+              <div class="card-body">
+                <h4>Price: <span class="card-text-bolder">{{ apartment.price }}</span></h4>
+                <hr/>
+                <h4>Size: <span class="card-text-bolder">{{ apartment.size }} m²</span></h4>
+                <hr/>
+
+                <span class="badge badge-pill badge-secondary">Elevator</span>
+                <span class="badge badge-pill badge-primary">Wheelchair</span>
+                <span class="badge badge-pill badge-info">Garage</span>
+                <span class="badge badge-pill badge-success">Garden</span>
+                <span class="badge badge-pill badge-warning">Patio</span>
+                <span class="badge badge-pill badge-danger">Danger</span>
+                <span class="badge badge-pill badge-rose">Rose</span>
+                <p class="card-text">{{ apartment.short_description }}</p>
+                <!--{% if user.is_staff %}-->
+                <!--<div class="d-flex justify-content-between align-items-center">-->
+                  <!--<div class="btn-group">-->
+                    <!--<button type="button" class="btn btn-sm btn-outline-secondary">View</button>-->
+                    <!--<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--{% endif %}-->
+              </div>
             </div>
+          </a>
         </div>
+      {% empty %}
+        <p>No meet the search criteria!</p>
       {% endfor %}
     </div>
-    {% else %}
-      <div class="col-md-12 card text-center"><h1>No Apartments Available!</h1></div>
-    {% endif %}
   </div>
 </div>
 {% endblock %}

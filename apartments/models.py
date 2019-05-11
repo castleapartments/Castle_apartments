@@ -29,4 +29,10 @@ class Apartment(models.Model):
     photo_main = models.ImageField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.street_name} {self.street_number}'
+        return f'{self.street_name} {self.street_number} - {self.postcode} {self.city}'
+
+    @property
+    def short_description(self):
+        if len(self.description) > 150:
+            return self.description[:147] + '...'
+        return self.description
