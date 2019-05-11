@@ -171,21 +171,21 @@ def profile(request):
         profile_form = ProfileForm()
     return render(request, "profile_edit.html", { 'form': profile_form })
 """
+class TestUserCanViewUser(UserPassesTestMixin):
+    def test_func(self):
+        if self.request.user.is_superuser or self.request.user.id == self.kwargs['pk']:
+            return True
+        raise PermissionDenied('Only Admins can view all users.')
 
-class ProfileUpdateView(UpdateView):
+@method_decorator(login_required, name='dispatch')
+class ProfileUpdateView(TestUserCanViewUser, UpdateView):
     model = UserProfile
     form_class = ProfileForm
     template_name = 'base/profile_edit.html'
-    
-    
-    def get_object(self, *args, **kwargs):
-        user = get_object_or_404(User, pk=self.kwargs['pk'])
-        return user.userprofile
+    success_url = reverse_lazy('profile') 
 
-    def get_success_url(self, *args, **kwargs):
-        #success_url = reverse_lazy('profile')
-        return reverse("profile")
-
+    def get_object(self):
+        return UserProfile.objects.get(user_id=self.kwargs['pk'])
 
 #@login_required
 #def profile(request):
@@ -209,16 +209,14 @@ class ProfileUpdateView(UpdateView):
  
 
 @method_decorator(login_required, name='dispatch')
-class ProfileDetailView(LoginRequiredMixin, DetailView):
+class ProfileDetailView(LoginRequiredMixin, TestUserCanViewUser, DetailView):
     model = UserProfile
-    """
-    def get_queryset(self):
-        try:
-            print(self.request.user.id)
-            return UserProfile.objects.filter(user_id=1)
-        except UserProfile.DoesNotExist:
-            return redirect('/profile')
-    """
+
+    def get_object(self):
+        return UserProfile.objects.get(user_id=self.kwargs['pk'])
+
+
+
 
 class TestUserIsSuper(UserPassesTestMixin):
     def test_func(self):
