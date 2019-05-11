@@ -107,7 +107,7 @@ venv.bak/
 .vscode/
 
 # Exclude all migration files
-apartments/migrations
-location/migrations
-image/migrations
-searchhistory/migrations
+# apartments/migrations
+# location/migrations
+# image/migrations
+# searchhistory/migrations
