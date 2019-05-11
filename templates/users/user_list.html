@@ -1,0 +1,67 @@
+{% extends '_base.html' %}
+
+{% block title %}
+Castle Apartments - All users
+{% endblock %}
+
+{% block content %}
+<div class="container">
+<div class="main">
+        <div class="section section-basic">
+
+    <div class="row">
+        <div class="col-md-12">
+            
+            
+                    {% if users %}
+                    <div class="row">
+                        {% for usr in users %}
+                        <div class="col-lg-3 col-md-4 ml-auto mr-auto">
+                        <div class="card">
+                            <div class="card-header card-header-primary text-center">
+                                <h4 class="card-title">{{usr.first_name}} {{usr.last_name}}</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center profile-image">
+                                    <img src="http://www.facetheforce.today/random/200?{{usr.first_name}}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        {% endfor %}
+                    </div>
+                        {% if is_paginated %}
+                        <div class="d-flex justify-content-center">
+                            <ul class="pagination pagination-primary">
+                                {% if page_obj.has_previous %}
+                                <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}" class="page-link" >prev<div class="ripple-container"></div></a></li>
+                                {% else %}
+                                <li class="page-item disabled"><a href="#" class="page-link">prev<div class="ripple-container"></div></a></li>
+                                {% endif %}
+                            
+                                {% for num in page_obj.paginator.page_range %}
+                                {% ifequal num page_obj.number %}
+                                    <li class="active page-item"><a href="#" class="page-link">{{ num }}<span class="sr-only">(current)</span></a></li>
+                                {% else %}
+                                    <li class="page-item"><a href="?page={{ num }}" class="page-link">{{ num }}</a></li>
+                                {% endifequal %}
+                                {% endfor %}
+                            
+                                {% if page_obj.has_next %}
+                                <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="page-link">next<div class="ripple-container"></div></a></li>
+                                {% else %}
+                                <li class="page-item disabled"><a href="#" class="page-link">next<div class="ripple-container"></div></a></li>
+                                {% endif %}
+                            <ul>
+                                </div>
+                        {% endif %}
+
+  
+                {% endif %}
+        
+        </div>
+    </div>
+</div>    </div>
+</div>
+
+{% endblock %}

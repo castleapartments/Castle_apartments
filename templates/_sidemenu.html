@@ -50,6 +50,14 @@
 
               {% if user.is_staff %}
               <li class="nav-item">
+                <a class="nav-link" href="{% url 'user_list' %}">
+                  <div class="menu-icon">
+                    <i class="fas fa-users"></i>
+                  </div>
+                  Users
+                </a>
+              </li>
+              <li class="nav-item">
                   <a class="nav-link" href="#">
                     <div class="menu-icon">
                         <i class="fas fa-chart-pie"></i>

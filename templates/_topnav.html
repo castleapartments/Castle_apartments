@@ -47,6 +47,10 @@
               
               {% if user.is_staff %}
               <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'user_list' %}">
+                <i class="fas fa-users"></i>
+                Users
+              </a>
               <a class="dropdown-item" href="{% url 'add_apartment' %}">
                   <i class="fas fa-chart-pie"></i>
                   Sales

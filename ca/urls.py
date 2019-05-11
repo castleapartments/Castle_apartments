@@ -7,7 +7,7 @@ admin.autodiscover()
 
 import base.views
 from base.views import PersonListView, PersonCreateView, PersonUpdateView,\
-        CardListView, CardUpdateView, CardCreateView, PersonAndCardListView, ProfileDetailView
+        CardListView, CardUpdateView, CardCreateView, PersonAndCardListView, ProfileDetailView, UserListView
 
 urlpatterns = [
     path("", base.views.index, name="index"),
@@ -17,6 +17,7 @@ urlpatterns = [
     path("logout/", base.views.user_logout, name="logout"),
     path("signup/", base.views.signup, name="signup"),
     path('users/', include('django.contrib.auth.urls')),
+    path('users/', UserListView.as_view(), name="user_list"),
     path("profile/", base.views.profile, name="profile"),
     path("profile/<int:pk>", ProfileDetailView.as_view(), name="userprofile_detail"),
     path("apartments/", include('apartments.urls')),

@@ -221,3 +221,8 @@ body {
 #profile-card .profile-image {
     margin:15px 0;
 }
+.large-forbidden-icon {
+    font-size: 7rem;
+    color: red;
+    margin-bottom: 20px;
+}

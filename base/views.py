@@ -5,13 +5,14 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.views.generic.edit import FormView
-
+from django.core.paginator import Paginator
+from django.core.exceptions import PermissionDenied
 
 from django.contrib.auth import authenticate, login, logout
 #from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from base.models import Person, Card, UserProfile
 from base.forms import UserForm, PersonForm, CardForm, ProfileForm
@@ -193,6 +194,28 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
             return UserProfile.objects.filter(user_id=self.request.user.id)
         except UserProfile.DoesNotExist:
             return redirect('/profile')
+
+class TestUserIsSuper(UserPassesTestMixin):
+    def test_func(self):
+        if self.request.user.is_superuser:
+            return True
+        raise PermissionDenied('Only Admins can view all users.')
+
+
+
+@method_decorator(login_required, name='dispatch')
+class UserListView(LoginRequiredMixin, TestUserIsSuper, ListView):
+    model = User
+    context_object_name = 'users'    
+    template_name = 'users/user_list.html'
+    queryset = User.objects.all()
+    paginate_by = 4
+
+    def get_context_data(self, **kwargs):
+        context = super(UserListView, self).get_context_data(**kwargs)
+        context['profiles'] = UserProfile.objects.all()
+        # And so on for more models
+        return context
 
 
 def test(request):

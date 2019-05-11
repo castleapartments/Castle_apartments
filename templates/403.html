@@ -1,0 +1,36 @@
+{% extends '_base.html' %}
+
+{% block title %}
+403 Forbidden
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+                <div class="card card-login">
+                    <div class="card-header card-header-primary text-center">
+                        <h4 class="card-title">403 Forbidden</h4>
+                    </div>
+                    <p class="description text-center">&nbsp;</p>
+                    <div class="card-body text-center">
+                            <div class="large-forbidden-icon text-center">
+                                    <i class="fas fa-ban"></i>
+                                </div> 
+                        {% if exception %}
+
+                            <p>{{ exception }}</p>
+                        {% else %}
+                            <p>Access denied. Make sure you have the correct permissions.</p>
+                        {% endif %}
+                       
+                    </div>
+                    <div class="footer text-center">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
