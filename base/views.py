@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+#from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from django.urls import reverse_lazy
@@ -176,7 +176,15 @@ class ProfileUpdateView(UpdateView):
     model = UserProfile
     form_class = ProfileForm
     template_name = 'base/profile_edit.html'
-    success_url = reverse_lazy('profile')    
+    
+    
+    def get_object(self, *args, **kwargs):
+        user = get_object_or_404(User, pk=self.kwargs['pk'])
+        return user.userprofile
+
+    def get_success_url(self, *args, **kwargs):
+        #success_url = reverse_lazy('profile')
+        return reverse("profile")
 
 
 #@login_required
