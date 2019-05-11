@@ -23,6 +23,7 @@ class Apartment(models.Model):
 
     approved = models.BooleanField(default=False)
     approval_date = models.DateTimeField(blank=True, null=True)
+    featured = models.BooleanField(default=False)
 
     sold = models.BooleanField(default=False)
     sold_date = models.DateField(null=True, blank=True)

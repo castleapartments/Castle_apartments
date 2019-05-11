@@ -6,11 +6,12 @@ from django.contrib import admin
 admin.autodiscover()
 
 import base.views
+from apartments.views import list_featured
 from base.views import PersonListView, PersonCreateView, PersonUpdateView,\
         CardListView, CardUpdateView, CardCreateView, PersonAndCardListView, ProfileDetailView, UserListView, ProfileUpdateView
 
 urlpatterns = [
-    path("", base.views.index, name="index"),
+    path("", list_featured, name="index"),
     path("login/", base.views.user_login, name="login"),
     
     path("forget_password/", base.views.forget_password, name="forget_password"),
@@ -21,9 +22,12 @@ urlpatterns = [
     path("profile/", base.views.profile, name="profile"),    
     path("profile/<int:pk>", ProfileDetailView.as_view(), name="userprofile_detail"),
     path("profile/<int:pk>/edit", ProfileUpdateView.as_view(), name="userprofile_edit"),
+
     path("apartments/", include('apartments.urls')),
+
     path("admin/", admin.site.urls),
     path("pc/", PersonAndCardListView.as_view(),  name="pc_list"),
+
     path('cards/', CardListView.as_view(), name='card_list'),
     path('cards/<int:pk>/edit/', CardUpdateView.as_view(), name='card_edit'),
     path('cards/add', CardCreateView.as_view(), name='card_add'),
