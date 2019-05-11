@@ -125,10 +125,12 @@ Castle Apartments - Profile
                                         <i class="fas fa-globe-europe"></i>
                                 </span>
                                 
+                                {% load countries %}
+                                {% get_countries as countries %}
                                 <select class="input-group-selection" id="country" name="country">
-                                    <option value="">Country...</option>
-                                    <option value="1">country 2...</option>
-                                    <option value="2">country 1...</option>
+                                {% for country in countries %}
+                                    <option value="{{ country.code }}">{{ country.name }}</option>
+                                {% endfor %}
                                 </select>
                             </div>
                         </div>

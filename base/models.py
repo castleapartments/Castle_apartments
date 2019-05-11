@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django_countries.fields import CountryField
 
 class Person(models.Model):
     name = models.CharField(max_length=130)
@@ -28,7 +29,8 @@ class UserProfile(models.Model):
     postal_code = models.IntegerField(blank=True, null=True, default=0)
         
     city = models.CharField(max_length=50, default='', blank=True, null=True)
-    country = models.CharField(max_length=50, default='', blank=True, null=True)
+    #country = models.CharField(max_length=50, default='', blank=True, null=True)
+    country = CountryField(blank=True, null=True)
 
     photo_main = models.ImageField(null=True, blank=True)
 

@@ -109,18 +109,20 @@ def signup(request):
             user = user_form.save(commit=False)
             user.set_password(user.password)
             username = user.username
-            user.save()
+            if user:
+                user.save()
 
-            # After the user is created the profile must be created
-            # Start by searching the user to get the User instance
-            find_user = User.objects.get(username=username)
-            profile = profile_form.save(commit=False)
-            profile.user = user
-            profile.save()
+                # After the user is created the profile must be created
+                # Start by searching the user to get the User instance
+                find_user = User.objects.get(username=username)
+                profile = profile_form.save(commit=False)
+                profile.user = user
+                profile.country = "US"
+                profile.save()
 
-            registered = True
-            
-            messages.info(request,'Welcome!')
+                registered = True
+                
+                messages.info(request,'Welcome!')
             return redirect('index')
         else:
             print(user_form.errors)

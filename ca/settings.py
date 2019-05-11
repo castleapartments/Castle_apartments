@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     "location",
     "apartments",
     "image",
-    "searchhistory"
+    "searchhistory",
+    "django_countries"
 ]
 
 MIDDLEWARE = [
