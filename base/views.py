@@ -24,6 +24,9 @@ from base.forms import UserForm, PersonForm, CardForm, ProfileForm
 def index(request):
     return render(request, "index.html")
 
+# ********************************
+# <--TEST - REMOVE IN CLEAN UP -->
+
 class PersonListView(ListView):
     model = Person
     context_object_name = 'people'
@@ -41,6 +44,9 @@ class CardCreateView(CreateView):
     model = Card
     fields = ('name',)
     success_url = reverse_lazy('card_list')    
+
+def singlecard(request):
+    return render(request, 'base/singlecard.html')
 
 class CardUpdateView(UpdateView):
     model = Card
@@ -65,6 +71,11 @@ class PersonAndCardListView(ListView):
         context['cards'] = Card.objects.all()
         # And so on for more models
         return context
+
+# <-- /TEST - REMOVE IN CLEAN UP -->
+# ********************************
+
+
 
 def forget_password(request):
     return redirect('/users/password_reset/')
