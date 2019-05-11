@@ -8,7 +8,8 @@ admin.autodiscover()
 import base.views
 from apartments.views import list_featured
 from base.views import PersonListView, PersonCreateView, PersonUpdateView,\
-        CardListView, CardUpdateView, CardCreateView, PersonAndCardListView, ProfileDetailView, UserListView, ProfileUpdateView
+        CardListView, CardUpdateView, CardCreateView, PersonAndCardListView,\
+        ProfileDetailView, UserListView, ProfileUpdateView, CreditCardCreateView
 
 urlpatterns = [
     path("", list_featured, name="index"),
@@ -24,6 +25,8 @@ urlpatterns = [
     path("profile/<int:pk>/edit", ProfileUpdateView.as_view(), name="userprofile_edit"),
 
     path("apartments/", include('apartments.urls')),
+
+    path("payment/", CreditCardCreateView.as_view(), name="payment_page"),
 
     path("admin/", admin.site.urls),
     path("pc/", PersonAndCardListView.as_view(),  name="pc_list"),

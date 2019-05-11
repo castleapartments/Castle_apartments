@@ -14,8 +14,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from base.models import Person, Card, UserProfile
-from base.forms import UserForm, PersonForm, CardForm, ProfileForm
+from base.models import Person, Card, UserProfile, UserCreditCard
+from base.forms import UserForm, PersonForm, CardForm, ProfileForm, CreditCardForm
 
 
 
@@ -71,6 +71,8 @@ class PersonAndCardListView(ListView):
         context['cards'] = Card.objects.all()
         # And so on for more models
         return context
+
+
 
 # <-- /TEST - REMOVE IN CLEAN UP -->
 # ********************************
@@ -145,41 +147,13 @@ def signup(request):
 def profile(request):
     return redirect('/profile/{}'.format(request.user.id))    
 
-"""
-@login_required
-def profile1(request):
-    if request.method == "POST":
-        profile_form = ProfileForm(data=request.POST)
-    return render(request, "profile.html", { 'form': profile_form })
 
-@login_required
-def profile(request):
-    if request.method == "POST":
-        profile_form = ProfileForm(data=request.POST)
-
-        if profile_form.is_valid():
-            
-            profile = profile_form.save(commit=False)
-            profile.user = request.user
-            profile.save()
-            
-            # Needs some box to notify that it was succesfully saved
-            messages.info(request,'Profile Saved!')
-            #return redirect('index')
-            return redirect('/profile/{}'.format(profile.id))
-            return HttpResponse(profile.user.username)
-        else:
-            
-            return HttpResponse(profile_form.errors)
-    else:
-        profile_form = ProfileForm()
-    return render(request, "profile_edit.html", { 'form': profile_form })
-"""
 class TestUserCanViewUser(UserPassesTestMixin):
     def test_func(self):
         if self.request.user.is_superuser or self.request.user.id == self.kwargs['pk']:
             return True
         raise PermissionDenied('Only Admins can view all users.')
+
 
 @method_decorator(login_required, name='dispatch')
 class ProfileUpdateView(TestUserCanViewUser, UpdateView):
@@ -191,26 +165,6 @@ class ProfileUpdateView(TestUserCanViewUser, UpdateView):
     def get_object(self):
         return UserProfile.objects.get(user_id=self.kwargs['pk'])
 
-#@login_required
-#def profile(request):
-#    if request.method == "POST":
-#        profile_form = ProfileForm(data=request.POST)
-#
-#        if profile_form.is_valid():
-#            
-#            profile = profile_form.save(commit=False)
-#            profile.user = request.user
-#            profile.save()
-#            
-#            # Needs some box to notify that it was succesfully saved
-#            messages.info(request,'Profile Saved!')
-#            return redirect('index')
-#        else:
-#            return HttpResponse(profile_form.errors)
-#    else:
-#        profile_form = ProfileForm()
-#    return render(request, "profile.html", { 'form': profile_form })
- 
 
 @method_decorator(login_required, name='dispatch')
 class ProfileDetailView(LoginRequiredMixin, TestUserCanViewUser, DetailView):
@@ -259,6 +213,12 @@ class UserListView(LoginRequiredMixin, TestUserIsSuper, ListView):
         context['profiles'] = UserProfile.objects.all()
         # And so on for more models
         return context
+
+class CreditCardCreateView(CreateView):
+    model = UserCreditCard
+    form_class = CreditCardForm
+    template_name = 'creditcard_details.html'
+    success_url = reverse_lazy('payment_page')     
 
 
 def test(request):

@@ -57,6 +57,7 @@ class CreditCardForm(forms.ModelForm):
     class Meta:
         model = UserCreditCard
         fields = ('credit_card_number', 'credit_card_provider', 'credit_card_security_number', 'credit_card_name_on_card','credit_card_expiry')
+        widgets = {'credit_card_expiry': forms.DateInput(attrs={'class': 'datetimepicker'})}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

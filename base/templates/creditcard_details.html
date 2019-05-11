@@ -13,7 +13,7 @@ Castle Apartments - Credit Card Details
     <div class="row">
         <div class="col-lg-8 col-md-10 ml-auto mr-auto">
             <div class="card card-login">
-                <form class="form" method="post" action="{% url 'creditcard' %}">
+                <form class="form" method="post" action="{% url 'payment_page' %}">
                     {% csrf_token %}
                     <div class="card-header card-header-primary text-center">
                         <h4 class="card-title">Payment Details</h4>
@@ -25,7 +25,7 @@ Castle Apartments - Credit Card Details
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <i class="fab fa-slack-hash"></i>
+                                            <i class="fas fa-credit-card"></i>
                                     </span>
                                     </div>
                                     {{ form.credit_card_number|as_crispy_field }}
@@ -36,7 +36,7 @@ Castle Apartments - Credit Card Details
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <i class="fab fa-slack-hash">mail</i>
+                                        <i class="fab fa-slack-hash"></i>
                                     </span>
                                     </div>
                                     
@@ -48,7 +48,7 @@ Castle Apartments - Credit Card Details
                                 <div class="input-group input-group-select">
                                     <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <i class="fab fa-slack-hash"></i>
+                                            <i class="fas fa-lock"></i>
                                     </span>
                                     </div>
                                     {{ form.credit_card_security_number|as_crispy_field }}
@@ -59,7 +59,7 @@ Castle Apartments - Credit Card Details
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <i class="fab fa-slack-hash"></i>
+                                        <i class="fas fa-user-circle"></i>
                                     </span>
                                     </div>
                                     
@@ -71,7 +71,7 @@ Castle Apartments - Credit Card Details
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <i class="fab fa-slack-hash"></i>
+                                        <i class="fas fa-calendar"></i>
                                     </span>
                                     </div>
                                     
@@ -88,6 +88,20 @@ Castle Apartments - Credit Card Details
         </div>
     </div>
 </div>
+
+<script>
+        $(document).ready(function() {
+          //init DateTimePickers
+          $('.datetimepicker').datetimepicker({
+                    format: 'L'
+                });
+          //materialKit.initFormExtendedDatetimepickers();
+
+        });
+    
+    
+
+      </script>
 {% endif %}
 
 {% endblock %}
