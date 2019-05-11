@@ -131,13 +131,6 @@ def signup(request):
 
     return render(request, "signup.html")
 
-class profileupdate(UpdateView):
-    model = UserProfile
-    form_class = ProfileForm
-    template_name = 'profile.html'
-    success_url = reverse_lazy('profile')  
-
-
 def profile(request):
     return redirect('/profile/{}'.format(request.user.id))    
 
