@@ -23,6 +23,7 @@ Castle Apartments - Profile
                         </div>
 
                         <div class="row">
+                            {% if userprofile.phone %}
                             <div class="col-md-12">  
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -40,6 +41,8 @@ Castle Apartments - Profile
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if userprofile.email %}
                             <div class="col-md-12"> 
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -57,6 +60,8 @@ Castle Apartments - Profile
                                     </div>                                    
                                 </div>    
                             </div>
+                            {% endif %}
+                            {% if userprofile.gender %}
                             <div class="col-md-12">  
                                 <div class="input-group input-group-select">
                                     <div class="input-group-prepend">
@@ -74,6 +79,8 @@ Castle Apartments - Profile
                                     </div>     
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if userprofile.ssn %}
                             <div class="col-md-12"> 
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -91,7 +98,8 @@ Castle Apartments - Profile
                                     </div>              
                                 </div>    
                             </div>
-
+                            {% endif %}
+                            {% if userprofile.street_name %}
                             <div class="col-md-12">  
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -109,6 +117,8 @@ Castle Apartments - Profile
                                     </div>                     
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if userprofile.street_number %}
                             <div class="col-md-12"> 
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -126,7 +136,8 @@ Castle Apartments - Profile
                                     </div>                   
                                 </div>  
                             </div>
-
+                            {% endif %}
+                            {% if userprofile.city %}
                             <div class="col-md-12">                                     
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -143,7 +154,9 @@ Castle Apartments - Profile
                                         </span>
                                     </div>    
                                 </div>
-                            </div>                                
+                            </div>
+                            {% endif %}
+                            {% if userprofile.postal_code %}                
                             <div class="col-md-12"> 
                                 <div class="input-group">
                                     <div class="input-group-prepend ">
@@ -160,7 +173,9 @@ Castle Apartments - Profile
                                         </span>
                                     </div>
                                 </div>
-                            </div>                        
+                            </div>
+                            {% endif %}
+                            {% if userprofile.country %} 
                             <div class="col-md-12"> 
                                 <div class="input-group">
                                     <div class="input-group-prepend ">
@@ -178,9 +193,10 @@ Castle Apartments - Profile
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
                         </div>
                         <div class="footer text-center">
-                            <input type="submit" class="btn btn-primary btn-link btn-wd btn-lg" name="" value="Edit profile">
+                            <a href="{{ request.path }}/edit"class="btn btn-primary btn-link btn-wd btn-lg">Edit profile</a>
                         </div>
                     </div>
             </div>
