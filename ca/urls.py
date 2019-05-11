@@ -34,5 +34,5 @@ urlpatterns = [
     path('people/', PersonListView.as_view(), name='person_list'),    
     path('people/add/', PersonCreateView.as_view(), name='person_add'),
     path('people/<int:pk>/edit/', PersonUpdateView.as_view(), name='person_edit'),
-    path("test/", base.views.test, name="test"),
+    path('avatar/', include('avatar.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
