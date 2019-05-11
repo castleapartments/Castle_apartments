@@ -13,7 +13,7 @@ Castle Apartments - Profile
     <div class="row">
         <div class="col-lg-8 col-md-10 ml-auto mr-auto">
             <div class="card card-login">
-                <form class="form" method="post" action="{% url 'profile' %}">
+                <form class="form" method="post" action="">
                     {% csrf_token %}
                     <div class="card-header card-header-primary text-center">
                         <h4 class="card-title">Profile</h4>
@@ -125,12 +125,10 @@ Castle Apartments - Profile
                                         <i class="fas fa-globe-europe"></i>
                                 </span>
                                 
-                                {% load countries %}
-                                {% get_countries as countries %}
                                 <select class="input-group-selection" id="country" name="country">
-                                {% for country in countries %}
-                                    <option value="{{ country.code }}">{{ country.name }}</option>
-                                {% endfor %}
+                                    <option value="">Country...</option>
+                                    <option value="1">country 2...</option>
+                                    <option value="2">country 1...</option>
                                 </select>
                             </div>
                         </div>

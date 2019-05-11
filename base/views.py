@@ -137,6 +137,11 @@ class profileupdate(UpdateView):
     template_name = 'profile.html'
     success_url = reverse_lazy('profile')  
 
+
+def profile(request):
+    return redirect('/profile/{}'.format(request.user.id))    
+
+"""
 @login_required
 def profile1(request):
     if request.method == "POST":
@@ -165,6 +170,13 @@ def profile(request):
     else:
         profile_form = ProfileForm()
     return render(request, "profile_edit.html", { 'form': profile_form })
+"""
+
+class ProfileUpdateView(UpdateView):
+    model = UserProfile
+    form_class = ProfileForm
+    template_name = 'base/profile_edit.html'
+    success_url = reverse_lazy('profile')    
 
 
 #@login_required

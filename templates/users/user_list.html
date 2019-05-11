@@ -17,16 +17,18 @@ Castle Apartments - All users
                     <div class="row">
                         {% for usr in users %}
                         <div class="col-lg-3 col-md-4 ml-auto mr-auto">
-                        <div class="card">
-                            <div class="card-header card-header-primary text-center">
-                                <h4 class="card-title">{{usr.first_name}} {{usr.last_name}}</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex justify-content-center profile-image">
-                                    <img src="http://www.facetheforce.today/random/200?{{usr.first_name}}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
+                            <a href="{%  url 'profile' %}{{usr.id}}">
+                                <div class="card">
+                                    <div class="card-header card-header-primary text-center">
+                                        <h4 class="card-title">{{usr.first_name}} {{usr.last_name}}</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-center profile-image">
+                                            <img src="http://www.facetheforce.today/random/200?{{usr.first_name}}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </a>
                     </div>
                         {% endfor %}
                     </div>
