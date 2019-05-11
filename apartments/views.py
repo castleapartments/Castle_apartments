@@ -4,10 +4,31 @@ from .models import Apartment
 from .forms import ApartmentForm
 
 
-def list(request):
-    apartments = Apartment.objects.all()
+class ApartmentListManager(object):
+    def get_all(self):
+        return Apartment.objects.all()
+
+    def get_featured(self):
+        all_apartments = self.get_all()
+        featured_apartments = [a for a in all_apartments if a.featured]
+        if len(featured_apartments) == 0:
+            return all_apartments[:6]
+        return featured_apartments
+
+
+apartment_manager = ApartmentListManager()
+
+
+def list_all(request):
     context = {
-        'apartments': apartments
+        'apartments': apartment_manager.get_all()
+    }
+    return render(request, 'apartments/list.html', context)
+
+
+def list_featured(request):
+    context = {
+        'apartments': apartment_manager.get_featured()
     }
     return render(request, 'apartments/list.html', context)
 
