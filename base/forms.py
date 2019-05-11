@@ -54,6 +54,17 @@ class PersonForm(forms.ModelForm):
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Save person'))
 
+class CreditCardForm(forms.ModelForm):
+    class Meta:
+        model = Person
+        fields = ('credit_card_number', 'credit_card_provider', 'credit_card_security_number', 'credit_card_name_on_card','credit_card_expiry')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Save creditcard'))
+
 class CardForm(forms.ModelForm):
     class Meta:
         model = Card
