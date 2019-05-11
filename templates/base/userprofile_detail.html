@@ -19,7 +19,8 @@ Castle Apartments - Profile
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-center profile-image">
-                            <img src="http://www.facetheforce.today/random/200" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
+                            {% load avatar_tags %}
+                            {% avatar user 200 class="img-raised rounded-circle img-fluid" id="user_avatar" %}
                         </div>
 
                         <div class="row">
