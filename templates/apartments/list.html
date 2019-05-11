@@ -5,13 +5,13 @@
   <div class="container">
     <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-4 text-center">
-            <a href="?by_price=true" class="btn btn-primary">By Price</a>
+            <a href="?order=price" class="btn btn-primary">By Price</a>
         </div>
         <div class="col-sm-6 col-md-6 col-lg-4 text-center">
-            <a href="?by_size=true" class="btn btn-primary">By Size</a>
+            <a href="?order=-size" class="btn btn-primary">By Size</a>
         </div>
         <div class="col-sm-6 col-md-6 col-lg-4 text-center">
-            <a href="?by_date=true" class="btn btn-primary">By Date</a>
+            <a href="?order=-approval_date" class="btn btn-primary">By Date</a>
         </div>
     </div>
     <div class="row">
@@ -29,9 +29,9 @@
               {% endif %}
               </div>
               <div class="card-body">
-                <h4>Price: <span class="card-text-bolder">{{ apartment.price }}</span></h4>
+                <h4>Price: <span class="card-text-bolder">{{ apartment.get_price }} ISK</span></h4>
                 <hr/>
-                <h4>Size: <span class="card-text-bolder">{{ apartment.size }} m²</span></h4>
+                <h4>Size: <span class="card-text-bolder">{{ apartment.get_type_display }} ({{ apartment.get_size_int }} m²)</span></h4>
                 <hr/>
 
                 <span class="badge badge-pill badge-secondary">Elevator</span>
@@ -50,6 +50,7 @@
                   <!--</div>-->
                 <!--</div>-->
                 <!--{% endif %}-->
+                <small class="text-muted">{{ apartment.age }} old</small>
               </div>
             </div>
           </a>
