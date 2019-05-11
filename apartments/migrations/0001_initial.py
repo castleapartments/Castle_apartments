@@ -27,7 +27,6 @@ class Migration(migrations.Migration):
                 ('price', models.IntegerField(default=0)),
                 ('approved', models.BooleanField(default=False)),
                 ('approval_date', models.DateTimeField(blank=True, null=True)),
-                ('featured', models.BooleanField(default=False)),
                 ('sold', models.BooleanField(default=False)),
                 ('sold_date', models.DateField(blank=True, null=True)),
                 ('photo_main', models.ImageField(blank=True, null=True, upload_to='')),
