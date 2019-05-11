@@ -5,20 +5,20 @@ Castle Apartments - All users
 {% endblock %}
 
 {% block content %}
-<div class="container">
-<div class="main">
+<div class="container  p-0 p-md-4">
+<div class="main p-0 p-md-4">
         <div class="section section-basic">
 
     <div class="row">
         <div class="col-md-12">
             
-            
+            <h2 class="title text-center">ALL USERS</h3>
                     {% if users %}
                     <div class="row">
                         {% for usr in users %}
                         <div class="col-lg-3 col-md-4 ml-auto mr-auto">
                             <a href="{%  url 'profile' %}{{usr.id}}">
-                                <div class="card">
+                                <div class="card p-2">
                                     <div class="card-header card-header-primary text-center">
                                         <h4 class="card-title">{{usr.first_name}} {{usr.last_name}}</h4>
                                     </div>

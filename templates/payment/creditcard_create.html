@@ -13,10 +13,10 @@ Castle Apartments - Credit Card Details
     <div class="row">
         <div class="col-lg-8 col-md-10 ml-auto mr-auto">
             <div class="card card-login">
-                <form class="form" method="post" action="{% url 'payment_page' %}">
+                <form class="form" method="post" action="">
                     {% csrf_token %}
                     <div class="card-header card-header-primary text-center">
-                        <h4 class="card-title">Payment Details</h4>
+                        <h4 class="card-title">Credit Card Details</h4>
                     </div>
                     <p class="description text-center">&nbsp;</p>
                     <div class="card-body">
@@ -93,7 +93,8 @@ Castle Apartments - Credit Card Details
         $(document).ready(function() {
           //init DateTimePickers
           $('.datetimepicker').datetimepicker({
-                    format: 'L'
+                    format: 'L',
+                    format: 'YYYY-MM-DD'
                 });
           //materialKit.initFormExtendedDatetimepickers();
 

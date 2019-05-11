@@ -214,12 +214,45 @@ class UserListView(LoginRequiredMixin, TestUserIsSuper, ListView):
         # And so on for more models
         return context
 
-class CreditCardCreateView(CreateView):
+
+
+def payment(request):
+    if UserCreditCard.objects.filter(user_id = request.user.id).exists():
+        return redirect('/payment/{}'.format(request.user.id))
+    else:
+        return redirect('/payment/add')
+
+@method_decorator(login_required, name='dispatch')
+class CreateCreditCardView(LoginRequiredMixin, CreateView):
     model = UserCreditCard
     form_class = CreditCardForm
-    template_name = 'creditcard_details.html'
-    success_url = reverse_lazy('payment_page')     
+    template_name = 'payment/creditcard_create.html'
+    success_url = reverse_lazy('payment_page')
+    
+    def form_valid(self, form):
+        print('test')
+        obj = form.save(commit=False)
+        obj.user = self.request.user
+        obj.save()
+        return redirect('/payment/')
 
+@method_decorator(login_required, name='dispatch')
+class ViewCreditCardView(LoginRequiredMixin, TestUserCanViewUser, DetailView):
+    model = UserCreditCard
+    template_name = 'payment/creditcard_details.html'
+
+    def get_object(self):        
+        return UserCreditCard.objects.get(user_id=self.kwargs['pk'])
+
+@method_decorator(login_required, name='dispatch')
+class UpdateCreditCardView(LoginRequiredMixin, TestUserCanViewUser, UpdateView):
+    model = UserCreditCard
+    form_class = CreditCardForm
+    template_name = 'payment/creditcard_create.html'
+    success_url = reverse_lazy('payment_page')   
+
+    def get_object(self):
+        return UserCreditCard.objects.get(user_id=self.kwargs['pk'])
 
 def test(request):
     current_user = request.user

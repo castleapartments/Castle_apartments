@@ -1,0 +1,122 @@
+{% extends "_base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+Castle Apartments - Credit Card Details
+{% endblock %}
+
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+            <div class="card card-login" id="profile-card">
+
+                    <div class="card-header card-header-primary text-center">
+                        <h4 class="card-title">Credit Card Details</h4>
+                    </div>
+                    <p class="description text-center">&nbsp;</p>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">  
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                            <i class="fas fa-credit-card"></i>
+                                    </span>
+                                    </div>
+                                    <div class="content">
+                                        <span class="input-content-title">
+                                    Credit card number:
+                                        </span>
+                                    <br><span class="input-content">
+                                    {{ usercreditcard.credit_card_number }}
+                                </span>
+                            </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12"> 
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fab fa-slack-hash"></i>
+                                    </span>
+                                    </div>
+                                    <div class="content">
+                                        <span class="input-content-title">
+                                    Credit card provider:
+                                        </span>
+                                    <br><span class="input-content">
+                                    {{ usercreditcard.credit_card_provider }}
+                                </span>
+                            </div>
+                                </div>    
+                            </div>
+
+                            <div class="col-md-12">  
+                                <div class="input-group input-group-select">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                            <i class="fas fa-lock"></i>
+                                    </span>
+                                    </div>
+                                    <div class="content">
+                                        <span class="input-content-title">
+                                    Security number:
+                                        </span>
+                                    <br><span class="input-content">
+                                    {{ usercreditcard.credit_card_security_number }}
+                                </span>
+                            </div>                                    
+                                </div>
+                            </div>
+                            <div class="col-md-12"> 
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-user-circle"></i>
+                                    </span>
+                                    </div>
+                                    <div class="content">
+                                        <span class="input-content-title">
+                                    Name on card:
+                                        </span>
+                                    <br><span class="input-content">
+                                    {{ usercreditcard.credit_card_name_on_card }}
+                                </span>
+                            </div>
+                                </div>    
+                            </div>
+
+                            <div class="col-md-12">  
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-calendar"></i>
+                                    </span>
+                                    </div>
+                                    <div class="content">
+                                        <span class="input-content-title">
+                                    Expiry date:
+                                        </span>
+                                    <br><span class="input-content">
+                                    {{ usercreditcard.credit_card_expiry }}
+                                </span>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer text-center">
+                        <a class="btn btn-primary btn-link btn-wd btn-lg" href="/payment/{{usercreditcard.user_id}}/edit">Edit Card details</a>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock %}

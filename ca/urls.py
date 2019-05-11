@@ -9,7 +9,8 @@ import base.views
 from apartments.views import list_featured
 from base.views import PersonListView, PersonCreateView, PersonUpdateView,\
         CardListView, CardUpdateView, CardCreateView, PersonAndCardListView,\
-        ProfileDetailView, UserListView, ProfileUpdateView, CreditCardCreateView
+        ProfileDetailView, UserListView, ProfileUpdateView, CreateCreditCardView,\
+        ViewCreditCardView, UpdateCreditCardView
 
 urlpatterns = [
     path("", list_featured, name="index"),
@@ -26,7 +27,10 @@ urlpatterns = [
 
     path("apartments/", include('apartments.urls')),
 
-    path("payment/", CreditCardCreateView.as_view(), name="payment_page"),
+    path("payment/", base.views.payment, name="payment_page"),
+    path("payment/add", CreateCreditCardView.as_view(), name="create_payment_page"),
+    path("payment/<int:pk>", ViewCreditCardView.as_view(), name="view_payment_page"),
+    path("payment/<int:pk>/edit", UpdateCreditCardView.as_view(), name="view_payment_page"),
 
     path("admin/", admin.site.urls),
     path("pc/", PersonAndCardListView.as_view(),  name="pc_list"),
