@@ -4,9 +4,20 @@
 <div class="album py-5" style="min-height: 100vh;">
   <div class="container">
     <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-4 text-center">
+            <a href="?by_price=true" class="btn btn-primary">By Price</a>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-4 text-center">
+            <a href="?by_size=true" class="btn btn-primary">By Size</a>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-4 text-center">
+            <a href="?by_date=true" class="btn btn-primary">By Date</a>
+        </div>
+    </div>
+    <div class="row">
       {% for apartment in apartments %}
         <div class="col-sm-6 col-md-6 col-lg-4">
-          <a href="#">
+          <a href="{% url 'view_apartment' apartment.apartment_id %}">
             <div class="card mb-4 shadow-sm">
               <div class="card-header card-header-primary text-center ch-fix">
                 <h6 class="card-title ct-fix">{{ apartment }}</h6>
@@ -44,8 +55,35 @@
           </a>
         </div>
       {% empty %}
-        <p>No meet the search criteria!</p>
+        <div class="card text-center">
+            <h1>No apartments meet the search criteria!</h1>
+        </div>
       {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+        {% if apartments.has_other_pages %}
+            <ul class="pagination">
+            {% if apartments.has_previous %}
+                <li class="page-item"><a href="?page={{apartments.previous_page_number}}" class="page-link">Previous</a></li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link">Previous</a></li>
+            {% endif %}
+           {% for page_number in apartments.paginator.page_range %}
+                {% if apartments.number == page_number %}
+                <li class="page-item active"><a class="page-link">{{ page_number }}</a></li>
+                {% else %}
+                <li class="page-item"><a href="?page={{ page_number }}" class="page-link">{{ page_number }}</a></li>
+                {% endif %}
+           {% endfor %}
+            {% if apartments.has_next %}
+                <li class="page-item"><a href="?page={{apartments.next_page_number}}" class="page-link">Next</a></li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link">Next</a></li>
+            {% endif %}
+            </ul>
+        {% endif %}
+        </div>
     </div>
   </div>
 </div>
