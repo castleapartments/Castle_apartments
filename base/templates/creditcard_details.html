@@ -1,0 +1,93 @@
+{% extends "_base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Castle Apartments - Credit Card Details
+{% endblock %}
+
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 ml-auto mr-auto">
+            <div class="card card-login">
+                <form class="form" method="post" action="{% url 'creditcard' %}">
+                    {% csrf_token %}
+                    <div class="card-header card-header-primary text-center">
+                        <h4 class="card-title">Payment Details</h4>
+                    </div>
+                    <p class="description text-center">&nbsp;</p>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">  
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fab fa-slack-hash"></i>
+                                    </span>
+                                    </div>
+                                    {{ form.credit_card_number|as_crispy_field }}
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fab fa-slack-hash">mail</i>
+                                    </span>
+                                    </div>
+                                    
+                                    {{ form.credit_card_provider|as_crispy_field }}
+                                </div>    
+                            </div>
+
+                            <div class="col-md-6">  
+                                <div class="input-group input-group-select">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fab fa-slack-hash"></i>
+                                    </span>
+                                    </div>
+                                    {{ form.credit_card_security_number|as_crispy_field }}
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fab fa-slack-hash"></i>
+                                    </span>
+                                    </div>
+                                    
+                                    {{ form.credit_card_name_on_card|as_crispy_field }}
+                                </div>    
+                            </div>
+
+                            <div class="col-md-6">  
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fab fa-slack-hash"></i>
+                                    </span>
+                                    </div>
+                                    
+                                    {{ form.credit_card_expiry|as_crispy_field }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer text-center">
+                        <input type="submit" class="btn btn-primary btn-link btn-wd btn-lg" name="" value="Update Creditcard">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
