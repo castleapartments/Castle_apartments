@@ -61,23 +61,35 @@ ROOMS_RANGE = [
 
 
 class SearchResultsBuilder(object):
-    def __init__(self, search_dict):
-        self._search_dict = dict(search_dict)
-        del self._search_dict['csrfmiddlewaretoken']
+    def __init__(self, search):
+        self._search = search
+        self._types = self._search.getlist('types')
+        self._countries = self._search.getlist('country')
+        self._cities = self._search.getlist('city')
 
-    def _has_attribute(self, attribute_name):
-        return attribute_name in self._search_dict.keys()
-
-    def _get_attribute_value_as_int(self, attribute_name):
-        return int(self._search_dict[attribute_name][0])
-
-    def has_types(self):
-        return 'types' in self._search_dict.keys()
+    def filter_location(self, results):
+        if self._countries:
+            query = None
+            for country in self._countries:
+                if query is None:
+                    query = Q(country=country)
+                else:
+                    query = query | Q(country=country)
+            results = results.filter(query)
+        if self._cities:
+            query = None
+            for city in self._cities:
+                if query is None:
+                    query = Q(city=city)
+                else:
+                    query = query | Q(city=city)
+            results = results.filter(query)
+        return results
 
     def filter_types(self, results):
-        if self._has_attribute('types'):
+        if self._types:
             query = None
-            for type in self._search_dict['types']:
+            for type in self._types:
                 if query is None:
                     query = Q(type=type)
                 else:
@@ -86,47 +98,49 @@ class SearchResultsBuilder(object):
         return results
 
     def filter_price(self, results):
-        if self._has_attribute('lower_price'):
-            value = self._get_attribute_value_as_int('lower_price')
+        if 'lower_price' in self._search:
+            value = int(self._search.get('lower_price'))
             results = results.filter(Q(price__gte=value))
-        if self._has_attribute('upper_price'):
-            value = self._get_attribute_value_as_int('upper_price')
+        if 'upper_price' in self._search:
+            value = int(self._search.get('upper_price'))
             results = results.filter(Q(price__lte=value))
         return results
 
     def filter_size(self, results):
-        if self._has_attribute('lower_size'):
-            value = self._get_attribute_value_as_int('lower_size')
+        if 'lower_size' in self._search:
+            value = int(self._search.get('lower_size'))
             results = results.filter(Q(size__lte=value))
-        if self._has_attribute('upper_size'):
-            value = self._get_attribute_value_as_int('upper_size')
+        if 'upper_size' in self._search:
+            value = int(self._search.get('upper_size'))
             results = results.filter(Q(size__lte=value))
         return results
 
     def filter_rooms(self, results):
-        if self._has_attribute('lower_rooms'):
-            value = self._get_attribute_value_as_int('lower_rooms')
+        if 'lower_rooms' in self._search:
+            value = int(self._search.get('lower_rooms'))
             results = results.filter(Q(rooms__lte=value))
-        if self._has_attribute('upper_rooms'):
-            value = self._get_attribute_value_as_int('upper_rooms')
+        if 'upper_rooms' in self._search:
+            value = int(self._search.get('upper_rooms'))
             results = results.filter(Q(rooms__lte=value))
         return results
 
     def filter_street(self, results):
-        if self._has_attribute('street'):
-            value = self._search_dict['street'][0]
-            results = results.filter(Q(street_name__iexact=value))
+        if 'street' in self._search:
+            value = self._search.get('street')
+            if len(value) > 0:
+                results = results.filter(Q(street_name__iexact=value))
         return results
 
     def filter_description(self, results):
-        if self._has_attribute('description'):
-            value = self._search_dict['description'][0]
-            results = results.filter(Q(description__iexact=value))
+        if 'description' in self._search:
+            value = self._search.get('description')
+            if len(value) > 0:
+                results = results.filter(Q(description__iexact=value))
         return results
 
     def filter_age(self, results):
-        if self._has_attribute('age'):
-            value = self._search_dict['age'][0]
+        if 'age' in self._search:
+            value = self._search.get('age')
             if value == '1_day':
                 one_day_ago = datetime.now() - timedelta(days=1)
                 results = results.filter(Q(approval_date__gte=one_day_ago))
@@ -134,8 +148,6 @@ class SearchResultsBuilder(object):
                 one_week_ago = datetime.now() - timedelta(days=7)
                 results = results.filter(Q(approval_date__gte=one_week_ago))
         return results
-
-    # 'types': ['farm_house', 'stable', 'garage'], 'price_from': ['10000000'], 'price_to': ['25000000'], 'address': ['asdf'], 'date': ['any']}>
 
 
 class ApartmentManager(object):
@@ -169,6 +181,7 @@ class ApartmentManager(object):
     def get_search_results(self, search_dict, page):
         search = SearchResultsBuilder(search_dict)
         apartments = self._get_all()
+        apartments = search.filter_location(apartments)
         apartments = search.filter_types(apartments)
         apartments = search.filter_price(apartments)
         apartments = search.filter_size(apartments)
@@ -177,6 +190,20 @@ class ApartmentManager(object):
         apartments = search.filter_street(apartments)
         apartments = search.filter_description(apartments)
         return self._page(apartments, page)
+
+    def build_country_city_dict(self):
+        all_apartments = self._get_all()
+        all_countries = set([a.country for a in all_apartments])
+        country_city_dict = dict(((c, set()) for c in all_countries))
+
+        for country, cities in country_city_dict.items():
+            for apartment in all_apartments:
+                if apartment.country == country:
+                    cities.add(apartment.city)
+
+        return country_city_dict
+
+
 
 
 apartment_manager = ApartmentManager()
@@ -194,27 +221,22 @@ def list_featured(request):
 
 
 def search(request):
+    context = {
+        'search_country_cites': apartment_manager.build_country_city_dict(),
+        'search_types'        : Apartment.TYPE_CHOICES,
+        'search_prices'       : PRICE_RANGE,
+        'search_sizes'        : SIZE_RANGE,
+        'search_rooms'        : ROOMS_RANGE,
+        'search_results'      : False,
+    }
+
     page = request.GET.get('page')
     if request.method == "POST":
-        apartments = apartment_manager.get_search_results(request.POST, page)
-        context = {
-            'search_types'       : Apartment.TYPE_CHOICES,
-            'search_prices'      : PRICE_RANGE,
-            'search_sizes'       : SIZE_RANGE,
-            'search_rooms'       : ROOMS_RANGE,
-            'search_results'     : True,
-            'apartments'         : apartments,
-        }
+        context['search_results'] = True
+        context['apartments'] = apartment_manager.get_search_results(request.POST, page)
         return render(request, 'apartments/search.html', context)
 
-    context = {
-        'search_types'       : Apartment.TYPE_CHOICES,
-        'search_prices'      : PRICE_RANGE,
-        'search_sizes'       : SIZE_RANGE,
-        'search_rooms'       : ROOMS_RANGE,
-        'search_results'     : False,
-        'apartments'         : apartment_manager.get_featured(page),
-    }
+    context['apartments'] = apartment_manager.get_featured(page)
     return render(request, 'apartments/search.html', context)
 
 

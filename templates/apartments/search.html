@@ -22,40 +22,28 @@
                             <h3>Location</h3>
                         </div>
                         <div class="search-location-space">
+                            {% for country, cities in search_country_cites.items %}
                             <div class="form-check">
                                 <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" id="capital" value="" data-toggle="collapse" data-target="#capital-options" aria-expanded="false" aria-controls="capital-options"> Capital Region
+                                <input class="form-check-input" type="checkbox" name="country" value="{{ country }}" data-toggle="collapse" data-target="#{{ country }}" aria-expanded="false">{{ country }}
                                 <span class="form-check-sign">
                                 <span class="check"></span>
                                 </span>
                                 </label>
                             </div>
-                            <div class="form-group-1 pl-3 collapse" id="capital-options">
+                            <div class="form-group-1 pl-3 collapse" id="{{ country }}">
+                                {% for city in cities %}
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" value=""> Capital Region 1
+                                    <input class="form-check-input" type="checkbox" name="city" value="{{ city }}">{{ city }}
                                     <span class="form-check-sign">
                                       <span class="check"></span>
                                     </span>
                                     </label>
                                 </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" value=""> Capital Region 2
-                                    <span class="form-check-sign">
-                                      <span class="check"></span>
-                                    </span>
-                                    </label>
-                                </div>
+                                {% endfor %}
                             </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" value=""> Type2
-                                <span class="form-check-sign">
-                                <span class="check"></span>
-                                </span>
-                                </label>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
 
