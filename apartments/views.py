@@ -54,7 +54,8 @@ def list_featured(request):
 
 
 def search(request):
-    return render(request, 'apartments/search.html')
+    page = request.GET.get('page')
+    return render(request, 'apartments/search.html', {'featured_apartments': apartment_manager.get_featured(page)})
 
 
 def view(request, apartment_id):
