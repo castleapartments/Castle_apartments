@@ -10,9 +10,8 @@ class Apartment(models.Model):
     apartment_id = models.AutoField(primary_key=True)
     add_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
-    # owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT)
-    # owner = models.OneToOneField(User, null=True, blank=True, on_delete=models.PROTECT)
-    # realtor = models.OneToOneField(User, null=True, blank=True, on_delete=models.PROTECT)
+    owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT)
+    realtor = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT, related_name='+')
 
     street_name = models.CharField(max_length=100, default='')
     street_number = models.CharField(max_length=10, default='')
