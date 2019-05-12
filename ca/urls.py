@@ -2,6 +2,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 
 admin.autodiscover()
 
@@ -17,6 +18,8 @@ urlpatterns = [
     path("login/", base.views.user_login, name="login"),
     
     path("forget_password/", base.views.forget_password, name="forget_password"),
+    #path("change_password/", auth_views.PasswordChangeForm, name='change_password'),
+    path('change_password/', auth_views.PasswordChangeView.as_view(), name='change_password'),
     path("logout/", base.views.user_logout, name="logout"),
     path("signup/", base.views.signup, name="signup"),
     path('users/', include('django.contrib.auth.urls')),
