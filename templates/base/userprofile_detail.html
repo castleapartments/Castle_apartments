@@ -19,8 +19,7 @@ Castle Apartments - Profile
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-center profile-image">
-                            {% load avatar_tags %}
-                            {% avatar user 200 class="img-raised rounded-circle img-fluid" id="user_avatar" %}
+                                <img src="{{ userprofile.photo_main.url }}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
                         </div>
 
                         <div class="row">

@@ -13,7 +13,7 @@ Castle Apartments - Profile
     <div class="row">
         <div class="col-lg-8 col-md-10 ml-auto mr-auto">
             <div class="card card-login">
-                <form class="form" method="post" action="">
+                <form class="form" enctype="multipart/form-data" method="post" action="">
                     {% csrf_token %}
                     <div class="card-header card-header-primary text-center">
                         <h4 class="card-title">Profile</h4>
@@ -21,7 +21,8 @@ Castle Apartments - Profile
                     <p class="description text-center">&nbsp;</p>
                     <div class="card-body">
                         <div class="d-flex justify-content-center profile-image">
-                            <img src="{{ form.photo_main.image.url }}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
+
+                            <img src="{{ userprofile.photo_main.url }}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
                             <br>
                             <p> : {{ form.photo_main }}</p>
                             
