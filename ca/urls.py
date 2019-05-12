@@ -7,14 +7,14 @@ from django.contrib.auth import views as auth_views
 admin.autodiscover()
 
 import base.views
-from apartments.views import list_featured
+from apartments.views import search
 from base.views import PersonListView, PersonCreateView, PersonUpdateView,\
         CardListView, CardUpdateView, CardCreateView, PersonAndCardListView,\
         ProfileDetailView, UserListView, ProfileUpdateView, CreateCreditCardView,\
         ViewCreditCardView, UpdateCreditCardView
 
 urlpatterns = [
-    path("", list_featured, name="index"),
+    path("", search, name="index"),
     path("login/", base.views.user_login, name="login"),
     
     path("forget_password/", base.views.forget_password, name="forget_password"),
