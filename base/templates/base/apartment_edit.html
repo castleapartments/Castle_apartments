@@ -10,7 +10,7 @@ Create / Edit Apartment
 <div class="container">
   <div class="row">
     <div class="col-md-12 p-0 p-md-1">
-      <div class="card m-0 p-3 p-md-3 ">
+      <div class="card m-0 p-3 p-sm-2 p-md-4 ">
         <div class="card-header card-header-primary text-center">
           <h4 class="card-title">APARTMENT </h4>
         </div>
@@ -141,27 +141,104 @@ Create / Edit Apartment
                 <option>5</option>
               </select>
             </div>
-          </div>
-          <div class="col-md-3">
-            <div class="input-group">  
-              <div class="form-group bmd-form-group is-filled">
-                <label for="id_search" class="col-form-label bmd-label-floating">
-                    Address
+            <div class="form-group">
+                <label for="baths" class="col-form-label bmd-label-static">
+                    Bathrooms
                 </label>
-                <input id="id_search" class="textinput textInput form-control" type="text" value=""> 
+                <select class="form-control search-select" id="baths">
+                  <option>Bathrooms:</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
               </div>
-            </div>
           </div>
-          <div class="col-md-3">
-            <div class="input-group">  
-              <div class="form-group bmd-form-group is-filled">
-                <label for="id_search" class="col-form-label bmd-label-floating">
-                    Address
-                </label>
-                <input id="id_search" class="textinput textInput form-control" type="text" value=""> 
+          <div class="col-md-6">
+            <div class="row">
+              <dic class="col-md-12">
+                  <div class="form-group" style="padding-top:0px;">
+                      <label for="exampleMessage" class="bmd-label-static" style="position: relative">Description</label>
+                      <textarea type="text" class="form-control" rows="6" id="exampleMessage"></textarea>
+                    </div>
+              </dic>
+          <div class="col-md-4">
+              <div class="title"  style="margin-top: 0px;">
+                  <h3 style="margin-top: 0px;">Features</h3>
               </div>
-            </div>
+              <div class="apartment_features">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" value=""> Type1
+                    <span class="form-check-sign">
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" value=""> Type2
+                    <span class="form-check-sign">
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" value=""> Type3
+                    <span class="form-check-sign">
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" value=""> Type4
+                    <span class="form-check-sign">
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" value=""> Type5
+                    <span class="form-check-sign">
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                </div>
+              </div>
           </div>
+          <div class="col-md-8">
+            <div class="title"  style="margin-top: 0px;">
+              <h3 style="margin-top: 0px;">Photos</h3>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-upload"></i> Upload</button>                
+          
+          <div class="title"  style="margin-top: 0px;">
+              <h3 style="margin-top: 0px;">Settings</h3>
+            </div>
+            <div class="">
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="checkbox" value=""> Submit
+                      <span class="form-check-sign">
+                        <span class="check"></span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline" style="margin-right:15px;">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" value=""> For sale
+                        <span class="form-check-sign">
+                          <span class="check"></span>
+                        </span>
+                      </label>
+                    </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg search_submit" style="width:100%"><i class="fas fa-save"></i> Save Apartment</button>                
+          </div>
+        </div></div>
         </div>
 
         <div class="footer text-center">   

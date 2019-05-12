@@ -293,7 +293,7 @@ body {
 .main-search .is-focused .bmd-label-floating, .main-search .is-filled .bmd-label-floating  {
     top:-1rem;
 }
-#search_submit {
+#search_submit, .search_submit {
     width:100%; 
     margin-top:45px;
 }
@@ -302,7 +302,7 @@ body {
         height: auto;
         overflow: hidden !important;
     }
-    #search_submit {
+    #search_submit, .search_submit {
         margin-bottom:25px;
     }
 }
