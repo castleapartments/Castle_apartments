@@ -264,6 +264,8 @@ body {
     -moz-appearance: menulist !important;
     appearance: menulist !important;
     background-image: none !important;
+    border-radius:5px;
+    padding:7px;
 }
 
 .main-search .title {
@@ -286,4 +288,11 @@ body {
 }
 .main-search .is-focused .bmd-label-floating, .main-search .is-filled .bmd-label-floating  {
     top:-1rem;
+}
+@media (max-width: 575px) {
+    .search-location-space {
+        height: auto;
+        overflow: hidden !important;
+    }
+    
 }
