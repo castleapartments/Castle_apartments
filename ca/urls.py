@@ -41,6 +41,7 @@ urlpatterns = [
     path('cards/single', base.views.singlecard, name="singlecard"),
     path('cards/list', base.views.apartmentlist, name="apartmentlist"),
     path('cards/search', base.views.apartmentsearch, name="apartmentsearch"),
+    path('cards/edit', base.views.apartmentedit, name="apartmentedit"),
     path('cards/', CardListView.as_view(), name='card_list'),
     path('cards/<int:pk>/edit/', CardUpdateView.as_view(), name='card_edit'),
     path('cards/add', CardCreateView.as_view(), name='card_add'),
