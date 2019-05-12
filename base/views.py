@@ -49,6 +49,9 @@ class CardCreateView(CreateView):
 def singlecard(request):
     return render(request, 'base/singlecard.html')
 
+def apartmentlist(request):
+    return render(request, 'base/apartment_list.html')
+
 class CardUpdateView(UpdateView):
     model = Card
     form_class = CardForm
