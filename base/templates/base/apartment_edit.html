@@ -10,7 +10,7 @@ Create / Edit Apartment
 <div class="container">
   <div class="row">
     <div class="col-md-12 p-0 p-md-1">
-      <div class="card m-0 p-3 p-md-3 main-search">
+      <div class="card m-0 p-3 p-md-3 ">
         <div class="card-header card-header-primary text-center">
           <h4 class="card-title">APARTMENT </h4>
         </div>
@@ -18,14 +18,25 @@ Create / Edit Apartment
      
         <div class="row">
           <div class="col-md-3">
+
             <div class="input-group">  
               <div class="form-group bmd-form-group is-filled">
-                <label for="id_search" class="col-form-label bmd-label-floating">
+                <label for="id_search" class="col-form-label bmd-label-static">
                     Address
                 </label>
                 <input id="id_search" class="textinput textInput form-control" type="text" value=""> 
               </div>
             </div>
+
+            <div class="input-group">  
+              <div class="form-group bmd-form-group is-filled">
+                <label for="str_num" class="col-form-label bmd-label-static">
+                    Street number
+                </label>
+                <input id="str_num" class="textinput textInput form-control" type="text" value=""> 
+              </div>
+            </div>
+  
 
             <div class="form-group">
               <label for="country" class="col-form-label bmd-label-static">
@@ -68,13 +79,67 @@ Create / Edit Apartment
 
           </div>
           <div class="col-md-3">
-            <div class="input-group">  
-              <div class="form-group bmd-form-group is-filled">
-                <label for="id_search" class="col-form-label bmd-label-floating">
-                    Address
-                </label>
-                <input id="id_search" class="textinput textInput form-control" type="text" value=""> 
-              </div>
+            <div class="form-group">
+
+                <div class="input-group">  
+                    <div class="form-group bmd-form-group is-filled">
+                      <label for="price" class="col-form-label bmd-label-static">
+                          Price
+                      </label>
+                      <input id="price" class="textinput textInput form-control" type="text" value=""> 
+                    </div>
+                  </div>
+      
+                  <div class="input-group">  
+                    <div class="form-group bmd-form-group is-filled">
+                      <label for="size" class="col-form-label bmd-label-static">
+                          Size
+                      </label>
+                      <input id="size" class="textinput textInput form-control" type="text" value=""> 
+                    </div>
+                  </div>
+
+              <label for="id_type" class="col-form-label bmd-label-static">
+                  Type
+              </label>
+              <select class="form-control search-select" name="type" id="id_type">
+                <option value="" selected="">Type</option>
+
+                <option value="apartment">Apartment</option>
+              
+                <option value="town_house">Town House</option>
+              
+                <option value="single_family">Single Family House</option>
+              
+                <option value="detached">Detached</option>
+              
+                <option value="summer_house">Summer House</option>
+              
+                <option value="farm_house">Farm House</option>
+              
+                <option value="stable">Stable</option>
+              
+                <option value="garage">Garage</option>
+              
+                <option value="plot">Plot</option>
+              
+                <option value="commercial">Commercial</option>
+              
+                <option value="other">Other</option>
+              
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="rooms" class="col-form-label bmd-label-static">
+                  Rooms
+              </label>
+              <select class="form-control search-select" id="rooms">
+                <option>rooms:</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
             </div>
           </div>
           <div class="col-md-3">
