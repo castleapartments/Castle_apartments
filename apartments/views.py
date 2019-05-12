@@ -159,20 +159,25 @@ class ApartmentManager(object):
         paginator = Paginator(apartments, APARTMENTS_PER_PAGE)
         return paginator.get_page(page)
 
-    def _get_all(self):
-        return Apartment.objects.all().filter(approved=True)
+    @staticmethod
+    def _get_all():
+        return Apartment.objects.all()
+
+    def _get_approved(self):
+        return self._get_all().filter(approved=True)
 
     def get_all(self, page, order='-approval_date'):
-        apartments = self._get_all().order_by(order)
+        apartments = self._get_approved().order_by(order)
         return self._page(apartments, page)
 
     def get_featured(self, page):
-        featured_apartments = self._get_all().filter(featured=True)
+        featured_apartments = self._get_approved().filter(featured=True)
         if len(featured_apartments) > 0:
             return self._page(featured_apartments, page)
         return self.get_all(page)
 
-    def get_apartment_by_id(self, apartment_id):
+    @staticmethod
+    def get_apartment_by_id(apartment_id):
         try:
             return Apartment.objects.get(apartment_id=apartment_id)
         except ObjectDoesNotExist:
@@ -180,7 +185,7 @@ class ApartmentManager(object):
 
     def get_search_results(self, search_dict, page):
         search = SearchResultsBuilder(search_dict)
-        apartments = self._get_all()
+        apartments = self._get_approved()
         apartments = search.filter_location(apartments)
         apartments = search.filter_types(apartments)
         apartments = search.filter_price(apartments)
@@ -192,7 +197,7 @@ class ApartmentManager(object):
         return self._page(apartments, page)
 
     def build_country_city_dict(self):
-        all_apartments = self._get_all()
+        all_apartments = self._get_approved()
         all_countries = set([a.country for a in all_apartments])
         country_city_dict = dict(((c, set()) for c in all_countries))
 
@@ -203,6 +208,8 @@ class ApartmentManager(object):
 
         return country_city_dict
 
+    def get_owners_apartments(self, owner):
+        return self._get_all().filter(owner=owner)
 
 
 
@@ -287,4 +294,8 @@ def add(request):
 
 @login_required
 def my(request):
-    return render(request, 'apartments/my.html')
+    owner = request.user
+    context = {
+        'your_apartments': apartment_manager.get_owners_apartments(owner)
+    }
+    return render(request, 'apartments/my.html', context)

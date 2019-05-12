@@ -56,6 +56,14 @@ class Apartment(models.Model):
         return f'{self.street_name} {self.street_number} - {self.postcode} {self.city}'
 
     @property
+    def address(self):
+        return f'{self.street_name} {self.street_number}'
+
+    @property
+    def location(self):
+        return f'{self.postcode} {self.city} ({self.country})'
+
+    @property
     def short_description(self):
         if len(self.description) > 150:
             return self.description[:147] + '...'
@@ -80,6 +88,14 @@ class Apartment(models.Model):
 
     def get_size_int(self):
         return int(self.size)
+
+    @property
+    def status(self):
+        if self.sold:
+            return 'Sold'
+        if self.approved:
+            return 'Approved'
+        return 'Pending Approval'
 
 
 class ApartmentImages(models.Model):

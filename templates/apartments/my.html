@@ -11,194 +11,63 @@
                 </div>
 
                 <!--TOP MENU-->
-                <div class="d-flex justify-content-center" style="margin-top:20px;">
-                    <ul class="nav nav-pills nav-pills-icons" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active show" href="#apartments-1" role="tab" data-toggle="tab" aria-selected="true">
-                                <i class="fas fa-home"></i> Portfolio
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#apartments-2" role="tab" data-toggle="tab" aria-selected="false">
-                                <i class="fas fa-shopping-basket"></i> For sale
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#apartments-3" role="tab" data-toggle="tab" aria-selected="false">
-                                <i class="fas fa-dollar-sign"></i> Sold
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <!--<div class="d-flex justify-content-center" style="margin-top:20px;">-->
+                    <!--<ul class="nav nav-pills nav-pills-icons" role="tablist">-->
+                        <!--<li class="nav-item">-->
+                            <!--<a class="nav-link active show" href="#apartments-1" role="tab" data-toggle="tab" aria-selected="true">-->
+                                <!--<i class="fas fa-home"></i> Portfolio-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li class="nav-item">-->
+                            <!--<a class="nav-link" href="#apartments-2" role="tab" data-toggle="tab" aria-selected="false">-->
+                                <!--<i class="fas fa-shopping-basket"></i> For sale-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li class="nav-item">-->
+                            <!--<a class="nav-link" href="#apartments-3" role="tab" data-toggle="tab" aria-selected="false">-->
+                                <!--<i class="fas fa-dollar-sign"></i> Sold-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
 
-
-
-                <div class="tab-content tab-space">
-                <div class="tab-pane active show" id="apartments-1">
                 <div class="title">
-                <h2>Property portfolio USER</h2>
+                    <h2>Your Apartments</h2>
                 </div>
                 <table class="table table-striped table-hover table-responsive-sm">
-                <thead>
-                <tr>
-                <th scope="col">#</th>
-                <th scope="col">Address</th>
-                <th scope="col">Zip - City</th>
-                <th scope="col">Status</th>
-                <th scope="col">Actions</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                <th class="align-middle" scope="row">1</th>
-                <td class="align-middle">Las Vegas Blvd 3535 </td>
-                <td class="align-middle">89129 Las Vegas</td>
-                <td class="align-middle"><span class="badge badge-pill badge-warning">Pending</span></td>
-                <td>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-shopping-cart"></i> View</button>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button>
-                </td>
-                </tr>
-                <tr>
-                <th class="align-middle" scope="row">1</th>
-                <td class="align-middle">Las Vegas Blvd 3535 </td>
-                <td class="align-middle">89129 Las Vegas</td>
-                <td class="align-middle"><span class="badge badge-pill badge-danger">Not submited</span></td>
-                <td>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-shopping-cart"></i> View</button>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button>
-                </td>
-                </tr>
-                <tr>
-                <th class="align-middle" scope="row">1</th>
-                <td class="align-middle">Reynimelur 57 </td>
-                <td class="align-middle">107 Reykjavik</td>
-                <td class="align-middle"><span class="badge badge-pill badge-warning">Pending</span></td>
-                <td>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-shopping-cart"></i> View</button>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button>
-                </td>
-                </tr>
-                <tr>
-                <th class="align-middle" scope="row">1</th>
-                <td class="align-middle">Krummahólar 3 </td>
-                <td class="align-middle">111 Reykjavik</td>
-                <td class="align-middle"><span class="badge badge-pill badge-success ">Aproved</span></td>
-                <td>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-shopping-cart"></i> View</button>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button>
-                </td>
-                </tr>
-                </tbody>
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for apartment in your_apartments %}
+                        <tr>
+                            <th class="align-middle" scope="row">{{ apartment.apartment_id }}</th>
+                            <td class="align-middle">{{ apartment.address }}</td>
+                            <td class="align-middle">{{ apartment.location }}</td>
+                            {% if apartment.status == 'Sold' %}
+                            <td class="align-middle"><span class="badge badge-pill badge-danger">{{ apartment.status }}</span></td>
+                            {% elif apartment.status == 'Approved' %}
+                            <td class="align-middle"><span class="badge badge-pill badge-success ">{{ apartment.status }}</span></td>
+                            {% else %}
+                            <td class="align-middle"><span class="badge badge-pill badge-warning">{{ apartment.status }}</span></td>
+                            {% endif %}
+                            <td>
+                                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-shopping-cart"></i> View</button>
+                                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
-                </div>
-                <div class="tab-pane" id="apartments-2">
-                <div class="title">
-                <h2>For Sale portfolio USER</h2>
-                </div>
-                <table class="table table-striped table-hover table-responsive-sm">
-                <thead>
-                <tr>
-                <th scope="col">#</th>
-                <th scope="col">Address</th>
-                <th scope="col">Zip - City</th>
-                <th scope="col">Status</th>
-                <th scope="col">Actions</th>
-                </tr>
-                </thead>
 
-                <tbody>
-                <tr>
-                <th class="align-middle" scope="row">1</th>
-                <td class="align-middle">Kalkofnsvegur 2 </td>
-                <td class="align-middle">103 Reykjavík</td>
-                <td class="align-middle"><span class="badge badge-pill badge-warning">Pending</span></td>
-                <td>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-shopping-cart"></i> View</button>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button>
 
-                </td>
-                </tr>
-                <tr>
-                <th class="align-middle" scope="row">1</th>
-                <td class="align-middle">Reynimelur 57 </td>
-                <td class="align-middle">107 Reykjavik</td>
-                <td class="align-middle"><span class="badge badge-pill badge-warning">Pending</span></td>
-                <td>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-shopping-cart"></i> View</button>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button>
 
-                </td>
-                </tr>
-                <tr>
-                <th class="align-middle" scope="row">1</th>
-                <td class="align-middle">Krummahólar 3 </td>
-                <td class="align-middle">111 Reykjavik</td>
-                <td class="align-middle"><span class="badge badge-pill badge-success ">Aproved</span></td>
-                <td>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-shopping-cart"></i> View</button>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-comments"></i> Contact</button>
-
-                </td>
-                </tr>
-                </tbody>
-                </table>
-                </div>
-                <div class="tab-pane" id="apartments-3">
-                <div class="title">
-                <h2>Sold portfolio USER</h2>
-                </div>
-                <table class="table table-striped table-hover table-responsive-sm">
-                <thead>
-                <tr>
-                <th scope="col">#</th>
-                <th scope="col">Address</th>
-                <th scope="col">Zip - City</th>
-                <th scope="col">Status</th>
-                <th scope="col">Actions</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                <th class="align-middle" scope="row">1</th>
-                <td class="align-middle">Geirsgata 23 </td>
-                <td class="align-middle">109 Reykjavík</td>
-                <td class="align-middle"><span class="badge badge-pill badge-warning">Pending</span></td>
-                <td>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-shopping-cart"></i> View</button>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-comments"></i> Contact</button>
-                </td>
-                </tr>
-                <tr>
-                <th class="align-middle" scope="row">1</th>
-                <td class="align-middle">Grundargata 5 </td>
-                <td class="align-middle">101 Reykjavik</td>
-                <td class="align-middle"><span class="badge badge-pill badge-warning">Pending</span></td>
-                <td>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-shopping-cart"></i> View</button>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-comments"></i> Contact</button>
-                </td>
-                </tr>
-                <tr>
-                <th class="align-middle" scope="row">1</th>
-                <td class="align-middle">Framnesvegur 33 </td>
-                <td class="align-middle">111 Reykjavik</td>
-                <td class="align-middle"><span class="badge badge-pill badge-success ">Aproved</span></td>
-                <td>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-shopping-cart"></i> View</button>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-comments"></i> Contact</button>
-                </td>
-                </tr>
-                </tbody>
-                </table>
-                </div>
-                </div>
 
 
 
