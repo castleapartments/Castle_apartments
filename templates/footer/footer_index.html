@@ -1,6 +1,45 @@
-{% for footer in footers %}
-    <p>{{ footer.container_name }}</p>
-    <p>{{ footer.container_text }}</p>
-    <p>{{ footer.container_location }}</p>
-    <hr>
-{% endfor %}
+{% load staticfiles %}
+<!-- Footer -->
+<footer class="page-footer font-small teal pt-4" style="background-color:white;">
+
+        <!-- Footer Text -->
+        <div class="container-fluid text-center text-md-left">
+      
+          <!-- Grid row -->
+          <div class="row">
+      
+            <!-- Grid column -->
+            <div class="col-md-6 mt-md-0 mt-3 text-center">
+      
+              <!-- Content -->
+              <h5 class="text-uppercase font-weight-bold">Where to find us</h5>
+              <p><img src="/media/where_to_find_us.PNG" style="width:50%; height:50%;"></p>
+      
+            </div>
+            <!-- Grid column -->
+      
+            <hr class="clearfix w-100 d-md-none pb-3">
+      
+            <!-- Grid column -->
+            <div class="col-md-6 mb-md-0 mb-3" style="border-left: 1px solid #AAAAAA;">
+      
+              <!-- Content -->
+            {% for footer in footers %}
+                <h5 class='text-uppercase font-weight-bold'>{{ footer.container_name }}</h5>
+                <p>{{ footer.container_text }}</p>
+            {% endfor %}
+
+            </div>
+            <!-- Grid column -->
+      
+          </div>
+          <!-- Grid row -->
+      
+        </div>
+        <!-- Footer Text -->
+      
+        <!-- Copyright -->
+        <!-- Copyright -->
+      
+      </footer>
+      <!-- Footer -->
