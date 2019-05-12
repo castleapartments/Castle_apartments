@@ -254,7 +254,36 @@ body {
     padding-left: 6px;
 }
 .search-location-space {
-    height: 250px;
+    height: 280px;
     overflow: auto;
-    padding: 0.5rem;
+    padding: 0 0.5rem;
+}
+.search-select {
+    border:1px solid #dee2e6 !important;
+    -webkit-appearance: menulist !important;
+    -moz-appearance: menulist !important;
+    appearance: menulist !important;
+    background-image: none !important;
+}
+
+.main-search .title {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    min-height: 32px;
+}
+.main-search .form-group {
+    margin-bottom: 0 !important;
+    padding-top: 0px;
+}
+.main-search .radio-search .form-check {
+    margin: 0 15px;
+}
+.main-search .radio-search .form-check label {
+    font-size: 1rem;
+}
+.main-search .bmd-form-group .bmd-label-floating {
+    top:0;
+}
+.main-search .is-focused .bmd-label-floating, .main-search .is-filled .bmd-label-floating  {
+    top:-1rem;
 }
