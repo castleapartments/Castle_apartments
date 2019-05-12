@@ -22,13 +22,7 @@ Castle Apartments - Profile
                     <div class="card-body">
                         <div class="d-flex justify-content-center profile-image">
                             
-                            {% if form.photo_main %}
                                 <img src="{{ form.photo_main.image.url }}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
-                                
-                            {% else %}
-                                <img src="/media/no_image.png" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
-                                
-                            {% endif %}
                             
                         </div>
 
