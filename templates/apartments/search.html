@@ -13,8 +13,11 @@
 
                 <!--MAIN CONTENT-->
                 <div class="row">
+
                     <!--LOCATION-->
                     <div class="col-sm-6 col-md-3">
+                        <form method="post">
+                        {% csrf_token %}
                         <div class="title" style="margin-bottom: 10px;">
                             <h3>Location</h3>
                         </div>
@@ -61,10 +64,10 @@
                         <div class="title">
                             <h3>Types</h3>
                         </div>
-                        {% for type in apartment_types %}
+                        {% for type in search_types %}
                         <div class="form-check">
                             <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="{{ type.0 }}">{{ type.1 }}
+                            <input class="form-check-input" type="checkbox" name="types" value="{{ type.0 }}">{{ type.1 }}
                             <span class="form-check-sign">
                             <span class="check"></span>
                             </span>
@@ -81,23 +84,21 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <select class="form-control search-select" id="exampleFormControlSelect2">
-                                        <option>From:</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control search-select" name="lower_price">
+                                        <option value="NULL" disabled selected>From:</option>
+                                        {% for price in search_prices %}
+                                        <option value="{{ price.value }}">{{ price.display }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <select class="form-control search-select" id="exampleFormControlSelect3">
-                                        <option>To:</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control search-select" name="upper_price">
+                                        <option value="NULL" disabled selected>To:</option>
+                                        {% for price in search_prices %}
+                                        <option value="{{ price.value }}">{{ price.display }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
@@ -109,23 +110,21 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <select class="form-control search-select" id="exampleFormControlSelect4">
-                                        <option>From:</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control search-select" name="lower_size">
+                                        <option value="NULL" disabled selected>From:</option>
+                                        {% for size in search_sizes %}
+                                        <option value="{{ size.value }}">{{ size.display }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <select class="form-control search-select" id="exampleFormControlSelect5">
-                                        <option>To:</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control search-select" name="upper_size">
+                                        <option value="NULL" disabled selected>To:</option>
+                                        {% for size in search_sizes %}
+                                        <option value="{{ size.value }}">{{ size.display }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
@@ -137,23 +136,21 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <select class="form-control search-select" id="exampleFormControlSelect6">
-                                        <option>From:</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control search-select" name="lower_rooms">
+                                        <option value="NULL" disabled selected>From:</option>
+                                        {% for room in search_rooms %}
+                                        <option value="{{ room.value }}">{{ room.display }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <select class="form-control search-select" id="exampleFormControlSelect7">
-                                        <option>To:</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control search-select" name="upper_rooms">
+                                        <option value="NULL" disabled selected>To:</option>
+                                        {% for room in search_rooms %}
+                                        <option value="{{ room.value }}">{{ room.display }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
@@ -168,15 +165,15 @@
                         <div class="input-group">
                             <div class="form-group bmd-form-group is-filled">
                                 <label for="id_search" class="col-form-label bmd-label-floating">Address</label>
-                                <input id="id_search" class="textinput textInput form-control" type="text" value="">
+                                <input id="id_search" class="textinput textInput form-control" type="text" value="" name="address">
                             </div>
                         </div>
                         <div class="title">
-                            <h3>Date</h3>
+                            <h3>Age</h3>
                         </div>
                         <div class="form-check">
                             <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" checked value="option1"> Any
+                            <input class="form-check-input" type="radio" name="date" checked value="any"> Any
                             <span class="circle">
                             <span class="check"></span>
                             </span>
@@ -184,7 +181,7 @@
                         </div>
                         <div class="form-check">
                             <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option1"> Today
+                            <input class="form-check-input" type="radio" name="date" value="1_day"> 1 Day
                             <span class="circle">
                             <span class="check"></span>
                             </span>
@@ -192,15 +189,15 @@
                         </div>
                         <div class="form-check">
                             <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option1"> This week
+                            <input class="form-check-input" type="radio" name="date" value="1_week"> 1 Week
                             <span class="circle">
                             <span class="check"></span>
                             </span>
                             </label>
                         </div>
                         <button type="submit" class="btn btn-primary btn-lg" style="width:100%;"><i class="fas fa-search"></i> Search</button>
+                        </form>
                     </div>
-
                 </div>
                 <!--FOOTER-->
                 <div class="footer text-center">
@@ -212,11 +209,24 @@
 </div>
 
 
-<!--Featured Apartments-->
+<!--Featured or found Apartments-->
 <div class="album py-5" style="min-height: 100vh;">
   <div class="container">
     <div class="row">
-      {% for apartment in featured_apartments %}
+        <div class="col-md-12 p-0 p-md-1">
+            <div class="card m-0 p-md-3">
+                <div class="card-header card-header-primary text-center">
+                {% if search_results %}
+                    <h4 class="card-title">SEARCH RESULTS</h4>
+                {% else %}
+                    <h4 class="card-title">FEATURED</h4>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+      {% for apartment in apartments %}
           {% include '_apartment_list.html' %}
       {% empty %}
         <p>Lol Nothing!</p>
