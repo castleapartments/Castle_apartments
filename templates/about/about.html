@@ -22,4 +22,74 @@ Castle Apartments - Credit Card Details
         </div>
     </div>
 </div>
+<div>
+    {% for userprofile in staff %}
+    <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+                    <div class="card card-login" id="profile-card">
+                        {% csrf_token %}
+                        <div class="card-header card-header-primary text-center">
+                            <h4 class="card-title">{{user.first_name}} {{user.last_name}}</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center profile-image">
+                                {% if userprofile.photo_main %}
+                                    <img src="{{ userprofile.photo_main.url }}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
+                                {% else %}
+                                    <img src="/media/no_image.png" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
+                                {% endif %}        
+                            </div>
+    
+                            <div class="row">
+                                {% if userprofile.phone %}
+                                <div class="col-md-12">  
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-phone"></i>
+                                        </span>
+                                        </div>
+                                        <div class="content">
+                                                <span class="input-content-title">
+                                            Phone:
+                                                </span>
+                                            <span class="input-content">
+                                            {{userprofile.phone}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% if userprofile.description %}
+                                <div class="col-md-12">  
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="far fa-address-card"></i>
+                                        </span>
+                                        </div>
+                                        <div class="content">
+                                                <span class="input-content-title">
+                                            About Me:
+                                                </span>
+                                            <span class="input-content">
+                                            {{userprofile.description}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}                                
+                                <div class="footer text-center">
+                                        <a href="mailto:{{ user.email }}"class="btn btn-primary btn-link btn-wd btn-lg">CONTACT</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}    
+</div>
 {% endblock %}

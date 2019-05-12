@@ -27,7 +27,8 @@ class UserProfile(models.Model):
     street_name = models.CharField(max_length=150, blank=True, null=True, default='')
     street_number = models.IntegerField(blank=True, null=True, default=0)
     postal_code = models.IntegerField(blank=True, null=True, default=0)
-        
+    description = models.TextField(blank=True, null=True, default=0)
+
     city = models.CharField(max_length=50, default='', blank=True, null=True)
     country = CountryField(blank=True, null=True)
 
