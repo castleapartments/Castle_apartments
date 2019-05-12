@@ -16,45 +16,7 @@
     </div>
     <div class="row">
       {% for apartment in apartments %}
-        <div class="col-sm-6 col-md-6 col-lg-4">
-          <a href="{% url 'view_apartment' apartment.apartment_id %}">
-            <div class="card mb-4 shadow-sm">
-              <div class="card-header card-header-primary text-center ch-fix">
-                <h6 class="card-title ct-fix">{{ apartment }}</h6>
-              </div>
-              {% if apartment.photo_main %}
-              <div class="apartment_img" style="background-image: url({{ apartment.photo_main.url }})">
-              {% else %}
-              <div class="apartment_img" style="background-image: url(/media/no_image.png)">
-              {% endif %}
-              </div>
-              <div class="card-body">
-                <h4>Price: <span class="card-text-bolder">{{ apartment.get_price }} ISK</span></h4>
-                <hr/>
-                <h4>Size: <span class="card-text-bolder">{{ apartment.get_type_display }} ({{ apartment.get_size_int }} m²)</span></h4>
-                <hr/>
-
-                <span class="badge badge-pill badge-secondary">Elevator</span>
-                <span class="badge badge-pill badge-primary">Wheelchair</span>
-                <span class="badge badge-pill badge-info">Garage</span>
-                <span class="badge badge-pill badge-success">Garden</span>
-                <span class="badge badge-pill badge-warning">Patio</span>
-                <span class="badge badge-pill badge-danger">Danger</span>
-                <span class="badge badge-pill badge-rose">Rose</span>
-                <p class="card-text">{{ apartment.short_description }}</p>
-                <!--{% if user.is_staff %}-->
-                <!--<div class="d-flex justify-content-between align-items-center">-->
-                  <!--<div class="btn-group">-->
-                    <!--<button type="button" class="btn btn-sm btn-outline-secondary">View</button>-->
-                    <!--<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
-                  <!--</div>-->
-                <!--</div>-->
-                <!--{% endif %}-->
-                <small class="text-muted">{{ apartment.age }} old</small>
-              </div>
-            </div>
-          </a>
-        </div>
+          {% include '_apartment_list.html' %}
       {% empty %}
         <div class="card text-center">
             <h1>No apartments meet the search criteria!</h1>

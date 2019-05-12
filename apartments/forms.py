@@ -11,7 +11,7 @@ class ApartmentForm(forms.ModelForm):
     city = forms.CharField(label="City")
     country = forms.CharField(label="Country")
 
-    type = forms.CharField(label="Property Type")
+    type = forms.ChoiceField(label="Property Type", choices=Apartment.TYPE_CHOICES)
 
     size = forms.DecimalField(label="Size (m²)")
     rooms = forms.IntegerField(label="Number of Roooms")

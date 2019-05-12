@@ -12,7 +12,7 @@ from datetime import datetime
 
 
 APARTMENTS_PER_PAGE = 9
-MAX_NUMBER_OF_IMAGES = 20
+MAX_NUMBER_OF_IMAGES = 12
 
 
 class ApartmentManager(object):
@@ -54,7 +54,8 @@ def list_featured(request):
 
 
 def search(request):
-    return render(request, 'apartments/search.html')
+    page = request.GET.get('page')
+    return render(request, 'apartments/search.html', {'featured_apartments': apartment_manager.get_featured(page)})
 
 
 def view(request, apartment_id):
@@ -100,3 +101,7 @@ def add(request):
     image_formset = image_form_set(queryset=ApartmentImages.objects.none())
     return render(request, 'apartments/add.html', {'apartment_form': apartment_form, 'image_formset': image_formset})
 
+
+@login_required
+def my(request):
+    return render(request, 'apartments/my.html')
