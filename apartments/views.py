@@ -55,7 +55,11 @@ def list_featured(request):
 
 def search(request):
     page = request.GET.get('page')
-    return render(request, 'apartments/search.html', {'featured_apartments': apartment_manager.get_featured(page)})
+    context = {
+        'apartment_types'    : Apartment.TYPE_CHOICES,
+        'featured_apartments': apartment_manager.get_featured(page),
+    }
+    return render(request, 'apartments/search.html', context)
 
 
 def view(request, apartment_id):
