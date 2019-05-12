@@ -20,16 +20,22 @@ class Apartment(models.Model):
     city = models.CharField(max_length=50, default='')
     country = models.CharField(max_length=50, default='')
 
-    type = models.CharField(
-        max_length=20,
-        choices=(
+    TYPE_CHOICES = (
             ('apartment',    'Apartment'),
+            ('town_house',   'Town House'),
+            ('single_family','Single Family House'),
             ('detached',     'Detached'),
             ('summer_house', 'Summer House'),
+            ('farm_house',   'Farm House'),
             ('stable',       'Stable'),
-            ('Garage',       'Garage'),
+            ('garage',       'Garage'),
             ('plot',         'Plot'),
-        ),
+            ('commercial',   'Commercial'),
+            ('other',        'Other'),
+        )
+    type = models.CharField(
+        max_length=20,
+        choices=TYPE_CHOICES,
         default='apartment'
     )
 
