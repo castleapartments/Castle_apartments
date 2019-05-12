@@ -52,6 +52,9 @@ def singlecard(request):
 def apartmentlist(request):
     return render(request, 'base/apartment_list.html')
 
+def apartmentsearch(request):
+    return render(request, 'base/apartment_search.html')
+
 class CardUpdateView(UpdateView):
     model = Card
     form_class = CardForm
