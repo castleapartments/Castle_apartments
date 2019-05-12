@@ -92,7 +92,7 @@ def change_password(request):
             messages.success(request, 'Your password was successfully updated')
             return redirect('change_password')
         else:
-            message.error(request, 'Please correct the error bellow')
+            messages.error(request, 'Please correct the error bellow')
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'users/change_password.html')
