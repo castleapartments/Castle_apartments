@@ -21,10 +21,14 @@ Castle Apartments - Profile
                     <p class="description text-center">&nbsp;</p>
                     <div class="card-body">
                         <div class="d-flex justify-content-center profile-image">
-                            {% load avatar_tags %}
-                            {% avatar user 200 class="img-raised rounded-circle img-fluid" id="user_avatar" %}
                             
-                            <a href="{% url 'avatar_change' %}">Change your avatar</a>
+                            {% if form.photo_main %}
+                            <img src="url({{ form.photo_main.image.url }}">
+                            {% else %}
+                            <img src="url(/media/no_image.png)">
+                            
+                            {% endif %}
+                            
                         </div>
 
                         <div class="row">

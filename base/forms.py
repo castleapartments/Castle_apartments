@@ -22,6 +22,7 @@ class UserForm(forms.ModelForm):
     #    self.helper.add_input(Submit('submit', 'Save person'))
 
 class ProfileForm(forms.ModelForm):
+    #image = forms.ImageField(label='Image')
     class Meta:
         model = UserProfile
         fields = (
@@ -36,11 +37,14 @@ class ProfileForm(forms.ModelForm):
                 'country'
             )
 
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Save profile'))            
+        self.helper.add_input(Submit('submit', 'Save profile'))
+    
+          
 
 class PersonForm(forms.ModelForm):
     class Meta:

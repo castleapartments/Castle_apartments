@@ -162,6 +162,7 @@ STATICFILES_DIRS = (
 
 # Media folder
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 MEDIA_URL = '/media/'
 
 # os.makedirs(STATIC_TMP, exist_ok=True)
