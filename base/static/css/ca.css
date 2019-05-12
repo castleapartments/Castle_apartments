@@ -295,7 +295,7 @@ body {
 }
 #search_submit, .search_submit {
     width:100%; 
-    margin-top:45px;
+    margin-top:25px;
 }
 @media (max-width: 575px) {
     .search-location-space {
@@ -303,6 +303,7 @@ body {
         overflow: hidden !important;
     }
     #search_submit, .search_submit {
+        margin-top:45px;
         margin-bottom:25px;
     }
 }
