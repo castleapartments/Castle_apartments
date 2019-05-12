@@ -1,9 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.forms import modelformset_factory
-from django.http import HttpResponseRedirect
 
 from .models import Apartment, ApartmentImages
 from .forms import ApartmentForm, ApartmentImageForm
@@ -83,6 +82,7 @@ def add(request):
         if apartment_form.is_valid() and image_formset.is_valid():
             apartment_object = apartment_form.save(commit=False)
             apartment_object.add_date = datetime.now()
+            apartment_object.owner = request.user
             apartment_object.save()
 
             for form in image_formset.cleaned_data:
@@ -96,7 +96,7 @@ def add(request):
                 apartment_image = ApartmentImages(apartment_id=apartment_object, image=image)
                 apartment_image.save()
 
-            return HttpResponseRedirect("/")
+            return redirect('view_apartment', apartment_id=apartment_object.apartment_id)
         else:
             print('apartment errors:', apartment_form.errors)
             print('image_formset errors:', image_formset.errors)
