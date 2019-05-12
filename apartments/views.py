@@ -100,3 +100,7 @@ def add(request):
     image_formset = image_form_set(queryset=ApartmentImages.objects.none())
     return render(request, 'apartments/add.html', {'apartment_form': apartment_form, 'image_formset': image_formset})
 
+
+@login_required
+def my(request):
+    return render(request, 'apartments/my.html')
