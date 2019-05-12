@@ -12,7 +12,7 @@ from datetime import datetime
 
 
 APARTMENTS_PER_PAGE = 9
-MAX_NUMBER_OF_IMAGES = 20
+MAX_NUMBER_OF_IMAGES = 12
 
 
 class ApartmentManager(object):
