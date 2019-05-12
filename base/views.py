@@ -181,7 +181,7 @@ class ProfileUpdateView(TestUserCanViewUser, UpdateView):
     success_url = reverse_lazy('profile') 
 
     def get_object(self):
-        return UserProfile.objects.get(user_id=self.kwargs['pk'])
+        return UserProfile.objects.all().get(user_id=self.kwargs['pk'])
 
 
 @method_decorator(login_required, name='dispatch')

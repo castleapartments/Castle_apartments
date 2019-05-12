@@ -22,7 +22,7 @@ class UserForm(forms.ModelForm):
     #    self.helper.add_input(Submit('submit', 'Save person'))
 
 class ProfileForm(forms.ModelForm):
-    image_main = forms.ImageField(label='Image')
+    #photo_main = forms.ImageField()
     class Meta:
         model = UserProfile
         fields = (
@@ -35,7 +35,7 @@ class ProfileForm(forms.ModelForm):
                 'postal_code',
                 'city',
                 'country',
-                'image_main'
+                'photo_main'
             )
 
 
