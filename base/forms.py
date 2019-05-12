@@ -25,6 +25,8 @@ class ProfileForm(forms.ModelForm):
     photo_main = forms.ImageField(widget=forms.widgets.FileInput)
     class Meta:
         model = UserProfile
+        #superuser = forms.BooleanField()
+        #employee = forms.BooleanField()
         fields = (
                 'sex',
                 'email',
@@ -35,7 +37,7 @@ class ProfileForm(forms.ModelForm):
                 'postal_code',
                 'city',
                 'country',
-                'photo_main'
+                'photo_main',
             )
 
 
