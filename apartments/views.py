@@ -8,7 +8,7 @@ from django.db.models import Q
 from .models import Apartment, ApartmentImages
 from .forms import ApartmentForm, ApartmentImageForm
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from collections import namedtuple
 import uuid
 
@@ -112,6 +112,29 @@ class SearchResultsBuilder(object):
             results = results.filter(Q(rooms__lte=value))
         return results
 
+    def filter_street(self, results):
+        if self._has_attribute('street'):
+            value = self._search_dict['street'][0]
+            results = results.filter(Q(street_name__iexact=value))
+        return results
+
+    def filter_description(self, results):
+        if self._has_attribute('description'):
+            value = self._search_dict['description'][0]
+            results = results.filter(Q(description__iexact=value))
+        return results
+
+    def filter_age(self, results):
+        if self._has_attribute('age'):
+            value = self._search_dict['age'][0]
+            if value == '1_day':
+                one_day_ago = datetime.now() - timedelta(days=1)
+                results = results.filter(Q(approval_date__gte=one_day_ago))
+            elif value == '1_week':
+                one_week_ago = datetime.now() - timedelta(days=7)
+                results = results.filter(Q(approval_date__gte=one_week_ago))
+        return results
+
     # 'types': ['farm_house', 'stable', 'garage'], 'price_from': ['10000000'], 'price_to': ['25000000'], 'address': ['asdf'], 'date': ['any']}>
 
 
@@ -124,12 +147,15 @@ class ApartmentManager(object):
         paginator = Paginator(apartments, APARTMENTS_PER_PAGE)
         return paginator.get_page(page)
 
+    def _get_all(self):
+        return Apartment.objects.all().filter(approved=True)
+
     def get_all(self, page, order='-approval_date'):
-        apartments = Apartment.objects.order_by(order).all()
+        apartments = self._get_all().order_by(order)
         return self._page(apartments, page)
 
     def get_featured(self, page):
-        featured_apartments = Apartment.objects.all().filter(featured=True)
+        featured_apartments = self._get_all().filter(featured=True)
         if len(featured_apartments) > 0:
             return self._page(featured_apartments, page)
         return self.get_all(page)
@@ -142,11 +168,14 @@ class ApartmentManager(object):
 
     def get_search_results(self, search_dict, page):
         search = SearchResultsBuilder(search_dict)
-        apartments = Apartment.objects.all()
+        apartments = self._get_all()
         apartments = search.filter_types(apartments)
         apartments = search.filter_price(apartments)
         apartments = search.filter_size(apartments)
         apartments = search.filter_rooms(apartments)
+        apartments = search.filter_age(apartments)
+        apartments = search.filter_street(apartments)
+        apartments = search.filter_description(apartments)
         return self._page(apartments, page)
 
 
