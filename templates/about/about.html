@@ -32,7 +32,7 @@ Castle Apartments - Credit Card Details
                     <div class="card card-login" id="profile-card">
                         {% csrf_token %}
                         <div class="card-header card-header-primary text-center">
-                            <h4 class="card-title">{{user.first_name}} {{user.last_name}}</h4>
+                            <h4 class="card-title">{{userprofile.user.first_name}} {{userprofile.user.last_name}}</h4>
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-center profile-image">
