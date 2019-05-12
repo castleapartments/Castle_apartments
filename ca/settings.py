@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "searchhistory",
     "django_countries",
     "cities",
+    "containers"
 ]
 
 MIDDLEWARE = [
