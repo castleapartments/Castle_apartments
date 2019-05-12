@@ -8,8 +8,7 @@ admin.autodiscover()
 
 import base.views
 from apartments.views import search
-from base.views import PersonListView, PersonCreateView, PersonUpdateView,\
-        CardListView, CardUpdateView, CardCreateView, PersonAndCardListView,\
+from base.views import CardListView, CardUpdateView, CardCreateView, \
         ProfileDetailView, UserListView, ProfileUpdateView, CreateCreditCardView,\
         ViewCreditCardView, UpdateCreditCardView
 
@@ -36,15 +35,15 @@ urlpatterns = [
     path("payment/<int:pk>/edit", UpdateCreditCardView.as_view(), name="view_payment_page"),
 
     path("admin/", admin.site.urls),
-    path("pc/", PersonAndCardListView.as_view(),  name="pc_list"),
+    #path("pc/", PersonAndCardListView.as_view(),  name="pc_list"),
     path('cards/single', base.views.singlecard, name="singlecard"),
     path('cards/list', base.views.apartmentlist, name="apartmentlist"),
     path('cards/search', base.views.apartmentsearch, name="apartmentsearch"),
     path('cards/', CardListView.as_view(), name='card_list'),
     path('cards/<int:pk>/edit/', CardUpdateView.as_view(), name='card_edit'),
     path('cards/add', CardCreateView.as_view(), name='card_add'),
-    path('people/', PersonListView.as_view(), name='person_list'),    
-    path('people/add/', PersonCreateView.as_view(), name='person_add'),
-    path('people/<int:pk>/edit/', PersonUpdateView.as_view(), name='person_edit'),
+    #path('people/', PersonListView.as_view(), name='person_list'),    
+    #path('people/add/', PersonCreateView.as_view(), name='person_add'),
+    #path('people/<int:pk>/edit/', PersonUpdateView.as_view(), name='person_edit'),
     #path('avatar/', include('avatar.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

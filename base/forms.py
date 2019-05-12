@@ -22,7 +22,7 @@ class UserForm(forms.ModelForm):
     #    self.helper.add_input(Submit('submit', 'Save person'))
 
 class ProfileForm(forms.ModelForm):
-    photo_main = forms.ImageField(widget=forms.widgets.FileInput)
+    #photo_main = forms.ImageField(widget=forms.widgets.FileInput)
     class Meta:
         model = UserProfile
         #superuser = forms.BooleanField()
@@ -47,19 +47,17 @@ class ProfileForm(forms.ModelForm):
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Save profile'))
     
-          
-
-class PersonForm(forms.ModelForm):
-    class Meta:
-        model = Person
-        fields = ('name', 'email', 'job_title', 'bio')
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Save person'))
-
+#class PersonForm(forms.ModelForm):
+#    class Meta:
+#        model = Person
+#        fields = ('name', 'email', 'job_title', 'bio')
+#
+#    def __init__(self, *args, **kwargs):
+#        super().__init__(*args, **kwargs)
+#        self.helper = FormHelper()
+#        self.helper.form_method = 'post'
+#        self.helper.add_input(Submit('submit', 'Save person'))
+#
 class CreditCardForm(forms.ModelForm):
     class Meta:
         model = UserCreditCard

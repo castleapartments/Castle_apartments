@@ -15,8 +15,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from base.models import Person, Card, UserProfile, UserCreditCard
-from base.forms import UserForm, PersonForm, CardForm, ProfileForm, CreditCardForm
+from base.models import Card, UserProfile, UserCreditCard
+from base.forms import UserForm, CardForm, ProfileForm, CreditCardForm
 
 
 
@@ -28,18 +28,18 @@ def index(request):
 # ********************************
 # <--TEST - REMOVE IN CLEAN UP -->
 
-class PersonListView(ListView):
-    model = Person
-    context_object_name = 'people'
+#class PersonListView(ListView):
+#    model = Person
+#    context_object_name = 'people'
 
 class CardListView(ListView):
     model = Card
     context_object_name = 'cards'
 
-class PersonCreateView(CreateView):
-    model = Person
-    fields = ('name', 'email', 'job_title', 'bio')
-    success_url = reverse_lazy('person_list')
+#class PersonCreateView(CreateView):
+#    model = Person
+#    fields = ('name', 'email', 'job_title', 'bio')
+#    success_url = reverse_lazy('person_list')
 
 class CardCreateView(CreateView):
     model = Card
@@ -61,23 +61,23 @@ class CardUpdateView(UpdateView):
     template_name = 'base/card_update_form.html'
     success_url = reverse_lazy('card_list')    
 
-class PersonUpdateView(UpdateView):
-    model = Person
-    form_class = PersonForm
-    template_name = 'base/person_update_form.html'
-    success_url = reverse_lazy('person_list')    
+#class PersonUpdateView(UpdateView):
+#    model = Person
+#    form_class = PersonForm
+#    template_name = 'base/person_update_form.html'
+#    success_url = reverse_lazy('person_list')    
 
-class PersonAndCardListView(ListView):
-    context_object_name = 'pc_list'    
-    template_name = 'base/pc_list.html'
-    queryset = Person.objects.all()
-
-    def get_context_data(self, **kwargs):
-        context = super(PersonAndCardListView, self).get_context_data(**kwargs)
-        context['persons'] = Person.objects.all()
-        context['cards'] = Card.objects.all()
-        # And so on for more models
-        return context
+#class PersonAndCardListView(ListView):
+#    context_object_name = 'pc_list'    
+#    template_name = 'base/pc_list.html'
+#    queryset = Person.objects.all()
+#
+#    def get_context_data(self, **kwargs):
+#        context = super(PersonAndCardListView, self).get_context_data(**kwargs)
+#        context['persons'] = Person.objects.all()
+#        context['cards'] = Card.objects.all()
+#        # And so on for more models
+#        return context
 
 
 
