@@ -1,12 +1,18 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
+from django.forms import modelformset_factory
+from django.http import HttpResponseRedirect
 
-from .models import Apartment
-from .forms import ApartmentForm
+from .models import Apartment, ApartmentImages
+from .forms import ApartmentForm, ApartmentImageForm
+
+from datetime import datetime
 
 
 APARTMENTS_PER_PAGE = 9
+MAX_NUMBER_OF_IMAGES = 20
 
 
 class ApartmentManager(object):
@@ -43,7 +49,6 @@ def list_all(request):
 
 
 def list_featured(request):
-    print('list_featured')
     page = request.GET.get('page')
     return render(request, 'apartments/list.html', {'apartments': apartment_manager.get_featured(page)})
 
@@ -53,14 +58,45 @@ def search(request):
 
 
 def view(request, apartment_id):
-    return render(request, 'apartments/view.html', {'apartment': apartment_manager.get_apartment_by_id(apartment_id)})
+    images = ApartmentImages.objects.all().filter(apartment_id=apartment_id)
+    context = {
+        'apartment'  : apartment_manager.get_apartment_by_id(apartment_id),
+        'images'     : images,
+    }
+    return render(request, 'apartments/view.html', context)
 
 
+@login_required
 def add(request):
-    if request.method == "POST":
-        form = ApartmentForm(request.POST)
-        if form.is_valid():
-            form.save()
+    #https://stackoverflow.com/questions/34006994/how-to-upload-multiple-images-to-a-blog-post-in-django
+    image_form_set = modelformset_factory(ApartmentImages, form=ApartmentImageForm, extra=MAX_NUMBER_OF_IMAGES)
 
-    form = ApartmentForm()
-    return render(request, 'apartments/add.html', {'form': form})
+    if request.method == "POST":
+        apartment_form = ApartmentForm(request.POST)
+        # image_formset = image_form_set(request.POST, request.FILES, queryset=ApartmentImages.object.none())
+        image_formset = image_form_set(request.POST, request.FILES)
+        if apartment_form.is_valid() and image_formset.is_valid():
+            apartment_object = apartment_form.save(commit=False)
+            apartment_object.add_date = datetime.now()
+            apartment_object.save()
+
+            for form in image_formset.cleaned_data:
+                if not form:
+                    continue
+                image = form['image']
+                if not bool(apartment_object.photo_main):
+                    apartment_object.photo_main = image
+                    apartment_object.save()
+
+                apartment_image = ApartmentImages(apartment_id=apartment_object, image=image)
+                apartment_image.save()
+
+            return HttpResponseRedirect("/")
+        else:
+            print('apartment errors:', apartment_form.errors)
+            print('image_formset errors:', image_formset.errors)
+
+    apartment_form = ApartmentForm()
+    image_formset = image_form_set(queryset=ApartmentImages.objects.none())
+    return render(request, 'apartments/add.html', {'apartment_form': apartment_form, 'image_formset': image_formset})
+

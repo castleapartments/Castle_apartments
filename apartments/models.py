@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 
 from datetime import datetime, timezone
 
+import uuid
+
 
 class Apartment(models.Model):
     apartment_id = models.AutoField(primary_key=True)
@@ -73,3 +75,8 @@ class Apartment(models.Model):
 
     def get_size_int(self):
         return int(self.size)
+
+
+class ApartmentImages(models.Model):
+    apartment_id = models.ForeignKey(Apartment, default=None, on_delete=models.CASCADE)
+    image = models.ImageField()

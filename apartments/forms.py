@@ -1,33 +1,32 @@
 from django import forms
-from .models import Apartment
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Row, Column, Submit
+from .models import Apartment, ApartmentImages
+# from crispy_forms.helper import FormHelper
+# from crispy_forms.layout import Layout, Row, Column, Submit
 
 
 class ApartmentForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    street_name = forms.CharField(label="Street Name")
+    street_number = forms.CharField(label="Street Number")
+    postcode = forms.CharField(label="Postcode")
+    city = forms.CharField(label="City")
+    country = forms.CharField(label="Country")
 
-        self.helper = FormHelper
-        self.helper.formMethod = 'post'
-        self.helper.label_class = 'bmd-label-floating'
+    type = forms.CharField(label="Property Type")
 
-        self.helper.layout = Layout(
-                  
-            Row(
-                Column('street_name', css_class='form-group col-md-6 mb-0'),
-                Column('street_number', css_class='form-group col-md-6 mb-0')),
-            'postcode',
-            'city',
-            'country',
-            'size',
-            'rooms',
-            'description',
-            'price',
-            'photo_main',
-            Submit('submit', 'Add Apartment')
-        )
+    size = forms.DecimalField(label="Size (m²)")
+    rooms = forms.IntegerField(label="Number of Roooms")
+    bathrooms = forms.IntegerField(label="Number of Bathrooms")
+    description = forms.CharField(widget=forms.Textarea, label="Description")
+    price = forms.IntegerField(label="Price")
 
     class Meta:
         model = Apartment
-        fields = ('street_name', 'street_number', 'postcode', 'city', 'country', 'size', 'rooms', 'description', 'price', 'photo_main')
+        fields = ('street_name', 'street_number', 'postcode', 'city', 'country', 'size', 'type', 'rooms', 'bathrooms', 'description', 'price')
+
+
+class ApartmentImageForm(forms.ModelForm):
+    image = forms.ImageField(label='Image')
+
+    class Meta:
+        model = ApartmentImages
+        fields = ('image', )
