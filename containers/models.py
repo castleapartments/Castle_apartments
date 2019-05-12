@@ -16,4 +16,6 @@ class Container(models.Model):
         default='footer')
 
     def __str__(self):
-        return str(self.container_name)
+        name = "<h5 class='text-uppercase font-weight-bold'>"+ str(self.container_name) +"</h5>"
+        text = "<p>" + str(self.container_text) + "</p>"
+        return name + text

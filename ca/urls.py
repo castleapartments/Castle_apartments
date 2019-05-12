@@ -11,6 +11,7 @@ from apartments.views import search
 from base.views import CardListView, CardUpdateView, CardCreateView, \
         ProfileDetailView, UserListView, ProfileUpdateView, CreateCreditCardView,\
         ViewCreditCardView, UpdateCreditCardView
+import containers.views
 
 urlpatterns = [
     path("", search, name="index"),
@@ -42,6 +43,7 @@ urlpatterns = [
     path('cards/', CardListView.as_view(), name='card_list'),
     path('cards/<int:pk>/edit/', CardUpdateView.as_view(), name='card_edit'),
     path('cards/add', CardCreateView.as_view(), name='card_add'),
+    path('footer', containers.views.footer_view, name='footer_view')
     #path('people/', PersonListView.as_view(), name='person_list'),    
     #path('people/add/', PersonCreateView.as_view(), name='person_add'),
     #path('people/<int:pk>/edit/', PersonUpdateView.as_view(), name='person_edit'),
