@@ -10,25 +10,62 @@ Single apartment
 <div class="container">
   <div class="row">
     <div class="col-md-12 p-0 p-md-1">
-      <div class="card m-0 p-md-3">
+      <div class="card m-0 p-3 p-md-3 main-search">
         <div class="card-header card-header-primary text-center">
           <h4 class="card-title">SEARCH </h4>
         </div>
         <!--<p class="description text-center">&nbsp;</p>-->
+     
+
+
         <div class="row">
-          <div class="col-md-4">
-              <div class="title">
+          <div class="col-sm-6 col-md-3">
+              <div class="title" style="margin-bottom: 10px;">
                   <h3>Location</h3>
               </div>
             <div class="search-location-space">
               
               <div class="form-check">
                 <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value=""> Type1
+                  <input class="form-check-input" type="checkbox" id="capital" value="" data-toggle="collapse" data-target="#capital-options" aria-expanded="false" aria-controls="capital-options"> Capital Region
                   <span class="form-check-sign">
                     <span class="check"></span>
                   </span>
                 </label>
+              </div>
+              <div class="form-group-1 pl-3 collapse" id="capital-options">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" value=""> Capital Region 1
+                    <span class="form-check-sign">
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" value=""> Capital Region 2
+                    <span class="form-check-sign">
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" value=""> Capital Region 3
+                    <span class="form-check-sign">
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" value=""> Capital Region 4
+                    <span class="form-check-sign">
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                </div>
               </div>
               <div class="form-check">
                 <label class="form-check-label">
@@ -78,28 +115,15 @@ Single apartment
                   </span>
                 </label>
               </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value=""> Type8
-                  <span class="form-check-sign">
-                    <span class="check"></span>
-                  </span>
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value=""> Type9
-                  <span class="form-check-sign">
-                    <span class="check"></span>
-                  </span>
-                </label>
-              </div>
+             
             </div>
           </div>
-          <div class="col-md-4">
-              <div class="title">
-                  <h3>Type</h3>
-              </div>
+          <div class="col-sm-6 col-md-3">
+            
+            <div class="title">
+                <h3>Type</h3>
+            </div>
+            <div style="padding-top: 1px;">
               <div class="form-check">
                 <label class="form-check-label">
                   <input class="form-check-input" type="checkbox" value=""> Type1
@@ -140,16 +164,148 @@ Single apartment
                   </span>
                 </label>
               </div>
+            </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="title">
+              <h3>Price</h3>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <select class="form-control search-select" id="exampleFormControlSelect2">
+                    <option>From:</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <select class="form-control search-select" id="exampleFormControlSelect3">
+                    <option>To:</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="title">
+                <h3>Size </h3>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <select class="form-control search-select" id="exampleFormControlSelect4">
+                      <option>From:</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <select class="form-control search-select" id="exampleFormControlSelect5">
+                      <option>To:</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="title">
+                  <h3>Rooms </h3>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <select class="form-control search-select" id="exampleFormControlSelect6">
+                        <option>From:</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <select class="form-control search-select" id="exampleFormControlSelect7">
+                        <option>To:</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+  
 
           </div>
+          <div class="col-12 col-sm-6 col-md-3">
+              <div class="title">
+                  <h3>Search</h3>
+              </div>
+              <div class="input-group">  
+                  <div class="form-group bmd-form-group is-filled">
+                    <label for="id_search" class="col-form-label bmd-label-floating">
+                        Address
+                    </label>
+                    <input id="id_search" class="textinput textInput form-control" type="text" value=""> 
+                  </div>
+                </div>
+                <div class="title">
+                    <h3>Date</h3>
+                </div>
+              <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" checked value="option1"> Any
+                    <span class="circle">
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option1"> Today
+                    <span class="circle">
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option1"> This week
+                    <span class="circle">
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                </div>
+              <button type="submit" class="btn btn-primary btn-lg" style="width:100%;"><i class="fas fa-search"></i> Search</button>                
+          
+          </div>
         </div>
-        <div class="footer text-center">            
-        </div>
+        <div class="footer text-center">   
+            </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+
+
+</script>
 
 {% endblock %}
