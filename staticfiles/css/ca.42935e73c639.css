@@ -1,0 +1,255 @@
+
+.jumbotron {
+    background: #532f8c;
+    color: white;
+    padding-bottom: 80px;
+    
+}
+.jumbotron .btn-primary {
+    background: #845ac7;
+    border-color: #845ac7
+}
+.jumbotron .btn-primary:hover {
+    background: #7646c1
+}
+.jumbotron p {
+    color: #d9ccee;
+    max-width: 75%;
+    margin: 1em auto 2em
+}
+.navbar+.jumbotron {
+    margin-top: -20px
+}
+.jumbotron .lang-logo {
+    display: block;
+}
+.jumbotron .lang-logo img {
+    max-width: 100%
+}
+
+body {
+    overflow-x: hidden;
+    background-image: url("/static/reykjavik-fjord-mountains-sunset-iceland.01e0b70b141f.jpg"); 
+    background-size: cover; 
+    background-position: top center;
+    height:100vh;
+    background-attachment: fixed;
+}
+.navbar-transparent .brand_logo {
+    display: block;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background: url("/static/logo_mini_light.beef56ae90c0.png") no-repeat;
+    width: 109px; /* Width of new image */
+    height: 40px; /* Height of new image */
+    padding-left: 109px;
+}
+#navbarSupportedContent .nav-item i {
+    margin-top: -7px;
+    top: 3px;
+    position: relative;
+    margin-right: 3px;
+    font-size: 1.25rem;
+    max-width: 24px;
+    vertical-align: middle;
+}
+#nav_sign_btn {
+    color: #555555;
+    background-color: transparent !important;
+    background-image: none;
+    border-color: #f8f9fa !important;
+    border: 1px solid !important;
+    padding: 0.40625rem 1.25rem !important;
+}
+.navbar-transparent #nav_sign_btn{
+    color:#f8f9fa;
+}
+.card-login .form {
+    min-height: initial;
+    padding-bottom: 40px;
+}
+.bg-purpletrans {
+    background-color: #532f8c;
+    background: linear-gradient(60deg, #ab47bc85, #7b1fa285);
+    min-height: 100vh;
+    max-width: 157px;
+    padding: 80px 15px 0;
+}
+.bg-purpletrans a {
+    color: #f5f5f5;
+    font-weight: 300;
+    font-size: .8rem;
+}
+.bg-purpletrans .nav-link:hover {
+    background-color: #ffffff1c;
+}
+.lang-logo img {
+    max-width: 100%;
+}
+.input-group-text .fab, .input-group-text .fas {
+    font-size: 24px;
+}
+.input-group-selection {
+    border: 0;
+    color: #aaaaaa;
+    line-height: 1.1;
+    width: 100%;
+    border-bottom: 1px solid #d2d2d2;
+    height: 36px;
+}
+.flexnowrapfix {
+    flex-wrap: nowrap;
+}
+.card-login .card-header {
+    text-transform: uppercase;
+}
+#menu-side-bar {
+    text-align: center;
+    font-size: 1rem;
+}
+#menu-side-bar i {
+    font-size:1.5rem;
+}
+#menu-side-bar .nav-link {
+    padding: 0.5rem 0rem;
+}
+.main-content {
+    padding:150px 0 0 !important;
+    margin: 0px!important;
+    background: rgba(0, 0, 0, 0.5);
+}
+.ca-sidebar {
+    padding:0;
+    background: rgba(0, 0, 0, 0.5);
+}
+.ch-fix {
+    position: absolute !important;
+    min-width: 90% !important;
+    margin: -17px 5% !important;
+    padding: 2% !important;
+}
+.ct-fix {
+    padding: 0 !important;
+    margin: 0 !important;
+    font-weight: 100;
+}
+.apartment_img {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #464646;
+  min-height:240px;
+  width:100%
+}
+.card h4 {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    font-size: 1rem;
+}
+.card hr {
+    margin-top: 0.1rem;
+    margin-bottom: 0.1rem;
+}
+.card .card-text-bolder {
+    font-weight: 500;
+}
+.form-group {
+    width:100%
+}
+.input-group {
+    flex-wrap: nowrap;
+}
+.card-login .input-group {
+    padding-bottom: none;
+ }
+ .card-login .input-group-select {
+    margin: 26px 0 0 0;
+ }
+ .card-login .input-group-select select {
+    margin: 0;
+    padding: 0;
+    height: 37px;
+    width: 100%;
+ }
+ .card-login .input-group-select label {
+    padding: 0;
+ }
+ .profile-image .form-group {
+     width: initial;
+     display: flex;
+     flex-direction: column;
+     align-self: center;
+     margin-left: 30px;
+ }
+.card-body-set-psw p {
+    text-align: center !important;
+}
+.card-body-set-psw label {
+    display: block;
+}
+.card p.description {
+    padding: 0 15px;
+}
+#navbarSupportedContent .dropdown-item {
+    padding-left: .5rem;
+}
+#navbarSupportedContent .dropdown-item i {
+    margin-right: 6px;
+}
+@media (max-width: 768px) {
+    .navbar .dropdown.show .dropdown-menu, .navbar .dropdown .dropdown-menu {
+        height: initial;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+    }
+    #navbarSupportedContent .dropdown-item {
+        padding-left: 1.5rem;
+    }
+}
+#profile-card .input-group {
+    margin: 0;
+}
+#profile-card .input-group i {
+    font-size: 1rem;
+}
+#profile-card .input-group-prepend {
+    min-width: 60px;
+}
+#profile-card .content .input-content {
+    font-weight: 600;
+}
+#profile-card .profile-image {
+    margin:15px 0;
+}
+.large-forbidden-icon {
+    font-size: 7rem;
+    color: red;
+    margin-bottom: 20px;
+}
+.list-group-flush .list-group-item {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-right: 0;
+    border-left: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.list-group-flush .list-group-item :first-child {
+    margin-right: .7rem;
+}
+.real-estate-agent {
+    margin-top: 30px;
+}
+.real-estate-agent .rea-image {
+    margin-bottom: 20px;
+}
+.apart-buy-div {
+    padding-top:20px;
+}
+.apartment-price {
+    font-weight: 600;
+}
+.list-group .feature {
+    font-weight: 600;
+    padding-left: 6px;
+}

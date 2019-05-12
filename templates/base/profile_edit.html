@@ -21,13 +21,16 @@ Castle Apartments - Profile
                     <p class="description text-center">&nbsp;</p>
                     <div class="card-body">
                         <div class="d-flex justify-content-center profile-image">
-
-                            <img src="{{ userprofile.photo_main.url }}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
-                            <br>
-                            <p> : {{ form.photo_main }}</p>
-                            
+                            {% if userprofile.photo_main %}
+                                <img src="{{ userprofile.photo_main.url }}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
+                            {% else %}
+                                <img src="/media/no_image.png" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
+                            {% endif %}        
                         </div>
-
+                        <div class="d-flex justify-content-center">
+                            
+                            {{ form.photo_main }}
+                        </div>
                         <div class="row">
                             <div class="col-md-6">  
                                 <div class="input-group">
