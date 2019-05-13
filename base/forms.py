@@ -9,7 +9,7 @@ from crispy_forms.layout import Submit
 
 from cloudinary.forms import CloudinaryJsFileField
 
-from base.models import Person, Card, UserProfile, UserCreditCard
+from base.models import Card, UserProfile, UserCreditCard
 
 
 class UserForm(forms.ModelForm):
