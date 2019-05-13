@@ -23,15 +23,15 @@
                             <i class="fas fa-search"></i> Your Searches
                             </a>
                         </li>
-                        {% if user.is_realtor %}
+                        {% if user.is_realtor or user.is_superuser %}
                         <li class="nav-item">
                             <a class="nav-link" href="#apartment-approvals" role="tab" data-toggle="tab" aria-selected="false">
-                            <i class="fas thumbs-up"></i> Apartment Approvals
+                            <i class="fas fa-thumbs-up"></i> Apartment Approvals
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#realtor-apartments" role="tab" data-toggle="tab" aria-selected="false">
-                            <i class="fas building"></i> Realtor Apartments
+                            <i class="fas fa-building"></i> Realtor Apartments
                             </a>
                         </li>
                         {% endif %}
