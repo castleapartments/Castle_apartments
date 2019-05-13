@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.forms import modelformset_factory
+from django.http import HttpResponseForbidden
 
 from .models import Apartment, ApartmentImages, Search
 from .forms import ApartmentForm, ApartmentImageForm, SearchForm
@@ -206,9 +207,9 @@ def search_delete(request, search_id):
     try:
         search_object = search_manager.get_by_id(search_id)
     except ObjectDoesNotExist:
-        return redirect('index')
+        return HttpResponseForbidden()
     if search_object.owner != request.user:
-        return redirect('index')
+        return HttpResponseForbidden()
 
     search_object.delete()
     return redirect('my_apartments')
@@ -253,7 +254,7 @@ def add(request):
                 apartment_image = ApartmentImages(apartment_id=apartment_object, image=image)
                 apartment_image.save() 
 
-            return redirect('view_apartment', apartment_id=apartment_object.apartment_id)
+                return redirect('my_apartments')
         else:
             print('apartment errors:', apartment_form.errors)
             print('image_formset errors:', image_formset.errors)
@@ -271,3 +272,29 @@ def my(request):
         'your_searches'  : search_manager.get_owners_searches(owner)[:10]
     }
     return render(request, 'apartments/my.html', context)
+
+
+@login_required
+def edit_apartment(request, apartment_id):
+    try:
+        apartment = apartment_manager.get_by_id(apartment_id)
+    except ObjectDoesNotExist:
+        return HttpResponseForbidden()
+    if apartment.owner != request.user or not request.user.is_staff:
+        return HttpResponseForbidden()
+
+    return redirect('my_apartments')
+
+
+@login_required
+def delete_apartment(request, apartment_id):
+    try:
+        apartment = apartment_manager.get_by_id(apartment_id)
+    except ObjectDoesNotExist:
+        return HttpResponseForbidden()
+    if apartment.owner != request.user or not request.user.is_staff:
+        return HttpResponseForbidden()
+
+    apartment.delete()
+
+    return redirect('my_apartments')
