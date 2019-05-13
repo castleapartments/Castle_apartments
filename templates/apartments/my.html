@@ -10,6 +10,23 @@
                     <h4 class="card-title">MY APARTMENTS </h4>
                 </div>
 
+                <div class="d-flex justify-content-center" style="margin-top:20px;">
+                    <ul class="nav nav-pills nav-pills-icons" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active show" href="#your-apartments" role="tab" data-toggle="tab" aria-selected="true">
+                            <i class="fas fa-home"></i> Your Apartments
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#your-searches" role="tab" data-toggle="tab" aria-selected="false">
+                            <i class="fas fas fa-search"></i></i> Your Searches
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tab-content tab-space">
+                <div class="tab-pane active show" id="your-apartments">
                 <!--APARTMENTS-->
                 <div class="title text-center">
                     <h2>Your Apartments</h2>
@@ -39,12 +56,16 @@
                             {% endif %}
                             <td>
                                 <a href="{% url 'view_apartment' apartment.apartment_id %}"><button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-shopping-cart"></i> View</button></a>
-                                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button>
+                                <a href="{% url 'edit_apartment' apartment.apartment_id %}"><button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</button></a>
+                                <a href="{% url 'delete_apartment' apartment.apartment_id %}" onclick="return confirm('Are you sure you want to delete this?')"><button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-times"></i> Delete</button></a>
                             </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+
+                </div>
+                <div class="tab-pane" id="your-searches">
 
                 <!--SEARCH HISTORY-->
                 <div class="title text-center">
@@ -74,12 +95,11 @@
                     </tbody>
                 </table>
 
+                </div>
+                </div>
 
 
-
-
-
-
+                {% if user.is_staff %}
 
                 <div class="d-flex justify-content-center" style="margin-top:20px;">
                 <ul class="nav nav-pills nav-pills-icons" role="tablist">
@@ -405,6 +425,8 @@
                 </table>
                 </div>
                 </div>
+
+                {% endif %}
 
                 <!--FOOTER-->
                 <div class="footer text-center">
