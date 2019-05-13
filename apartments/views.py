@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.forms import modelformset_factory
 from django.http import HttpResponseForbidden
 
+import copy
+
 from .models import Apartment, ApartmentImages, Search
 from .forms import ApartmentForm, ApartmentImageForm, SearchForm
 
@@ -240,7 +242,8 @@ def add(request):
                     continue
                 image = form['image']
                 if not bool(apartment_object.photo_main):
-                    apartment_object.photo_main = image
+                    image_copy = copy.deepcopy(image)
+                    apartment_object.photo_main = image_copy
                     apartment_object.save()
 
                 apartment_image = ApartmentImages(apartment_id=apartment_object, image=image)
