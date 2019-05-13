@@ -7,6 +7,10 @@ from django.contrib.auth.models import User
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
+from cloudinary.forms import CloudinaryJsFileField, CloudinaryUnsignedJsFileField
+from cloudinary.compat import to_bytes
+import cloudinary, hashlib
+
 from base.models import Person, Card, UserProfile, UserCreditCard
 
 
@@ -20,6 +24,8 @@ class UserForm(forms.ModelForm):
     #    self.helper = FormHelper()
     #    self.helper.form_method = 'post'
     #    self.helper.add_input(Submit('submit', 'Save person'))
+
+
 
 class ProfileForm(forms.ModelForm):
     #photo_main = forms.ImageField(widget=forms.widgets.FileInput)
@@ -38,6 +44,7 @@ class ProfileForm(forms.ModelForm):
                 'city',
                 'country',
                 'photo_main',
+                'image',
             )
 
 
@@ -46,7 +53,13 @@ class ProfileForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Save profile'))
-    
+
+class PhotoDirectForm(ProfileForm):
+    image = CloudinaryJsFileField()
+
+class PhotoUnsignedDirectForm(ProfileForm):
+    upload_preset_name = "sample_" + hashlib.sha1(to_bytes(cloudinary.config().api_key + cloudinary.config().api_secret)).hexdigest()[0:10]
+    image = CloudinaryUnsignedJsFileField(upload_preset_name)
 #class PersonForm(forms.ModelForm):
 #    class Meta:
 #        model = Person

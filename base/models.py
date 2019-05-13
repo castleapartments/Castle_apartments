@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
+from cloudinary.models import CloudinaryField
 
 class Person(models.Model):
     name = models.CharField(max_length=130)
@@ -33,6 +34,7 @@ class UserProfile(models.Model):
     country = CountryField(blank=True, null=True)
 
     photo_main = models.ImageField(null=True, blank=True)
+    image = CloudinaryField('image', null=True, blank=True)
 
     def __str__(self):
         return "Username : " + self.user.username + " - Name : " +self.user.first_name + " " + self.user.last_name
