@@ -6,7 +6,7 @@ from django.forms import modelformset_factory
 from django.db.models import Q
 
 from .models import Apartment, ApartmentImages
-from .forms import ApartmentForm, ApartmentImageForm
+from .forms import ApartmentForm, ApartmentImageForm, SearchForm
 
 from datetime import datetime, timedelta
 from collections import namedtuple
@@ -245,6 +245,30 @@ def search(request):
 
     context['apartments'] = apartment_manager.get_featured(page)
     return render(request, 'apartments/search.html', context)
+
+
+def search2(request):
+    page = request.GET.get('page')
+    context = {
+        'search_country_cites': apartment_manager.build_country_city_dict(),
+        'search_types'        : Apartment.TYPE_CHOICES,
+        'search_prices'       : PRICE_RANGE,
+        'search_sizes'        : SIZE_RANGE,
+        'search_rooms'        : ROOMS_RANGE,
+        'search_results'      : False,
+    }
+    if request.method == "POST":
+        search_form = SearchForm(request.POST)
+        if search_form.is_valid():
+            search_object = search_form.save(commit=False)
+            search_object.created = datetime.now()
+            if not request.user.is_anonymous:
+                search_object.owner = request.user
+            print(search_object)
+        context['search_results'] = True
+
+    context['apartments'] = apartment_manager.get_featured(page)
+    return render(request, 'apartments/search2.html', context)
 
 
 def view(request, apartment_id):

@@ -3,8 +3,6 @@ from django.contrib.auth.models import User
 
 from datetime import datetime, timezone
 
-import uuid
-
 
 class Apartment(models.Model):
     apartment_id = models.AutoField(primary_key=True)
@@ -101,3 +99,33 @@ class Apartment(models.Model):
 class ApartmentImages(models.Model):
     apartment_id = models.ForeignKey(Apartment, default=None, on_delete=models.CASCADE)
     image = models.ImageField()
+
+
+class Search(models.Model):
+    search_id = models.AutoField(primary_key=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    owner = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+
+    min_size = models.IntegerField(null=True)
+    max_size = models.IntegerField(null=True)
+    min_rooms = models.IntegerField(null=True)
+    max_rooms = models.IntegerField(null=True)
+    min_price = models.IntegerField(null=True)
+    max_price = models.IntegerField(null=True)
+
+    street = models.CharField(max_length=100, blank=True)
+    description = models.CharField(max_length=100, blank=True)
+
+    AGE_CHOICES = (
+            ('d', '1 Day'),
+            ('w', '1 Week'),
+        )
+    age = models.CharField(
+        max_length=1,
+        choices=AGE_CHOICES,
+        blank=True
+    )
+
+    def __str__(self):
+        return f'{self.search_id} {self.created} {self.owner} {self.min_size} {self.max_size} {self.min_price} {self.max_price} {self.min_rooms} {self.max_rooms} {self.age}'
