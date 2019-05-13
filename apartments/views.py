@@ -249,7 +249,7 @@ def add(request):
                 apartment_image = ApartmentImages(apartment_id=apartment_object, image=image)
                 apartment_image.save()
 
-                return redirect('my_apartments')
+            return redirect('my_apartments')
         else:
             print('apartment errors:', apartment_form.errors)
             print('image_formset errors:', image_formset.errors)
