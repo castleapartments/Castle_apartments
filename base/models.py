@@ -2,11 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
 
-class Person(models.Model):
-    name = models.CharField(max_length=130)
-    email = models.EmailField(blank=True)
-    job_title = models.CharField(max_length=30, blank=True)
-    bio = models.TextField(blank=True)
+#class Person(models.Model):
+#    name = models.CharField(max_length=130)
+#    email = models.EmailField(blank=True)
+#    job_title = models.CharField(max_length=30, blank=True)
+#    bio = models.TextField(blank=True)
 
 class Card(models.Model):
     name = models.CharField(max_length=130)
