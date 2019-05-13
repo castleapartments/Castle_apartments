@@ -83,6 +83,9 @@ class SearchManager(object):
         apartments = search_object.filter_description(apartments)
         return apartments
 
+    def get_owners_searches(self, owner):
+        return self._get_all().filter(owner=owner)
+
 
 class ApartmentManager(object):
     def __init__(self):
@@ -111,24 +114,11 @@ class ApartmentManager(object):
         return self.get_all(page)
 
     @staticmethod
-    def get_apartment_by_id(apartment_id):
+    def get_by_id(apartment_id):
         try:
             return Apartment.objects.get(apartment_id=apartment_id)
         except ObjectDoesNotExist:
             return None
-
-    def get_search_results(self, search_dict, page):
-        search = SearchResultsBuilder(search_dict)
-        apartments = self.get_approved()
-        apartments = search.filter_location(apartments)
-        apartments = search.filter_types(apartments)
-        apartments = search.filter_price(apartments)
-        apartments = search.filter_size(apartments)
-        apartments = search.filter_rooms(apartments)
-        apartments = search.filter_age(apartments)
-        apartments = search.filter_street(apartments)
-        apartments = search.filter_description(apartments)
-        return self.paginate(apartments, page)
 
     def build_country_city_dict(self):
         all_apartments = self.get_approved()
@@ -211,10 +201,24 @@ def search_results(request, search_id):
     return render(request, 'apartments/search2.html', context)
 
 
+def search_delete(request, search_id):
+    if request.user.is_anonymous:
+        return redirect('index')
+    try:
+        search_object = search_manager.get_by_id(search_id)
+    except ObjectDoesNotExist:
+        return redirect('index')
+    if search_object.owner != request.user:
+        return redirect('index')
+
+    search_object.delete()
+    return redirect('my_apartments')
+
+
 def view(request, apartment_id):
     images = ApartmentImages.objects.all().filter(apartment_id=apartment_id)
     context = {
-        'apartment'  : apartment_manager.get_apartment_by_id(apartment_id),
+        'apartment'  : apartment_manager.get_by_id(apartment_id),
         'images'     : images,
     }
     return render(request, 'apartments/view.html', context)
@@ -260,6 +264,7 @@ def add(request):
 def my(request):
     owner = request.user
     context = {
-        'your_apartments': apartment_manager.get_owners_apartments(owner)
+        'your_apartments': apartment_manager.get_owners_apartments(owner),
+        'your_searches'  : search_manager.get_owners_searches(owner)[:10]
     }
     return render(request, 'apartments/my.html', context)

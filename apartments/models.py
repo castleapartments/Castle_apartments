@@ -218,21 +218,39 @@ class Search(models.Model):
         return apartments
 
     def __str__(self):
-        s = ''
-        s += f'\nsearch_id   : {self.search_id}'
-        s += f'\ncreated     : {self.created}'
-        s += f'\nowner       : {self.owner}'
-        s += f'\ncity        : {self.cities}'
-        s += f'\ncountry     : {self.countries}'
-        s += f'\ntypes       : {self.types}'
-        s += f'\nmin_size    : {self.min_size}'
-        s += f'\nmax_size    : {self.max_size}'
-        s += f'\nmin_price   : {self.min_price}'
-        s += f'\nmax_price   : {self.max_price}'
-        s += f'\nmin_rooms   : {self.min_rooms}'
-        s += f'\nmax_rooms   : {self.max_rooms}'
-        s += f'\nstreet      : {self.street}'
-        s += f'\ndescription : {self.description}'
-        s += f'\nmax_size    : {self.max_size}'
-        s += f'\nage         : {self.age}'
-        return s
+        options = []
+        if self.cities:
+            options.append('Cities: ({})'.format(','.join([c for c in self.cities])))
+        if self.countries:
+            options.append('Countries: ({})'.format(','.join([c for c in self.countries])))
+        if self.types:
+            type_choices = dict(Apartment.TYPE_CHOICES)
+            options.append('Types: ({})'.format(','.join([type_choices[c] for c in self.types])))
+        if self.min_size or self.max_size:
+            options.append('Size: {} to {}'.format(self.min_size if self.min_size else 'Any', self.min_size if self.min_size else 'Any'))
+        if self.min_price or self.max_price:
+            options.append('Price: {} to {}'.format(self.min_price if self.min_price else 'Any', self.max_price if self.max_price else 'Any'))
+        if self.min_rooms or self.max_rooms:
+            options.append('Size: {} to {}'.format(self.min_rooms if self.min_rooms else 'Any', self.max_rooms if self.max_rooms else 'Any'))
+        if self.street:
+            options.append("Street: '{}'".format(self.street))
+        if self.description:
+            options.append("Description: '{}'".format(self.description))
+
+        if self.age == 'd':
+            options.append('Age: 1 Day')
+        elif self.age == 'w':
+            options.append('Age: 1 Week')
+        else:
+            options.append('Age: Any')
+
+        return '; '.join(options)
+
+    def history_age(self):
+        days_ago = (datetime.now(timezone.utc) - self.created).days
+        if days_ago < 1:
+            return 'Today'
+        elif days_ago < 2:
+            return 'Yesterday'
+        else:
+            return f'{days_ago} days ago'
