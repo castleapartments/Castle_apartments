@@ -43,6 +43,18 @@ class Apartment(models.Model):
     description = models.TextField(blank=True, null=True, default='')
     price = models.IntegerField(default=0)
 
+    VALID_FEATURES = [
+        'Garage',
+        'Private Entrance',
+        'Elevator',
+        'Wheelchair Access',
+        'Garden',
+        'Animals Allowed',
+        'Storage',
+        'Shed',
+    ]
+    features = JSONField(default=list)
+
     approved = models.BooleanField(default=False)
     approval_date = models.DateTimeField(blank=True, null=True)
     featured = models.BooleanField(default=False)

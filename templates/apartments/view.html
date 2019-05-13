@@ -72,15 +72,18 @@
                                 <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-shopping-cart"></i> Buy</button>
                                 <button type="submit" class="btn btn-info btn-lg"><i class="fas fa-edit"></i> Edit</button>
                         </div>
+                        {% if apartment.features %}
                         <div class="title">
                             <h3>Features</h3>
                         </div>
                         <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><i class="fas fa-check"></i><span class="feature">Elevator</span></li>
-                                <li class="list-group-item"><i class="fas fa-check"></i><span class="feature">Garden</span></li>
-                                <li class="list-group-item"><i class="fas fa-check"></i><span class="feature">Wheelchair access</span></li>
+                            {% for feature in apartment.features %}
+                            <li class="list-group-item"><i class="fas fa-check"></i><span class="feature">{{ feature }}</span></li>
+                            {% endfor %}
                         </ul>
+                        {% endif %}
                         <div class="real-estate-agent">
+                            {% if apartment.realtor %}
                             <div class="rea-image text-center">
                                     <img src="http://www.facetheforce.today/random/200?{{usr.first_name}}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
                             </div>
@@ -90,6 +93,7 @@
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-comments"></i> Contact</button>
                             </div>
+                            {% endif %}
 
                         </div>
 

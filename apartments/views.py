@@ -1,16 +1,14 @@
 from django.shortcuts import render, redirect
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.forms import modelformset_factory
-from django.db.models import Q
 
 from .models import Apartment, ApartmentImages, Search
 from .forms import ApartmentForm, ApartmentImageForm, SearchForm
 
-from datetime import datetime, timedelta
+from datetime import datetime
 from collections import namedtuple
-
 
 
 RangeValue = namedtuple('RangeValue', ['value', 'display'])
@@ -173,7 +171,7 @@ def search(request):
             return redirect('search_results', search_id=search_object.search_id)
 
     context['apartments'] = apartment_manager.get_featured(page)
-    return render(request, 'apartments/search2.html', context)
+    return render(request, 'apartments/search.html', context)
 
 
 def search_results(request, search_id):
@@ -198,7 +196,7 @@ def search_results(request, search_id):
     if request.method == "POST":
         return search(request)
 
-    return render(request, 'apartments/search2.html', context)
+    return render(request, 'apartments/search.html', context)
 
 
 def search_delete(request, search_id):
@@ -226,12 +224,10 @@ def view(request, apartment_id):
 
 @login_required
 def add(request):
-    #https://stackoverflow.com/questions/34006994/how-to-upload-multiple-images-to-a-blog-post-in-django
     image_form_set = modelformset_factory(ApartmentImages, form=ApartmentImageForm, extra=MAX_NUMBER_OF_IMAGES)
 
     if request.method == "POST":
         apartment_form = ApartmentForm(request.POST)
-        # image_formset = image_form_set(request.POST, request.FILES, queryset=ApartmentImages.object.none())
         image_formset = image_form_set(request.POST, request.FILES)
         if apartment_form.is_valid() and image_formset.is_valid():
             apartment_object = apartment_form.save(commit=False)

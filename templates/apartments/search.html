@@ -72,7 +72,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <select class="form-control search-select" name="lower_price">
+                                    <select class="form-control search-select" name="min_price">
                                         <option value="NULL" disabled selected>From:</option>
                                         {% for price in search_prices %}
                                         <option value="{{ price.value }}">{{ price.display }}</option>
@@ -82,7 +82,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <select class="form-control search-select" name="upper_price">
+                                    <select class="form-control search-select" name="max_price">
                                         <option value="NULL" disabled selected>To:</option>
                                         {% for price in search_prices %}
                                         <option value="{{ price.value }}">{{ price.display }}</option>
@@ -98,7 +98,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <select class="form-control search-select" name="lower_size">
+                                    <select class="form-control search-select" name="min_size">
                                         <option value="NULL" disabled selected>From:</option>
                                         {% for size in search_sizes %}
                                         <option value="{{ size.value }}">{{ size.display }}</option>
@@ -108,7 +108,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <select class="form-control search-select" name="upper_size">
+                                    <select class="form-control search-select" name="max_size">
                                         <option value="NULL" disabled selected>To:</option>
                                         {% for size in search_sizes %}
                                         <option value="{{ size.value }}">{{ size.display }}</option>
@@ -124,7 +124,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <select class="form-control search-select" name="lower_rooms">
+                                    <select class="form-control search-select" name="min_rooms">
                                         <option value="NULL" disabled selected>From:</option>
                                         {% for room in search_rooms %}
                                         <option value="{{ room.value }}">{{ room.display }}</option>
@@ -134,7 +134,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <select class="form-control search-select" name="upper_rooms">
+                                    <select class="form-control search-select" name="max_rooms">
                                         <option value="NULL" disabled selected>To:</option>
                                         {% for room in search_rooms %}
                                         <option value="{{ room.value }}">{{ room.display }}</option>
@@ -167,7 +167,7 @@
                         </div>
                         <div class="form-check">
                             <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="age" checked value="any"> Any
+                            <input class="form-check-input" type="radio" name="age" checked value=""> Any
                             <span class="circle">
                             <span class="check"></span>
                             </span>
@@ -175,7 +175,7 @@
                         </div>
                         <div class="form-check">
                             <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="age" value="1_day"> 1 Day
+                            <input class="form-check-input" type="radio" name="age" value="d"> 1 Day
                             <span class="circle">
                             <span class="check"></span>
                             </span>
@@ -183,7 +183,7 @@
                         </div>
                         <div class="form-check">
                             <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="age" value="1_week"> 1 Week
+                            <input class="form-check-input" type="radio" name="age" value="w"> 1 Week
                             <span class="circle">
                             <span class="check"></span>
                             </span>
