@@ -3,6 +3,7 @@ from .models import Apartment, ApartmentImages, Search
 from crispy_forms.helper import FormHelper
 # from crispy_forms.layout import Layout, Row, Column, Submit
 
+from cloudinary.forms import CloudinaryJsFileField
 
 class ApartmentForm(forms.ModelForm):
     street_name = forms.CharField(label="Street Name")
@@ -25,12 +26,15 @@ class ApartmentForm(forms.ModelForm):
 
 
 class ApartmentImageForm(forms.ModelForm):
-    image = forms.ImageField(label='Image')
-
+    #image = forms.ImageField(label='Image')
+    #image = CloudinaryJsFileField()
+    
     class Meta:
         model = ApartmentImages
         fields = ('image', )
 
+class PhotoDirectForm(ApartmentImageForm):
+    image = CloudinaryJsFileField()
 
 class SearchForm(forms.ModelForm):
     min_size = forms.IntegerField(required=False)

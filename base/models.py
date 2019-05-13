@@ -33,8 +33,8 @@ class UserProfile(models.Model):
     city = models.CharField(max_length=50, default='', blank=True, null=True)
     country = CountryField(blank=True, null=True)
 
-    photo_main = models.ImageField(null=True, blank=True)
-    image = CloudinaryField('image', null=True, blank=True)
+    photo_main = CloudinaryField(null=True, blank=True)
+
 
     def __str__(self):
         return "Username : " + self.user.username + " - Name : " +self.user.first_name + " " + self.user.last_name

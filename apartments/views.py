@@ -4,9 +4,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.forms import modelformset_factory
 from django.db.models import Q
-
+import copy
 from .models import Apartment, ApartmentImages
-from .forms import ApartmentForm, ApartmentImageForm, SearchForm
+from .forms import ApartmentForm, ApartmentImageForm, SearchForm, PhotoDirectForm
+
+
 
 from datetime import datetime, timedelta
 from collections import namedtuple
@@ -296,15 +298,21 @@ def add(request):
             apartment_object.save()
 
             for form in image_formset.cleaned_data:
+
                 if not form:
                     continue
                 image = form['image']
+
                 if not bool(apartment_object.photo_main):
-                    apartment_object.photo_main = image
+
+                    # .save() empties the image object..
+                    image_main = copy.deepcopy(image)
+
+                    apartment_object.photo_main = image_main
                     apartment_object.save()
 
                 apartment_image = ApartmentImages(apartment_id=apartment_object, image=image)
-                apartment_image.save()
+                apartment_image.save() 
 
             return redirect('view_apartment', apartment_id=apartment_object.apartment_id)
         else:
