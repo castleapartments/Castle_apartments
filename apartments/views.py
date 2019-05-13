@@ -260,11 +260,15 @@ def search2(request):
     if request.method == "POST":
         search_form = SearchForm(request.POST)
         if search_form.is_valid():
+            print('SEARCH IS VALID')
             search_object = search_form.save(commit=False)
             search_object.created = datetime.now()
+            search_object.populate(request.POST)
             if not request.user.is_anonymous:
                 search_object.owner = request.user
             print(search_object)
+        else:
+            print('SEARCH IS INVALID')
         context['search_results'] = True
 
     context['apartments'] = apartment_manager.get_featured(page)

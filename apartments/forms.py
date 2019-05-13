@@ -33,6 +33,9 @@ class ApartmentImageForm(forms.ModelForm):
 
 
 class SearchForm(forms.ModelForm):
+    # city = forms.CharField(required=False, max_length=50, default='')
+    # country = forms.CharField(required=False, max_length=50, default='')
+
     min_size = forms.IntegerField(required=False)
     max_size = forms.IntegerField(required=False)
     min_rooms = forms.IntegerField(required=False)
@@ -40,6 +43,19 @@ class SearchForm(forms.ModelForm):
     min_price = forms.IntegerField(required=False)
     max_price = forms.IntegerField(required=False)
 
+    # street = forms.CharField(required=False, max_length=100, default='')
+    # description = forms.CharField(required=False, max_length=100, default='')
+
     class Meta:
         model = Search
-        fields = ('min_size', 'max_size', 'min_rooms', 'max_rooms', 'min_price', 'max_price', 'street', 'description', 'age')
+        fields = (
+            'min_size',
+            'max_size',
+            'min_rooms',
+            'max_rooms',
+            'min_price',
+            'max_price',
+            'street',
+            'description',
+            'age'
+        )

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import JSONField
 
 from datetime import datetime, timezone
 
@@ -107,6 +108,10 @@ class Search(models.Model):
 
     owner = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
+    cities = JSONField(default=list)
+    countries = JSONField(default=list)
+    types = JSONField(default=list)
+
     min_size = models.IntegerField(null=True)
     max_size = models.IntegerField(null=True)
     min_rooms = models.IntegerField(null=True)
@@ -127,5 +132,37 @@ class Search(models.Model):
         blank=True
     )
 
+    def populate(self, search_form):
+        self._populate_types(search_form.getlist('types'))
+        self._populate_countries(search_form.getlist('country'))
+        self._populate_cities(search_form.getlist('city'))
+
+    def _populate_types(self, types):
+        valid_types = [t[0] for t in Apartment.TYPE_CHOICES]
+        self.types = [t for t in types if t in valid_types]
+
+    def _populate_countries(self, countries):
+        self.countries = [c for c in countries]
+
+    def _populate_cities(self, cities):
+        self.cities = [c for c in cities]
+
     def __str__(self):
-        return f'{self.search_id} {self.created} {self.owner} {self.min_size} {self.max_size} {self.min_price} {self.max_price} {self.min_rooms} {self.max_rooms} {self.age}'
+        s = ''
+        s += f'\nsearch_id   : {self.search_id}'
+        s += f'\ncreated     : {self.created}'
+        s += f'\nowner       : {self.owner}'
+        s += f'\ncity        : {self.cities}'
+        s += f'\ncountry     : {self.countries}'
+        s += f'\ntypes       : {self.types}'
+        s += f'\nmin_size    : {self.min_size}'
+        s += f'\nmax_size    : {self.max_size}'
+        s += f'\nmin_price   : {self.min_price}'
+        s += f'\nmax_price   : {self.max_price}'
+        s += f'\nmin_rooms   : {self.min_rooms}'
+        s += f'\nmax_rooms   : {self.max_rooms}'
+        s += f'\nstreet      : {self.street}'
+        s += f'\ndescription : {self.description}'
+        s += f'\nmax_size    : {self.max_size}'
+        s += f'\nage         : {self.age}'
+        return s
