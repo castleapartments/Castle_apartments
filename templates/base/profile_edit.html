@@ -1,6 +1,7 @@
 {% extends "_base.html" %}
 {% load staticfiles %}
 {% load crispy_forms_tags %}
+{% load cloudinary %}
 
 {% block title %}
 Castle Apartments - Profile
@@ -183,7 +184,9 @@ Castle Apartments - Profile
                         <input type="submit" class="btn btn-primary btn-link btn-wd btn-lg" name="" value="Update profile">
                         <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-primary btn-link btn-wd btn-lg">Go back</a>
                     </div>
+
                 </form>
+               
             </div>
         </div>
     </div>

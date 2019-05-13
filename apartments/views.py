@@ -6,6 +6,8 @@ from django.forms import modelformset_factory
 
 from .models import Apartment, ApartmentImages, Search
 from .forms import ApartmentForm, ApartmentImageForm, SearchForm
+from django.db.models import Q
+import copy
 
 from datetime import datetime
 from collections import namedtuple
@@ -235,15 +237,21 @@ def add(request):
             apartment_object.save()
 
             for form in image_formset.cleaned_data:
+
                 if not form:
                     continue
                 image = form['image']
+
                 if not bool(apartment_object.photo_main):
-                    apartment_object.photo_main = image
+
+                    # .save() empties the image object..
+                    image_main = copy.deepcopy(image)
+
+                    apartment_object.photo_main = image_main
                     apartment_object.save()
 
                 apartment_image = ApartmentImages(apartment_id=apartment_object, image=image)
-                apartment_image.save()
+                apartment_image.save() 
 
             return redirect('view_apartment', apartment_id=apartment_object.apartment_id)
         else:

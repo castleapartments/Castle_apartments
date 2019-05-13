@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
 
 from datetime import datetime, timezone, timedelta
-
+from cloudinary.models import CloudinaryField
 
 class Apartment(models.Model):
     apartment_id = models.AutoField(primary_key=True)
@@ -61,7 +61,7 @@ class Apartment(models.Model):
 
     sold = models.BooleanField(default=False)
     sold_date = models.DateField(null=True, blank=True)
-    photo_main = models.ImageField()
+    photo_main = CloudinaryField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.street_name} {self.street_number} - {self.postcode} {self.city}'
@@ -111,7 +111,7 @@ class Apartment(models.Model):
 
 class ApartmentImages(models.Model):
     apartment_id = models.ForeignKey(Apartment, default=None, on_delete=models.CASCADE)
-    image = models.ImageField()
+    image = CloudinaryField(null=True, blank=True)
 
 
 class Search(models.Model):

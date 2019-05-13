@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
+from cloudinary.forms import CloudinaryJsFileField
+
 from base.models import Person, Card, UserProfile, UserCreditCard
 
 
@@ -20,6 +22,8 @@ class UserForm(forms.ModelForm):
     #    self.helper = FormHelper()
     #    self.helper.form_method = 'post'
     #    self.helper.add_input(Submit('submit', 'Save person'))
+
+
 
 class ProfileForm(forms.ModelForm):
     #photo_main = forms.ImageField(widget=forms.widgets.FileInput)
@@ -46,7 +50,10 @@ class ProfileForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Save profile'))
-    
+
+class PhotoDirectForm(ProfileForm):
+    photo_main = CloudinaryJsFileField()
+
 #class PersonForm(forms.ModelForm):
 #    class Meta:
 #        model = Person

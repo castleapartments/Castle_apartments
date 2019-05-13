@@ -1,6 +1,6 @@
 {% extends "_base.html" %}
 {% load staticfiles %}
-
+{% load cloudinary %}
 
 {% block title %}
 Castle Apartments - Profile
@@ -23,7 +23,7 @@ Castle Apartments - Profile
                                 <img src="{{ userprofile.photo_main.url }}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
                             {% else %}
                                 <img src="/media/no_image.png" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
-                            {% endif %}        
+                            {% endif %}
                         </div>
 
                         <div class="row">

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "cloudinary",
     "crispy_forms",
     "base",
     "apartments",
@@ -47,7 +48,8 @@ INSTALLED_APPS = [
     "django_countries",
     "cities",
     "containers",
-    "about"
+    "about",
+    
 ]
 
 MIDDLEWARE = [
@@ -146,6 +148,8 @@ EMAIL_PORT = 25
 EMAIL_USE_TLS = True
 
 
+
+
 """
 # Nice to have for development - will save emails as txt docs instead 
 # of sending them.
@@ -178,5 +182,5 @@ django_heroku.settings(locals())
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = "/"
 
-
+CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL', '')
     
