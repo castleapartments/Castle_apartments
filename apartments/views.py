@@ -5,12 +5,12 @@ from django.contrib.auth.decorators import login_required
 from django.forms import modelformset_factory
 from django.db.models import Q
 
-from .models import Apartment, ApartmentImages
+from .models import Apartment, ApartmentImages, Search
 from .forms import ApartmentForm, ApartmentImageForm, SearchForm
 
 from datetime import datetime, timedelta
 from collections import namedtuple
-import uuid
+
 
 
 RangeValue = namedtuple('RangeValue', ['value', 'display'])
@@ -60,94 +60,28 @@ ROOMS_RANGE = [
 ]
 
 
-class SearchResultsBuilder(object):
-    def __init__(self, search):
-        self._search = search
-        self._types = self._search.getlist('types')
-        self._countries = self._search.getlist('country')
-        self._cities = self._search.getlist('city')
+class SearchManager(object):
+    def __init__(self, apartment_manager):
+        self._apartment_manager = apartment_manager
+    @staticmethod
+    def _get_all():
+        return Search.objects.all()
 
-    def filter_location(self, results):
-        if self._countries:
-            query = None
-            for country in self._countries:
-                if query is None:
-                    query = Q(country=country)
-                else:
-                    query = query | Q(country=country)
-            results = results.filter(query)
-        if self._cities:
-            query = None
-            for city in self._cities:
-                if query is None:
-                    query = Q(city=city)
-                else:
-                    query = query | Q(city=city)
-            results = results.filter(query)
-        return results
+    @staticmethod
+    def get_by_id(search_id):
+        return Search.objects.get(search_id=search_id)
 
-    def filter_types(self, results):
-        if self._types:
-            query = None
-            for type in self._types:
-                if query is None:
-                    query = Q(type=type)
-                else:
-                    query = query | Q(type=type)
-            results = results.filter(query)
-        return results
-
-    def filter_price(self, results):
-        if 'lower_price' in self._search:
-            value = int(self._search.get('lower_price'))
-            results = results.filter(Q(price__gte=value))
-        if 'upper_price' in self._search:
-            value = int(self._search.get('upper_price'))
-            results = results.filter(Q(price__lte=value))
-        return results
-
-    def filter_size(self, results):
-        if 'lower_size' in self._search:
-            value = int(self._search.get('lower_size'))
-            results = results.filter(Q(size__lte=value))
-        if 'upper_size' in self._search:
-            value = int(self._search.get('upper_size'))
-            results = results.filter(Q(size__lte=value))
-        return results
-
-    def filter_rooms(self, results):
-        if 'lower_rooms' in self._search:
-            value = int(self._search.get('lower_rooms'))
-            results = results.filter(Q(rooms__lte=value))
-        if 'upper_rooms' in self._search:
-            value = int(self._search.get('upper_rooms'))
-            results = results.filter(Q(rooms__lte=value))
-        return results
-
-    def filter_street(self, results):
-        if 'street' in self._search:
-            value = self._search.get('street')
-            if len(value) > 0:
-                results = results.filter(Q(street_name__iexact=value))
-        return results
-
-    def filter_description(self, results):
-        if 'description' in self._search:
-            value = self._search.get('description')
-            if len(value) > 0:
-                results = results.filter(Q(description__iexact=value))
-        return results
-
-    def filter_age(self, results):
-        if 'age' in self._search:
-            value = self._search.get('age')
-            if value == '1_day':
-                one_day_ago = datetime.now() - timedelta(days=1)
-                results = results.filter(Q(approval_date__gte=one_day_ago))
-            elif value == '1_week':
-                one_week_ago = datetime.now() - timedelta(days=7)
-                results = results.filter(Q(approval_date__gte=one_week_ago))
-        return results
+    def get_results(self, search_object):
+        apartments = self._apartment_manager.get_approved()
+        apartments = search_object.filter_location(apartments)
+        apartments = search_object.filter_types(apartments)
+        apartments = search_object.filter_price(apartments)
+        apartments = search_object.filter_size(apartments)
+        apartments = search_object.filter_rooms(apartments)
+        apartments = search_object.filter_age(apartments)
+        apartments = search_object.filter_street(apartments)
+        apartments = search_object.filter_description(apartments)
+        return apartments
 
 
 class ApartmentManager(object):
@@ -155,7 +89,7 @@ class ApartmentManager(object):
         self._active_searches = {}
 
     @staticmethod
-    def _page(apartments, page):
+    def paginate(apartments, page):
         paginator = Paginator(apartments, APARTMENTS_PER_PAGE)
         return paginator.get_page(page)
 
@@ -163,17 +97,17 @@ class ApartmentManager(object):
     def _get_all():
         return Apartment.objects.all()
 
-    def _get_approved(self):
+    def get_approved(self):
         return self._get_all().filter(approved=True)
 
     def get_all(self, page, order='-approval_date'):
-        apartments = self._get_approved().order_by(order)
-        return self._page(apartments, page)
+        apartments = self.get_approved().order_by(order)
+        return self.paginate(apartments, page)
 
     def get_featured(self, page):
-        featured_apartments = self._get_approved().filter(featured=True)
+        featured_apartments = self.get_approved().filter(featured=True)
         if len(featured_apartments) > 0:
-            return self._page(featured_apartments, page)
+            return self.paginate(featured_apartments, page)
         return self.get_all(page)
 
     @staticmethod
@@ -185,7 +119,7 @@ class ApartmentManager(object):
 
     def get_search_results(self, search_dict, page):
         search = SearchResultsBuilder(search_dict)
-        apartments = self._get_approved()
+        apartments = self.get_approved()
         apartments = search.filter_location(apartments)
         apartments = search.filter_types(apartments)
         apartments = search.filter_price(apartments)
@@ -194,10 +128,10 @@ class ApartmentManager(object):
         apartments = search.filter_age(apartments)
         apartments = search.filter_street(apartments)
         apartments = search.filter_description(apartments)
-        return self._page(apartments, page)
+        return self.paginate(apartments, page)
 
     def build_country_city_dict(self):
-        all_apartments = self._get_approved()
+        all_apartments = self.get_approved()
         all_countries = set([a.country for a in all_apartments])
         country_city_dict = dict(((c, set()) for c in all_countries))
 
@@ -212,8 +146,8 @@ class ApartmentManager(object):
         return self._get_all().filter(owner=owner)
 
 
-
 apartment_manager = ApartmentManager()
+search_manager = SearchManager(apartment_manager)
 
 
 def list_all(request):
@@ -228,26 +162,6 @@ def list_featured(request):
 
 
 def search(request):
-    context = {
-        'search_country_cites': apartment_manager.build_country_city_dict(),
-        'search_types'        : Apartment.TYPE_CHOICES,
-        'search_prices'       : PRICE_RANGE,
-        'search_sizes'        : SIZE_RANGE,
-        'search_rooms'        : ROOMS_RANGE,
-        'search_results'      : False,
-    }
-
-    page = request.GET.get('page')
-    if request.method == "POST":
-        context['search_results'] = True
-        context['apartments'] = apartment_manager.get_search_results(request.POST, page)
-        return render(request, 'apartments/search.html', context)
-
-    context['apartments'] = apartment_manager.get_featured(page)
-    return render(request, 'apartments/search.html', context)
-
-
-def search2(request):
     page = request.GET.get('page')
     context = {
         'search_country_cites': apartment_manager.build_country_city_dict(),
@@ -260,18 +174,40 @@ def search2(request):
     if request.method == "POST":
         search_form = SearchForm(request.POST)
         if search_form.is_valid():
-            print('SEARCH IS VALID')
             search_object = search_form.save(commit=False)
             search_object.created = datetime.now()
             search_object.populate(request.POST)
             if not request.user.is_anonymous:
                 search_object.owner = request.user
-            print(search_object)
-        else:
-            print('SEARCH IS INVALID')
-        context['search_results'] = True
+            search_object.save()
+            return redirect('search_results', search_id=search_object.search_id)
 
     context['apartments'] = apartment_manager.get_featured(page)
+    return render(request, 'apartments/search2.html', context)
+
+
+def search_results(request, search_id):
+    try:
+        search_object = search_manager.get_by_id(search_id)
+    except ObjectDoesNotExist:
+        return redirect('search2')
+
+    page = request.GET.get('page')
+    found_apartments = search_manager.get_results(search_object)
+    paginated_found_apartments = apartment_manager.paginate(found_apartments, page)
+    context = {
+        'search_country_cites': apartment_manager.build_country_city_dict(),
+        'search_types'        : Apartment.TYPE_CHOICES,
+        'search_prices'       : PRICE_RANGE,
+        'search_sizes'        : SIZE_RANGE,
+        'search_rooms'        : ROOMS_RANGE,
+        'search_results'      : True,
+        'apartments'          : paginated_found_apartments
+    }
+
+    if request.method == "POST":
+        return search(request)
+
     return render(request, 'apartments/search2.html', context)
 
 

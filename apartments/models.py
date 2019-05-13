@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
 
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 
 class Apartment(models.Model):
@@ -146,6 +146,76 @@ class Search(models.Model):
 
     def _populate_cities(self, cities):
         self.cities = [c for c in cities]
+
+    def filter_location(self, apartments):
+        if self.countries:
+            query = None
+            for country in self.countries:
+                if query is None:
+                    query = models.Q(country=country)
+                else:
+                    query = query | models.Q(country=country)
+            apartments = apartments.filter(query)
+        if self.cities:
+            query = None
+            for city in self.cities:
+                if query is None:
+                    query = models.Q(city=city)
+                else:
+                    query = query | models.Q(city=city)
+            apartments = apartments.filter(query)
+        return apartments
+
+    def filter_types(self, apartments):
+        if self.types:
+            query = None
+            for type in self.types:
+                if query is None:
+                    query = models.Q(type=type)
+                else:
+                    query = query | models.Q(type=type)
+            apartments = apartments.filter(query)
+        return apartments
+
+    def filter_price(self, apartments):
+        if self.min_price:
+            apartments = apartments.filter(models.Q(price__gte=self.min_price))
+        if self.max_price:
+            apartments = apartments.filter(models.Q(price__lte=self.max_price))
+        return apartments
+
+    def filter_size(self, apartments):
+        if self.min_size:
+            apartments = apartments.filter(models.Q(price__gte=self.min_size))
+        if self.max_size:
+            apartments = apartments.filter(models.Q(price__lte=self.max_size))
+        return apartments
+
+    def filter_rooms(self, apartments):
+        if self.min_rooms:
+            apartments = apartments.filter(models.Q(price__gte=self.min_rooms))
+        if self.max_rooms:
+            apartments = apartments.filter(models.Q(price__lte=self.max_rooms))
+        return apartments
+
+    def filter_age(self, apartments):
+        if self.age == 'd':
+            one_day_ago = datetime.now() - timedelta(days=1)
+            apartments = apartments.filter(models.Q(approval_date__gte=one_day_ago))
+        elif self.age == 'w':
+            one_week_ago = datetime.now() - timedelta(days=7)
+            apartments = apartments.filter(models.Q(approval_date__gte=one_week_ago))
+        return apartments
+
+    def filter_street(self, apartments):
+        if self.street:
+            apartments = apartments.filter(models.Q(street_name__iexact=self.street))
+        return apartments
+
+    def filter_description(self, apartments):
+        if self.description:
+            apartments = apartments.filter(models.Q(description__iexact=self.description))
+        return apartments
 
     def __str__(self):
         s = ''
