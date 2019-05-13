@@ -68,10 +68,14 @@
                             <li class="list-group-item"><i class="fas fa-check"></i><span class="feature-title">Rooms: </span><span class="feature">{{ apartment.rooms }}</span></li>
                             <li class="list-group-item"><i class="fas fa-check"></i><span class="feature-title">Shitters: </span><span class="feature">{{ apartment.bathrooms }}</span></li>
                         </ul>
+                        {% if user.is_authenticated %}
                         <div class="apart-buy-div text-center">
                                 <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-shopping-cart"></i> Buy</button>
+                                {% if user.is_staff or apartment.owner == user %}
                                 <button type="submit" class="btn btn-info btn-lg"><i class="fas fa-edit"></i> Edit</button>
+                                {% endif %}
                         </div>
+                        {% endif %}
                         {% if apartment.features %}
                         <div class="title">
                             <h3>Features</h3>

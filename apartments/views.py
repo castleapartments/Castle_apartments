@@ -199,9 +199,8 @@ def search_results(request, search_id):
     return render(request, 'apartments/search.html', context)
 
 
+@login_required
 def search_delete(request, search_id):
-    if request.user.is_anonymous:
-        return redirect('index')
     try:
         search_object = search_manager.get_by_id(search_id)
     except ObjectDoesNotExist:
