@@ -7,8 +7,6 @@ from django.http import HttpResponseForbidden
 
 from .models import Apartment, ApartmentImages, Search
 from .forms import ApartmentForm, ApartmentImageForm, SearchForm
-from django.db.models import Q
-import copy
 
 from datetime import datetime
 from collections import namedtuple
@@ -238,21 +236,15 @@ def add(request):
             apartment_object.save()
 
             for form in image_formset.cleaned_data:
-
                 if not form:
                     continue
                 image = form['image']
-
                 if not bool(apartment_object.photo_main):
-
-                    # .save() empties the image object..
-                    image_main = copy.deepcopy(image)
-
-                    apartment_object.photo_main = image_main
+                    apartment_object.photo_main = image
                     apartment_object.save()
 
                 apartment_image = ApartmentImages(apartment_id=apartment_object, image=image)
-                apartment_image.save() 
+                apartment_image.save()
 
                 return redirect('my_apartments')
         else:
@@ -296,5 +288,17 @@ def delete_apartment(request, apartment_id):
         return HttpResponseForbidden()
 
     apartment.delete()
+
+    return redirect('my_apartments')
+
+
+@login_required
+def approve_apartment(request, apartment_id):
+    try:
+        apartment = apartment_manager.get_by_id(apartment_id)
+    except ObjectDoesNotExist:
+        return HttpResponseForbidden()
+    if not request.user.is_staff:
+        return HttpResponseForbidden()
 
     return redirect('my_apartments')
