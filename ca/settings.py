@@ -43,10 +43,10 @@ INSTALLED_APPS = [
     "crispy_forms",
     "base",
     "apartments",
-    "image",
-    "searchhistory",
+    #"image",
+    #"searchhistory",
     "django_countries",
-    "cities",
+    #"cities",
     "containers",
     "about",
     
