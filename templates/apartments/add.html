@@ -73,54 +73,25 @@ Create a Apartment
                       {{ apartment_form.description|as_crispy_field }}
                     </div>
               </dic>
-          <div class="col-md-4">
+          <div class="col-md-6">
               <div class="title"  style="margin-top: 0px;">
                   <h3 style="margin-top: 0px;">Features</h3>
               </div>
               <div class="apartment_features">
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" value=""> Type1
+                
+                  {% for feature in features %}       
+                  <div class="form-check">
+                  <label class="form-check-label" for="features_{{ feature.0 }}">
+                    <input class="form-check-input" id="features_{{ feature.0 }}" name="features" type="checkbox" value="{{ feature.1 }}">{{ feature.1 }}
                     <span class="form-check-sign">
                       <span class="check"></span>
                     </span>
                   </label>
                 </div>
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" value=""> Type2
-                    <span class="form-check-sign">
-                      <span class="check"></span>
-                    </span>
-                  </label>
-                </div>
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" value=""> Type3
-                    <span class="form-check-sign">
-                      <span class="check"></span>
-                    </span>
-                  </label>
-                </div>
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" value=""> Type4
-                    <span class="form-check-sign">
-                      <span class="check"></span>
-                    </span>
-                  </label>
-                </div>
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" value=""> Type5
-                    <span class="form-check-sign">
-                      <span class="check"></span>
-                    </span>
-                  </label>
-                </div>
+                {% endfor %}
               </div>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-6">
             <div class="title"  style="margin-top: 0px;">
               <h3 style="margin-top: 0px;">Photos</h3>
             </div>
@@ -166,17 +137,10 @@ Create a Apartment
               <h3 style="margin: 15px 0;">Settings</h3>
             </div>
             <div class="">
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                      <input class="form-check-input" type="checkbox" value=""> Submit
-                      <span class="form-check-sign">
-                        <span class="check"></span>
-                      </span>
-                    </label>
-                  </div>
+               
                   <div class="form-check form-check-inline" style="margin-right:15px;">
                       <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" value=""> For sale
+                        <input class="form-check-input" type="checkbox" value=""> Put up for sale
                         <span class="form-check-sign">
                           <span class="check"></span>
                         </span>

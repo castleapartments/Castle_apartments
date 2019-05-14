@@ -43,16 +43,16 @@ class Apartment(models.Model):
     description = models.TextField(blank=True, null=True, default='')
     price = models.IntegerField(default=0)
 
-    VALID_FEATURES = [
-        'Garage',
-        'Private Entrance',
-        'Elevator',
-        'Wheelchair Access',
-        'Garden',
-        'Animals Allowed',
-        'Storage',
-        'Shed',
-    ]
+    VALID_FEATURES = (
+        ('garage','Garage',
+        ('private_entrance',    'Private Entrance')),
+        ('elevator',            'Elevator'),
+        ('wheelchair_access',   'Wheelchair Access'),
+        ('garden',              'Garden'),
+        ('animals_allowed',     'Animals Allowed'),
+        ('storage',             'Storage'),
+        ('shed',                'Shed'),
+    )
     features = JSONField(default=list)
 
     approved = models.BooleanField(default=False)
@@ -61,6 +61,15 @@ class Apartment(models.Model):
 
     sold = models.BooleanField(default=False)
     sold_date = models.DateField(null=True, blank=True)
+
+    def populate(self, apartment_form):
+        self._populate_features(apartment_form.getlist('features'))
+
+    def _populate_features(self, features):
+        valid_features = [t[1] for t in Apartment.VALID_FEATURES]
+        self.features = [t for t in features if t in valid_features]
+
+
 
     def __str__(self):
         return f'{self.street_name} {self.street_number} - {self.postcode} {self.city}'

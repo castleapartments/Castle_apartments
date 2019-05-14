@@ -5,8 +5,6 @@ from django.contrib.auth.decorators import login_required
 from django.forms import modelformset_factory
 from django.http import HttpResponseForbidden
 
-import copy
-
 from .models import Apartment, ApartmentImages, Search
 from .forms import ApartmentForm, ApartmentImageForm, SearchForm
 from base.models import UserProfile
@@ -221,10 +219,9 @@ def search_delete(request, search_id):
     search_object.delete()
     return redirect('my_apartments')
 
-
 def view(request, apartment_id):
-    images = ApartmentImages.objects.all().filter(apartment_id=apartment_id)
-    apartment = apartment_manager.get_by_id(apartment_id)
+    images = ApartmentImages.objects.all().filter(apartment_id=apartment_id)   
+    apartment = apartment_manager.get_by_id(apartment_id) 
     context = {
         'apartment'  : apartment,
         'images'     : images,
@@ -234,6 +231,7 @@ def view(request, apartment_id):
         realtor = UserProfile.objects.get(user_id=apartment.realtor.pk)
         context['realtor'] = realtor
     print(apartment.realtor.pk)
+    
     return render(request, 'apartments/view.html', context)
 
 
@@ -248,6 +246,7 @@ def add(request):
             apartment_object = apartment_form.save(commit=False)
             apartment_object.add_date = datetime.now()
             apartment_object.owner = request.user
+            apartment_object.populate(request.POST)
             apartment_object.save()
 
             for i,form in enumerate(image_formset.cleaned_data):
@@ -263,7 +262,7 @@ def add(request):
 
     apartment_form = ApartmentForm()
     image_formset = image_form_set(queryset=ApartmentImages.objects.none())
-    return render(request, 'apartments/add.html', {'apartment_form': apartment_form, 'image_formset': image_formset})
+    return render(request, 'apartments/add.html', {'apartment_form': apartment_form, 'image_formset': image_formset, 'features': Apartment.VALID_FEATURES})
 
 
 @login_required

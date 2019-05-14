@@ -198,6 +198,27 @@ Castle Apartments - Profile
                                 </div>
                             </div>
                             {% endif %}
+                            {% if user.is_staff %}
+                                {% if userprofile.description %}
+                                <div class="col-md-12">  
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-book"></i>
+                                        </span>
+                                    </div>
+                                    <div class="content">
+                                        <span class="input-content-title">
+                                        Description:
+                                        </span>
+                                        <span class="input-content">
+                                        {{userprofile.description}}
+                                        </span>
+                                        </div>                     
+                                    </div>
+                                </div>
+                                {% endif %}                         
+                            {% endif %}
                         </div>
                         <div class="footer text-center">
                             <a href="{{ request.path }}/edit"class="btn btn-primary btn-link btn-wd btn-lg">Edit profile</a>
