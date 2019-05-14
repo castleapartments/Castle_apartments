@@ -179,8 +179,8 @@
                             </td>
 
                             <td>
-                                {% if apartment.status == 'Sold' %}
-                                <a href="{% url 'approve_apartment' apartment.apartment_id %}"><button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Approve</button></a>
+                                {% if apartment.sold %}
+                                <a href="{% url 'approve_sale_apartment' apartment.apartment_id %}" onclick="return confirm('Are you sure you want to confirm the sale?')"><button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Approve</button></a>
                                 {% endif %}
                                 {% if apartment.featured %}
                                 <a href="{% url 'unfeature_apartment' apartment.apartment_id %}"><button type="submit" class="btn badge-info btn-sm"><i class="fas fa-times"></i> Unfeature</button></a>

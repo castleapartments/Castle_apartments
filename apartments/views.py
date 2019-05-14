@@ -358,6 +358,7 @@ def feature_apartment(request, apartment_id):
 
     return redirect('my_apartments')
 
+
 @login_required
 def unfeature_apartment(request, apartment_id):
     if not request.user.is_staff or not request.user.is_superuser:
@@ -370,6 +371,31 @@ def unfeature_apartment(request, apartment_id):
         return HttpResponseForbidden()
 
     apartment.featured = False
+    apartment.save()
+
+    return redirect('my_apartments')
+
+
+@login_required
+def approve_sale_apartment(request, apartment_id):
+    if not request.user.is_staff or not request.user.is_superuser:
+        return HttpResponseForbidden()
+    try:
+        apartment = apartment_manager.get_by_id(apartment_id)
+    except ObjectDoesNotExist:
+        return HttpResponseForbidden()
+    if apartment.realtor != request.user:
+        return HttpResponseForbidden()
+    if not apartment.sold:
+        return HttpResponseForbidden()
+
+    buyer = apartment.buyer
+    apartment.buyer = None
+    apartment.owner = buyer
+    apartment.realtor = None
+    apartment.approved = False
+    apartment.featured = False
+    apartment.sold = False
     apartment.save()
 
     return redirect('my_apartments')

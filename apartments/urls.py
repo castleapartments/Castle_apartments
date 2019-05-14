@@ -18,4 +18,5 @@ urlpatterns = [
     path('unapprove/<int:apartment_id>', views.unapprove_apartment, name='unapprove_apartment'),
     path('feature/<int:apartment_id>', views.feature_apartment, name='feature_apartment'),
     path('unfeature/<int:apartment_id>', views.unfeature_apartment, name='unfeature_apartment'),
+    path('approve_sale/<int:apartment_id>', views.approve_sale_apartment, name='approve_sale_apartment')
 ]
