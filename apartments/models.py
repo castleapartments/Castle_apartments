@@ -61,6 +61,7 @@ class Apartment(models.Model):
 
     sold = models.BooleanField(default=False)
     sold_date = models.DateField(null=True, blank=True)
+    buyer = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT, related_name='+')
 
     def populate(self, apartment_form):
         self._populate_features(apartment_form.getlist('features'))
@@ -113,7 +114,7 @@ class Apartment(models.Model):
         if self.sold:
             return 'Sold'
         if self.approved:
-            return 'Approved'
+            return 'For Sale'
         return 'Pending Approval'
 
     def photo_main(self):

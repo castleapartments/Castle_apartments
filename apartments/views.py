@@ -138,6 +138,9 @@ class ApartmentManager(object):
     def get_owners_apartments(self, owner):
         return self._get_all().filter(owner=owner)
 
+    def get_realtors_apartments(self, realtor):
+        return self._get_all().filter(realtor=realtor)
+
 
 apartment_manager = ApartmentManager()
 search_manager = SearchManager(apartment_manager)
@@ -268,10 +271,12 @@ def my(request):
     context = {
         'your_apartments': apartment_manager.get_owners_apartments(owner),
         'your_searches'  : search_manager.get_owners_searches(owner)[:10]
+
     }
 
     if owner.is_staff or owner.is_superuser:
         context['apartment_approvals'] = apartment_manager.get_unapproved()
+        context['apartment_realtor'] = apartment_manager.get_realtors_apartments(owner)
 
     return render(request, 'apartments/my.html', context)
 
@@ -304,16 +309,68 @@ def delete_apartment(request, apartment_id):
 
 @login_required
 def approve_apartment(request, apartment_id):
+    if not request.user.is_staff or not request.user.is_superuser:
+        return HttpResponseForbidden()
     try:
         apartment = apartment_manager.get_by_id(apartment_id)
     except ObjectDoesNotExist:
-        return HttpResponseForbidden()
-    if not request.user.is_staff or not request.user.is_superuser:
         return HttpResponseForbidden()
 
     apartment.approved = True
     apartment.approval_date = datetime.now()
     apartment.realtor = request.user
+    apartment.save()
+
+    return redirect('my_apartments')
+
+
+@login_required
+def unapprove_apartment(request, apartment_id):
+    if not request.user.is_staff or not request.user.is_superuser:
+        return HttpResponseForbidden()
+    try:
+        apartment = apartment_manager.get_by_id(apartment_id)
+    except ObjectDoesNotExist:
+        return HttpResponseForbidden()
+    if apartment.realtor != request.user:
+        return HttpResponseForbidden()
+
+    apartment.approved = False
+    apartment.featured = False
+    apartment.realtor = None
+    apartment.save()
+
+    return redirect('my_apartments')
+
+
+@login_required
+def feature_apartment(request, apartment_id):
+    if not request.user.is_staff or not request.user.is_superuser:
+        return HttpResponseForbidden()
+    try:
+        apartment = apartment_manager.get_by_id(apartment_id)
+    except ObjectDoesNotExist:
+        return HttpResponseForbidden()
+    if apartment.realtor != request.user:
+        return HttpResponseForbidden()
+
+    apartment.featured = True
+    apartment.save()
+
+    return redirect('my_apartments')
+
+@login_required
+def unfeature_apartment(request, apartment_id):
+    if not request.user.is_staff or not request.user.is_superuser:
+        return HttpResponseForbidden()
+    try:
+        apartment = apartment_manager.get_by_id(apartment_id)
+    except ObjectDoesNotExist:
+        return HttpResponseForbidden()
+    if apartment.realtor != request.user:
+        return HttpResponseForbidden()
+
+    apartment.featured = False
     apartment.save()
 
     return redirect('my_apartments')
