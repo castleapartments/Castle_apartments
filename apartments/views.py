@@ -230,8 +230,7 @@ def view(request, apartment_id):
     if apartment.realtor:
         realtor = UserProfile.objects.get(user_id=apartment.realtor.pk)
         context['realtor'] = realtor
-    print(apartment.realtor.pk)
-    
+
     return render(request, 'apartments/view.html', context)
 
 
