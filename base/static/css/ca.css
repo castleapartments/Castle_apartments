@@ -307,3 +307,8 @@ body {
         margin-bottom:25px;
     }
 }
+.carousel-item img {
+    width:100% !important;
+    height:100% !important;
+    display: block !important;
+}
