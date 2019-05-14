@@ -67,14 +67,18 @@
                             <li class="list-group-item"><i class="fas fa-check"></i><span class="feature-title">Type: </span><span class="feature">{{ apartment.get_type_display }}</span></li>
                             <li class="list-group-item"><i class="fas fa-check"></i><span class="feature-title">Size: </span><span class="feature">{{ apartment.size }} m²</span></li>
                             <li class="list-group-item"><i class="fas fa-check"></i><span class="feature-title">Rooms: </span><span class="feature">{{ apartment.rooms }}</span></li>
-                            <li class="list-group-item"><i class="fas fa-check"></i><span class="feature-title">Shitters: </span><span class="feature">{{ apartment.bathrooms }}</span></li>
+                            <li class="list-group-item"><i class="fas fa-check"></i><span class="feature-title">Bathrooms: </span><span class="feature">{{ apartment.bathrooms }}</span></li>
                         </ul>
                         {% if user.is_authenticated %}
                         <div class="apart-buy-div text-center">
-                                <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-shopping-cart"></i> Buy</button>
-                                {% if user.is_staff or apartment.owner == user %}
-                                <button type="submit" class="btn btn-info btn-lg"><i class="fas fa-edit"></i> Edit</button>
-                                {% endif %}
+                            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-shopping-cart"></i> Buy</button>
+                            {% if user.is_staff or apartment.owner == user %}
+                            <a href="{% url 'edit_apartment' apartment.apartment_id %}"><button type="submit" class="btn btn-info btn-lg"><i class="fas fa-edit"></i> Edit</button></a>
+                            {% endif %}
+                        </div>
+                        {% else %}
+                        <div class="apart-buy-div text-center">
+                            <a href="{% url 'login' %}"><button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-shopping-cart"></i> Buy</button></a>
                         </div>
                         {% endif %}
                         {% if apartment.features %}
@@ -90,13 +94,16 @@
                         <div class="real-estate-agent">
                             {% if apartment.realtor %}
                             <div class="rea-image text-center">
-                                    <img src="http://www.facetheforce.today/random/200?{{usr.first_name}}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
+                                    <img src="{{ realtor.photo_main.url }}" alt="Realtor" class="img-raised rounded-circle img-fluid">
+                            </div>
+                            <div class="text-center">
+                                <h3><span class="apartment-price">{{ apartment.realtor.first_name }} {{ apartment.realtor.last_name }}</span></h3>
                             </div>
                             <p>
-                                    The Death Star plans are not in the main computer. Where are those transmissions you intercepted? What have you done with those plans? We intercepted no transmissions. ....
+                                    {{ realtor.description }}
                             </p>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-comments"></i> Contact</button>
+                                <a href="mailto:{{ realtor.email }}"><button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-comments"></i> Contact</button></a>
                             </div>
                             {% endif %}
 
