@@ -31,7 +31,7 @@ class ApartmentImageForm(forms.ModelForm):
     
     class Meta:
         model = ApartmentImages
-        fields = ('image', 'primary')
+        fields = ('image',)
 
 class PhotoDirectForm(ApartmentImageForm):
     image = CloudinaryJsFileField()
