@@ -248,11 +248,11 @@ def add(request):
             apartment_object.populate(request.POST)
             apartment_object.save()
 
-            for i,form in enumerate(image_formset.cleaned_data):
+            for i, form in enumerate(image_formset.cleaned_data):
                 if not form:
                     continue
                 image = form['image']
-                primary = request.POST['primary'] == '{}'.format(i)
+                primary = request.POST.get('primary', None) == '{}'.format(i)
                 apartment_image = ApartmentImages(apartment_id=apartment_object, image=image, primary=primary)
                 apartment_image.save()
 
