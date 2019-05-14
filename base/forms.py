@@ -42,6 +42,7 @@ class ProfileForm(forms.ModelForm):
                 'city',
                 'country',
                 'photo_main',
+                'description',
             )
 
 

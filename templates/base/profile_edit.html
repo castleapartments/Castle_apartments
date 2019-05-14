@@ -144,7 +144,20 @@ Castle Apartments - Profile
                                 </select>
                             </div>
                         </div>
-                        {% if user.is_superuser %}
+
+                        {% if user.is_staff %}
+                        <div class="col-md-6"> 
+                            <div class="input-group">
+                                <div class="input-group-prepend ">
+                                    <span class="input-group-text">
+                                        <i class="fab fa-slack-hash"></i>
+                                    </span>
+                                </div>
+                                {{ form.description|as_crispy_field }}
+                            </div>
+                        </div>
+                        {% endif %}                          
+                        {% if user.is_staff %}
                         <div class="col-md-6"> 
                             <div class="input-group">
                                 <div class="input-group-prepend ">
@@ -154,15 +167,15 @@ Castle Apartments - Profile
                                 </div>
                                 
                                 {% if user.is_staff %}
-                                <input type="checkbox" name="staff" checked> Employee
+                                <input type="checkbox" name="staff" disabled="disabled" checked> You Are Employee
                                 {% else %}
-                                <input type="checkbox" name="staff"> Employee
+                                <input type="checkbox" name="staff" disabled="disabled"> You Are Not Employee
                                 {% endif %}
 
                             </div>
                         </div>
                         {% endif %}
-                        {% if user.is_superuser %}
+                        {% if user.is_staff %}
                         <div class="col-md-6"> 
                             <div class="input-group">
                                 <div class="input-group-prepend ">
@@ -172,14 +185,17 @@ Castle Apartments - Profile
                                 </div>
                                 
                                 {% if user.is_superuser %}
-                                <input type="checkbox" name="superuser" checked> Superuser<br>
+                                <input type="checkbox" name="superuser" disabled="disabled" checked> You Are Superuser<br>
                                 {% else %}
-                                <input type="checkbox" name="superuser"> Superuser<br>
+                                <input type="checkbox" name="superuser" disabled="disabled"> You Are Not Superuser<br>
                                 {% endif %}                                
                             </div>
                         </div>
                         {% endif %}                        
+   
                     </div>
+                 
+
                     <div class="footer text-center">
                         <input type="submit" class="btn btn-primary btn-link btn-wd btn-lg" name="" value="Update profile">
                         <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-primary btn-link btn-wd btn-lg">Go back</a>
