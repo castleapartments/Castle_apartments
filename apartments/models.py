@@ -61,7 +61,6 @@ class Apartment(models.Model):
 
     sold = models.BooleanField(default=False)
     sold_date = models.DateField(null=True, blank=True)
-    photo_main = CloudinaryField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.street_name} {self.street_number} - {self.postcode} {self.city}'
@@ -108,10 +107,20 @@ class Apartment(models.Model):
             return 'Approved'
         return 'Pending Approval'
 
+    def photo_main(self):
+        images = self.images.all().filter(primary=True)
+        if images:
+            return images[0]
+        return None
+
 
 class ApartmentImages(models.Model):
-    apartment_id = models.ForeignKey(Apartment, default=None, on_delete=models.CASCADE)
+    apartment_id = models.ForeignKey(Apartment, default=None, on_delete=models.CASCADE, related_name='images')
+    primary = models.BooleanField(default=False)
     image = CloudinaryField(null=True, blank=True)
+
+    def url(self):
+        return self.image.url
 
 
 class Search(models.Model):

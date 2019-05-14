@@ -244,18 +244,12 @@ def add(request):
                 if not form:
                     continue
                 image = form['image']
-                if not bool(apartment_object.photo_main):
-                    image_copy = copy.deepcopy(image)
-                    apartment_object.photo_main = image_copy
-                    apartment_object.save()
-
-                apartment_image = ApartmentImages(apartment_id=apartment_object, image=image)
+                primary = form['primary']
+                apartment_image = ApartmentImages(apartment_id=apartment_object, image=image, primary=primary)
                 apartment_image.save()
 
             return redirect('my_apartments')
-        else:
-            print('apartment errors:', apartment_form.errors)
-            print('image_formset errors:', image_formset.errors)
+
 
     apartment_form = ApartmentForm()
     image_formset = image_form_set(queryset=ApartmentImages.objects.none())
