@@ -104,6 +104,9 @@ class ApartmentManager(object):
     def get_approved(self):
         return self._get_all().filter(approved=True)
 
+    def get_unapproved(self):
+        return self._get_all().filter(approved=False)
+
     def get_all(self, page, order='-approval_date'):
         apartments = self.get_approved().order_by(order)
         return self.paginate(apartments, page)
@@ -266,6 +269,10 @@ def my(request):
         'your_apartments': apartment_manager.get_owners_apartments(owner),
         'your_searches'  : search_manager.get_owners_searches(owner)[:10]
     }
+
+    if owner.is_staff or owner.is_superuser:
+        context['apartment_approvals'] = apartment_manager.get_unapproved()
+
     return render(request, 'apartments/my.html', context)
 
 
@@ -301,7 +308,12 @@ def approve_apartment(request, apartment_id):
         apartment = apartment_manager.get_by_id(apartment_id)
     except ObjectDoesNotExist:
         return HttpResponseForbidden()
-    if not request.user.is_staff:
+    if not request.user.is_staff or not request.user.is_superuser:
         return HttpResponseForbidden()
+
+    apartment.approved = True
+    apartment.approval_date = datetime.now()
+    apartment.realtor = request.user
+    apartment.save()
 
     return redirect('my_apartments')
