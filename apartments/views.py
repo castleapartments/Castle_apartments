@@ -9,6 +9,7 @@ import copy
 
 from .models import Apartment, ApartmentImages, Search
 from .forms import ApartmentForm, ApartmentImageForm, SearchForm
+from base.models import UserProfile
 
 from datetime import datetime
 from collections import namedtuple
@@ -220,10 +221,16 @@ def search_delete(request, search_id):
 
 def view(request, apartment_id):
     images = ApartmentImages.objects.all().filter(apartment_id=apartment_id)
+    apartment = apartment_manager.get_by_id(apartment_id)
     context = {
-        'apartment'  : apartment_manager.get_by_id(apartment_id),
+        'apartment'  : apartment,
         'images'     : images,
     }
+
+    if apartment.realtor:
+        realtor = UserProfile.objects.get(user_id=apartment.realtor.pk)
+        context['realtor'] = realtor
+    print(apartment.realtor.pk)
     return render(request, 'apartments/view.html', context)
 
 
