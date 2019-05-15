@@ -11,13 +11,8 @@ from django.forms import modelformset_factory
 from django.http import HttpResponseForbidden
 
 from .models import Apartment, ApartmentImages, Search
-<<<<<<< HEAD
-from .forms import ApartmentForm, ApartmentImageForm, SearchForm
-from base.models import UserProfile, UserCreditCard
-=======
 from .forms import ApartmentForm, ApartmentImageForm, SearchForm, EditApartmentForm
-from base.models import UserProfile
->>>>>>> d79c5a048c7652740cfad8a7ec692a12e9f89b1c
+from base.models import UserProfile, UserCreditCard
 
 from datetime import datetime, time
 from collections import namedtuple
@@ -474,8 +469,11 @@ def transfer_ownership(request, apartment_id):
     try:
         buyer_creditcard = UserCreditCard.objects.get(user=buyer)
         
+        # Check if the owner is not the same as the buyer then redirect back to search
+        if buyer == apartment.owner:
+            return redirect('search')
         # Validate that the creditcard expiry is correct
-        if buyer_creditcard.credit_card_expiry >= datetime.now().date():
+        elif buyer_creditcard.credit_card_expiry >= datetime.now().date():
             if request.method == "POST":
                 apartment.owner = buyer
                 apartment.save()

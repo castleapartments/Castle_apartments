@@ -11,9 +11,9 @@ Castle Apartments - Credit Card Details
 {% block content %}
 {% if user.is_authenticated %}
 <div style="color:white">
-<p>{{apartment.street_name}}</p>
-<p>{{apartment.owner.first_name}}</p>
-<P>{{ user.first_name }}</P>
+<p>BUYING : {{apartment.street_name}}</p>
+<p>CURRENT OWNER : {{apartment.owner.first_name}} {{apartment.owner.last_name}}</p>
+<P>BUYER : {{ user.first_name }} {{ user.last_name }}</P>
 {% if buyer.credit_card_number %}
     <p>{{ buyer.credit_card_number }}</p>
 {% endif%}
