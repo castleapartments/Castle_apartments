@@ -478,6 +478,7 @@ def transfer_ownership(request, apartment_id):
             if request.method == "POST":
                 apartment.owner = buyer
                 apartment.save()
+                return redirect('my_apartments')
             template_name = 'payment/owner_transfer.html'
             return render(request, template_name, {'apartment': apartment, 'buyer': buyer_creditcard})
         else:
