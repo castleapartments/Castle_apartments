@@ -312,3 +312,6 @@ body {
     height:100% !important;
     display: block !important;
 }
+.apartment-description, .apartment-description p {
+    font-size:1.4rem;
+}

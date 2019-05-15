@@ -1,12 +1,17 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import UpdateView
+from django.urls import reverse_lazy
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.forms import modelformset_factory
 from django.http import HttpResponseForbidden
 
 from .models import Apartment, ApartmentImages, Search
-from .forms import ApartmentForm, ApartmentImageForm, SearchForm
+from .forms import ApartmentForm, ApartmentImageForm, SearchForm, EditApartmentForm
 from base.models import UserProfile
 
 from datetime import datetime
@@ -279,23 +284,81 @@ def my(request):
 
     return render(request, 'apartments/my.html', context)
 
+class CanEditApartment(UserPassesTestMixin):
+    def test_func(self):
+        try:
+            apartment = apartment_manager.get_by_id(self.kwargs['apartment_id'])
+            if apartment == None:
+                raise PermissionDenied('Apartment is not for you.')
+        except ObjectDoesNotExist:
+            raise PermissionDenied('Apartment is not for you.')
+        if apartment.owner != self.request.user or not self.request.user.is_staff:
+            raise PermissionDenied('You have .')
+        return True
 
-@login_required
-def edit_apartment(request, apartment_id):
-    try:
-        apartment = apartment_manager.get_by_id(apartment_id)
-    except ObjectDoesNotExist:
-        return HttpResponseForbidden()
-    if apartment.owner != request.user or not request.user.is_staff:
-        return HttpResponseForbidden()
+@method_decorator(login_required, name='dispatch')
+class EditApartment(LoginRequiredMixin, CanEditApartment, UpdateView):
+    model = Apartment
+    form_class = EditApartmentForm
+    template_name = 'apartments/edit.html'
+    success_url = reverse_lazy('my_apartments') 
 
-    return redirect('my_apartments')
+    def get_object(self):
+        return apartment_manager.get_by_id(self.kwargs['apartment_id'])
 
+    def get_context_data(self, **kwargs):
+        context = super(EditApartment, self).get_context_data(**kwargs)
+        Apart_img = ApartmentImages.objects.all().filter(apartment_id_id=self.kwargs['apartment_id'])
+        image_form_set = modelformset_factory(ApartmentImages, form=ApartmentImageForm, extra=(MAX_NUMBER_OF_IMAGES-Apart_img.count()))
+        image_formset = image_form_set(queryset=Apart_img)
+        context['features_options'] = Apartment.VALID_FEATURES
+        context['images'] = image_formset
+        return context
+
+    def form_valid(self, form):
+        image_form_set = modelformset_factory(ApartmentImages, form=ApartmentImageForm, extra=MAX_NUMBER_OF_IMAGES)
+        image_formset = image_form_set(self.request.POST, self.request.FILES)
+
+        obj = form.save(commit=False)
+        obj.features = self.request.POST.getlist('features_new')
+
+        if image_formset.is_valid():
+            for i, form in enumerate(image_formset.cleaned_data):
+                if not form:
+                    continue
+                image = form['image']
+                if image != None and isinstance(image, InMemoryUploadedFile):
+                    if form['id'] != None:
+                        old_image = ApartmentImages.objects.get(id=old_id)
+                        old_image.delete()
+                    primary = self.request.POST.get('primary_new', None) == '{}'.format(i)
+                    new_image = ApartmentImages(apartment_id=obj, image=image, primary=primary)
+                    new_image.save()
+
+                else:
+                    if self.request.POST.get('primary_new') != None:
+                        primary = self.request.POST.get('primary_new', None) == '{}'.format(i)
+                        update_image = form['id']
+                        if update_image.primary:
+                            update_image.primary = False
+                            update_image.save()
+                        if primary:
+                            update_image = form['id']
+                            update_image.primary = True
+                            update_image.save()
+                    if self.request.POST.get('form-{}-image-clear'.format(i), None) == 'on':
+                        del_image = form['id']
+                        del_image.delete()
+
+        obj.save()
+        return redirect('/apartments/view/{}'.format(self.kwargs['apartment_id']))
 
 @login_required
 def delete_apartment(request, apartment_id):
     try:
         apartment = apartment_manager.get_by_id(apartment_id)
+        if apartment == None:
+            raise PermissionDenied('Apartment is not for you.')
     except ObjectDoesNotExist:
         return HttpResponseForbidden()
     if apartment.owner != request.user or not request.user.is_staff:
@@ -304,7 +367,6 @@ def delete_apartment(request, apartment_id):
     apartment.delete()
 
     return redirect('my_apartments')
-
 
 @login_required
 def approve_apartment(request, apartment_id):
