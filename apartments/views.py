@@ -476,10 +476,10 @@ def transfer_ownership(request, apartment_id):
             messages.error(request, 'You are trying to buy your own apartment, that does not work.')
             return redirect('search')
         # Validate that the creditcard expiry is correct
-        elif len(buyer_creditcard.credit_card_number) < 12:
+        elif len(str(buyer_creditcard.credit_card_number)) < 12:
             messages.error(request, 'Length of the creditcard number is incorrect')
             return redirect('payment_page')
-        elif  len(buyer_creditcard.credit_card_security_number) < 3:
+        elif  len(str(buyer_creditcard.credit_card_security_number)) < 3:
             messages.error(request, 'Security card number is incorrect')
             return redirect('payment_page')
         elif buyer_creditcard.credit_card_expiry >= datetime.now().date():
