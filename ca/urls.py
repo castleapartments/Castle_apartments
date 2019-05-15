@@ -13,6 +13,7 @@ from base.views import CardListView, CardUpdateView, CardCreateView, \
         ViewCreditCardView, UpdateCreditCardView
 import containers.views
 import about.views
+import apartments.views
 
 urlpatterns = [
     path("", search, name="index"),
@@ -46,7 +47,8 @@ urlpatterns = [
     path('cards/<int:pk>/edit/', CardUpdateView.as_view(), name='card_edit'),
     path('cards/add', CardCreateView.as_view(), name='card_add'),
     path('footer/', containers.views.footer_view, name='footer_view'),
-    path('about/', about.views.about_view, name='about')
+    path('about/', about.views.about_view, name='about'),
+    path('buy_apartment/<int:apartment_id>', apartments.views.transfer_ownership, name='buy_apartment'),
     #path('people/', PersonListView.as_view(), name='person_list'),    
     #path('people/add/', PersonCreateView.as_view(), name='person_add'),
     #path('people/<int:pk>/edit/', PersonUpdateView.as_view(), name='person_edit'),

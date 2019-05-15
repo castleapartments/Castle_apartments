@@ -7,9 +7,9 @@ from django.http import HttpResponseForbidden
 
 from .models import Apartment, ApartmentImages, Search
 from .forms import ApartmentForm, ApartmentImageForm, SearchForm
-from base.models import UserProfile
+from base.models import UserProfile, UserCreditCard
 
-from datetime import datetime
+from datetime import datetime, time
 from collections import namedtuple
 
 
@@ -399,3 +399,23 @@ def approve_sale_apartment(request, apartment_id):
     apartment.save()
 
     return redirect('my_apartments')
+
+
+def transfer_ownership(request, apartment_id):
+    apartment = apartment_manager.get_by_id(apartment_id)
+    buyer = request.user
+    try:
+        buyer_creditcard = UserCreditCard.objects.get(user=buyer)
+        
+        # Validate that the creditcard expiry is correct
+        if buyer_creditcard.credit_card_expiry >= datetime.now().date():
+            if request.method == "POST":
+                apartment.owner = buyer
+                apartment.save()
+            template_name = 'payment/owner_transfer.html'
+            return render(request, template_name, {'apartment': apartment, 'buyer': buyer_creditcard})
+        else:
+            return redirect('payment_page')
+    except ObjectDoesNotExist:
+        return redirect('payment_page')
+

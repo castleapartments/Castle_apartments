@@ -1,0 +1,27 @@
+{% extends "_base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load cloudinary %}
+
+{% block title %}
+Castle Apartments - Credit Card Details
+{% endblock %}
+
+
+{% block content %}
+{% if user.is_authenticated %}
+<div style="color:white">
+<p>{{apartment.street_name}}</p>
+<p>{{apartment.owner.first_name}}</p>
+<P>{{ user.first_name }}</P>
+{% if buyer.credit_card_number %}
+    <p>{{ buyer.credit_card_number }}</p>
+{% endif%}
+<br>
+    <form class="form" method="post" action="">
+            {% csrf_token %}
+        <a href="{% url 'buy_apartment' apartment.apartment_id %}"><button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-shopping-cart"></i> Transfer</button></a>
+    </form>
+</div>
+{% endif %}
+{% endblock %}
