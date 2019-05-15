@@ -254,7 +254,6 @@ class CreateCreditCardView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('payment_page')
     
     def form_valid(self, form):
-        print('test')
         obj = form.save(commit=False)
         obj.user = self.request.user
         obj.save()

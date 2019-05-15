@@ -19,16 +19,24 @@ class ApartmentForm(forms.ModelForm):
     bathrooms = forms.IntegerField(label="Number of Bathrooms")
     description = forms.CharField(widget=forms.Textarea, label="Description")
     price = forms.IntegerField(label="Price")
+    #features = forms.MultipleChoiceField(widget = forms.CheckboxSelectMultiple)
 
     class Meta:
         model = Apartment
         fields = ('street_name', 'street_number', 'postcode', 'city', 'country', 'size', 'type', 'rooms', 'bathrooms', 'description', 'price')
 
+class EditApartmentForm(ApartmentForm):
+
+    class Meta:
+        model = Apartment
+        fields = ('street_name', 'street_number', 'postcode', 'city', 'country', 'size', 'type', 'rooms', 'bathrooms', 'description', 'price', 'features')
+
+
 
 class ApartmentImageForm(forms.ModelForm):
     #image = forms.ImageField(label='Image')
     #image = CloudinaryJsFileField()
-    
+    #primary = forms.BooleanField(required=False)
     class Meta:
         model = ApartmentImages
         fields = ('image',)

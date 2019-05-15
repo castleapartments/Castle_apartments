@@ -43,7 +43,7 @@ class Apartment(models.Model):
     description = models.TextField(blank=True, null=True, default='')
     price = models.IntegerField(default=0)
 
-    VALID_FEATURES = (
+    VALID_FEATURES = [
         ('garage','Garage',
         ('private_entrance',    'Private Entrance')),
         ('elevator',            'Elevator'),
@@ -52,7 +52,7 @@ class Apartment(models.Model):
         ('animals_allowed',     'Animals Allowed'),
         ('storage',             'Storage'),
         ('shed',                'Shed'),
-    )
+    ]
     features = JSONField(default=list)
 
     approved = models.BooleanField(default=False)
@@ -62,12 +62,11 @@ class Apartment(models.Model):
     sold = models.BooleanField(default=False)
     sold_date = models.DateField(null=True, blank=True)
     buyer = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT, related_name='+')
-
-    def populate(self, apartment_form):
-        self._populate_features(apartment_form.getlist('features'))
+    def populate(self, _form):
+        self._populate_features(_form.getlist('features'))
 
     def _populate_features(self, features):
-        valid_features = [t[1] for t in Apartment.VALID_FEATURES]
+        valid_features = [t[0] for t in Apartment.VALID_FEATURES]
         self.features = [t for t in features if t in valid_features]
 
 
@@ -114,7 +113,7 @@ class Apartment(models.Model):
         if self.sold:
             return 'Sold'
         if self.approved:
-            return 'For Sale'
+            return 'Approved'
         return 'Pending Approval'
 
     def photo_main(self):
