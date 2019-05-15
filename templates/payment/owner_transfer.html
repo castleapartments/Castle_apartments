@@ -1,27 +1,84 @@
-{% extends "_base.html" %}
-{% load staticfiles %}
-{% load crispy_forms_tags %}
-{% load cloudinary %}
+{% extends '_base.html' %}
 
 {% block title %}
-Castle Apartments - Credit Card Details
+Create / Edit Apartment
 {% endblock %}
 
-
 {% block content %}
-{% if user.is_authenticated %}
-<div style="color:white">
-<p>BUYING : {{apartment.street_name}}</p>
-<p>CURRENT OWNER : {{apartment.owner.first_name}} {{apartment.owner.last_name}}</p>
-<P>BUYER : {{ user.first_name }} {{ user.last_name }}</P>
-{% if buyer.credit_card_number %}
-    <p>{{ buyer.credit_card_number }}</p>
-{% endif%}
-<br>
-    <form class="form" method="post" action="">
-            {% csrf_token %}
-        <a href="{% url 'buy_apartment' apartment.apartment_id %}"><button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-shopping-cart"></i> Transfer</button></a>
-    </form>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 p-0 p-md-1">
+      <div class="card m-0 p-3 p-sm-2 p-md-4 ">
+        <div class="card-header card-header-primary text-center">
+          <h4 class="card-title">TRANSFER OWNERSHIP </h4>
+        </div>
+        <p class="description text-center">&nbsp;</p>
+     
+        <div class="row">
+          <div class="col-md-4">
+              <div class="card">
+                  
+                  <div class="card-header card-header-primary text-center">
+                      <h4 class="card-title">OWNER</h4>
+                  </div>
+                  <div class="card-body">
+                      <div class="d-flex justify-content-center profile-image">
+                            {% if seller.photo_main %}
+                                <img src="{{ seller.photo_main.url }}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
+                            {% else %}
+                                <img src="/media/no_image.png" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
+                            {% endif %}        
+                      </div>
+
+                      <h4 class="text-center"><strong>{{apartment.owner.first_name}} {{apartment.owner.last_name}}</strong></h4>        
+                      
+                      <div class="text-center"><a href="mailto:{{ seller.email }}"class="btn btn-primary btn-lg"><i class="fas fa-comments"></i> Contact</a></div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="row h-100 justify-content-center align-items-center text-center"style="font-size:12rem;"><div><i class="fas fa-share d-none d-md-block"></i> <i class="fas fa-arrow-down d-block d-md-none"></i></div></div>
+          </div>
+          <div class="col-md-4">
+              <div class="card">
+                  
+                  <div class="card-header card-header-primary text-center">
+                      <h4 class="card-title">BUYER</h4>
+                  </div>
+                  <div class="card-body">
+                      <div class="d-flex justify-content-center profile-image">
+                            {% if buyer.photo_main %}
+                                <img src="{{ buyer.photo_main.url }}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
+                            {% else %}
+                                <img src="/media/no_image.png" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
+                            {% endif %}        
+                      </div>
+
+                      <h4 class="text-center"><strong>{{ user.first_name }} {{ user.last_name }}</strong></h4>     
+                      <div class="text-center"><a href="mailto:{{ buyer.email }}"class="btn btn-primary btn-lg"><i class="fas fa-comments"></i> Contact</a></div>
+                  </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="text-center" style="margin-top: 30px;">
+                <form class="form" method="post" action="">
+                        {% csrf_token %}
+                        <a href="{% url 'buy_apartment' apartment.apartment_id %}"><button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-check"></i> Approve</button></a>
+                </form>
+              </div>
+        </div>
+        <div class="footer text-center">   
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-{% endif %}
+
+<script>
+
+
+</script>
+
 {% endblock %}

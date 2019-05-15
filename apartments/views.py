@@ -470,7 +470,9 @@ def transfer_ownership(request, apartment_id):
     buyer = request.user
     try:
         buyer_creditcard = UserCreditCard.objects.get(user=buyer)
-
+        buyer_profile = UserProfile.objects.get(user=buyer)
+        seller_profile = UserProfile.objects.get(user=apartment.owner)
+        
         # Check if the owner is not the same as the buyer then redirect back to search
         if buyer == apartment.owner:
             messages.error(request, 'You are trying to buy your own apartment, that does not work.')
@@ -489,7 +491,7 @@ def transfer_ownership(request, apartment_id):
                 messages.success(request, 'You just bought your self a house')
                 return redirect('my_apartments')
             template_name = 'payment/owner_transfer.html'
-            return render(request, template_name, {'apartment': apartment, 'buyer': buyer_creditcard})
+            return render(request, template_name, {'apartment': apartment, 'buyer': buyer_profile, 'seller': seller_profile})
         else:
             messages.error(request, 'The date on the credit card is invalid or expired.')
             return redirect('payment_page')
