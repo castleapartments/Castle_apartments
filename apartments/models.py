@@ -62,6 +62,7 @@ class Apartment(models.Model):
     sold = models.BooleanField(default=False)
     sold_date = models.DateField(null=True, blank=True)
     buyer = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT, related_name='+')
+    previous_owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT, related_name='+')
     def populate(self, _form):
         self._populate_features(_form.getlist('features'))
 

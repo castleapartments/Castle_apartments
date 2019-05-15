@@ -467,26 +467,30 @@ def approve_sale_apartment(request, apartment_id):
 
 def transfer_ownership(request, apartment_id):
     apartment = apartment_manager.get_by_id(apartment_id)
+    owner = apartment.owner
     buyer = request.user
     try:
         buyer_creditcard = UserCreditCard.objects.get(user=buyer)
         buyer_profile = UserProfile.objects.get(user=buyer)
-        seller_profile = UserProfile.objects.get(user=apartment.owner)
+        seller_profile = UserProfile.objects.get(user=owner)
         
         # Check if the owner is not the same as the buyer then redirect back to search
-        if buyer == apartment.owner:
+        if buyer == owner:
             messages.error(request, 'You are trying to buy your own apartment, that does not work.')
             return redirect('search')
-        # Validate that the creditcard expiry is correct
         #elif len(str(buyer_creditcard.credit_card_number)) < 12:
         #    messages.error(request, 'Length of the creditcard number is incorrect')
         #    return redirect('payment_page')
         #elif  len(str(buyer_creditcard.credit_card_security_number)) < 3:
         #    messages.error(request, 'Security card number is incorrect')
         #    return redirect('payment_page')
+        # Validate that the creditcard expiry is correct
         elif buyer_creditcard.credit_card_expiry >= datetime.now().date():
             if request.method == "POST":
                 apartment.owner = buyer
+                apartment.sold = True
+                apartment.sold_date = datetime.now().date()
+                apartment.previous_owner = owner
                 apartment.save()
                 messages.success(request, 'You just bought your self a house')
                 return redirect('my_apartments')
