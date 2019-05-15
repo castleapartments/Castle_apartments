@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import UpdateView
+from django.contrib import messages
 from django.urls import reverse_lazy
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.forms import modelformset_factory
@@ -472,17 +473,27 @@ def transfer_ownership(request, apartment_id):
 
         # Check if the owner is not the same as the buyer then redirect back to search
         if buyer == apartment.owner:
+            messages.error(request, 'You are trying to buy your own apartment, that does not work.')
             return redirect('search')
         # Validate that the creditcard expiry is correct
+        elif len(buyer_creditcard.credit_card_number) < 12:
+            messages.error(request, 'Length of the creditcard number is incorrect')
+            return redirect('payment_page')
+        elif  len(buyer_creditcard.credit_card_security_number) < 3:
+            messages.error(request, 'Security card number is incorrect')
+            return redirect('payment_page')
         elif buyer_creditcard.credit_card_expiry >= datetime.now().date():
             if request.method == "POST":
                 apartment.owner = buyer
                 apartment.save()
+                messages.success(request, 'You just bought your self a house')
                 return redirect('my_apartments')
             template_name = 'payment/owner_transfer.html'
             return render(request, template_name, {'apartment': apartment, 'buyer': buyer_creditcard})
         else:
+            messages.error(request, 'The date on the credit card is invalid or expired.')
             return redirect('payment_page')
     except ObjectDoesNotExist:
+        messages.error(request, 'No valid credit card found')
         return redirect('payment_page')
 
