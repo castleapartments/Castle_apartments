@@ -464,7 +464,7 @@ def approve_sale_apartment(request, apartment_id):
 
     return redirect('my_apartments')
 
-
+@login_required
 def transfer_ownership(request, apartment_id):
     apartment = apartment_manager.get_by_id(apartment_id)
     owner = apartment.owner
