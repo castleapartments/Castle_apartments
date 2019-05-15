@@ -191,11 +191,12 @@ def search_results(request, search_id):
     try:
         search_object = search_manager.get_by_id(search_id)
     except ObjectDoesNotExist:
-        return redirect('search2')
+        return redirect('search')
 
     page = request.GET.get('page')
+    order = request.GET.get('order',  '-approval_date')
     found_apartments = search_manager.get_results(search_object)
-    paginated_found_apartments = apartment_manager.paginate(found_apartments, page)
+    paginated_found_apartments = apartment_manager.paginate(found_apartments.order_by(order), page)
     context = {
         'search_country_cites': apartment_manager.build_country_city_dict(),
         'search_types'        : Apartment.TYPE_CHOICES,
@@ -468,7 +469,7 @@ def transfer_ownership(request, apartment_id):
     buyer = request.user
     try:
         buyer_creditcard = UserCreditCard.objects.get(user=buyer)
-        
+
         # Check if the owner is not the same as the buyer then redirect back to search
         if buyer == apartment.owner:
             return redirect('search')

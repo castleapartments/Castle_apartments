@@ -37,35 +37,19 @@
                 <i class="fas fa-user-circle"></i>
                 Profile
               </a>
+              <a class="dropdown-item" href="{% url 'my_apartments' %}">
+                  <i class="fas fa-home"></i>
+                  My Apartments
+              </a>
               <a class="dropdown-item" href="{% url 'add_apartment' %}">
                   <i class="fas fa-clinic-medical"></i>
-                  Add apartment
+                  Add Apartment
               </a>
               <a class="dropdown-item" href="{% url 'payment_page' %}">
                   <i class="fas fa-money-bill-alt"></i>
                   Payment
               </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{% url 'add_apartment' %}">
-                  <i class="fas fa-cog"></i>
-                  Settings
-              </a>
-              
-              {% if user.is_staff %}
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{% url 'user_list' %}">
-                <i class="fas fa-users"></i>
-                Users
-              </a>
-              <a class="dropdown-item" href="{% url 'add_apartment' %}">
-                  <i class="fas fa-chart-pie"></i>
-                  Sales
-              </a>
-              <a class="dropdown-item" href="{% url 'add_apartment' %}">
-                  <i class="fas fa-envelope"></i>
-                  Messages
-              </a>
-              {% endif %}
+            
             </div>
           </li>
           {% endif %}

@@ -1,6 +1,21 @@
 {% load staticfiles %}
 <!-- Footer -->
-<footer class="page-footer font-small teal pt-4" style="background-color:white;">
+{% if user.is_authenticated %}
+<div class="container-fluid" style="background-color:white;">
+    <div class="row">
+<nav class="col-md-2 d-none d-md-block sidebar ca-sidebar" style="background:transparent !important">
+  <div class="sidebar-sticky sticky-top" style="height: 100%;">
+    <ul class="nav flex-column bg-purpletrans" style="height: 100%;min-height: 100%;">
+        
+      </ul>
+  </div>
+</nav>
+
+<footer class="col-md-10 ml-sm-auto col-lg-10  px-4 page-footer font-small teal pt-4" style="margin-bottom: 39px;">
+{% else %}
+<footer class="col-md-12 ml-sm-auto col-lg-12 px-4 page-footer font-small teal pt-4" style="margin-bottom: 39px;">
+{% endif %}
+
 
         <!-- Footer Text -->
         <div class="container-fluid text-center text-md-left">
@@ -42,3 +57,5 @@
       
       </footer>
       <!-- Footer -->
+    </div>
+  </div>
