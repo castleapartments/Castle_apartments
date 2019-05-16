@@ -1,15 +1,13 @@
-
+import datetime
 from django import forms
-
 from django_countries.fields import CountryField
 from django.contrib.auth.models import User
-
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-
+from kennitala import Kennitala
 from cloudinary.forms import CloudinaryJsFileField
-
 from base.models import UserProfile, UserCreditCard
+from base.fields import CreditCardField
 
 
 class UserForm(forms.ModelForm):
@@ -37,6 +35,13 @@ class ProfileForm(forms.ModelForm):
                 'description',
             )
 
+    def clean_ssn(self):
+        ssn = self.cleaned_data['ssn']
+        Kennitala(ssn).validate()
+        if not Kennitala(ssn).validate():
+            raise forms.ValidationError("Ssn (kennitala) not correct.")
+        return ssn
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -47,6 +52,9 @@ class PhotoDirectForm(ProfileForm):
     photo_main = CloudinaryJsFileField()
 
 class CreditCardForm(forms.ModelForm):
+
+    credit_card_number = CreditCardField(placeholder=u'0000 0000 0000 0000', min_length=12, max_length=19)    
+
     class Meta:
         model = UserCreditCard
         fields = ('credit_card_number', 'credit_card_provider', 'credit_card_security_number', 'credit_card_name_on_card','credit_card_expiry')
@@ -57,3 +65,9 @@ class CreditCardForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Save creditcard'))
+
+    def clean_credit_card_expiry(self):
+        credit_card_expiry = self.cleaned_data['credit_card_expiry']
+        if credit_card_expiry < datetime.date.today():
+            raise forms.ValidationError("The expiry date cannot be in the past!")
+        return credit_card_expiry

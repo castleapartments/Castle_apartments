@@ -18,8 +18,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from base.models import UserProfile, UserCreditCard
 from base.forms import UserForm, ProfileForm, CreditCardForm
 
-
-
 # Create your views here.
 
 def index(request):
@@ -96,9 +94,8 @@ def signup(request):
                 profile.save()
 
                 registered = True
-                new_user = authenticate(username=user.username,
-                                    password=user.password,)
-                login(request, new_user)
+                user = authenticate(username=user_form.cleaned_data['username'], password=user_form.cleaned_data['password'])
+                login(request, user)
                 messages.success(request,'Welcome to the castle {}!'.format(user.username))
             return redirect('index')
         else:
