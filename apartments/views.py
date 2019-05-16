@@ -64,7 +64,7 @@ ROOMS_RANGE = [
     RangeValue(8, '8'),
     RangeValue(10, '10'),
 ]
-
+ORDER_CHOICES = ['price', '-price', 'size', '-size', 'approval_date', '-approval_date']
 
 class SearchManager(object):
     def __init__(self, apartment_manager):
@@ -116,11 +116,12 @@ class ApartmentManager(object):
         apartments = self.get_approved().order_by(order)
         return self.paginate(apartments, page)
 
-    def get_featured(self, page):
-        featured_apartments = self.get_approved().filter(featured=True)
+    def get_featured(self, page, order='-approval_date'):
+        print(order)
+        featured_apartments = self.get_approved().filter(featured=True).order_by(order)
         if len(featured_apartments) > 0:
             return self.paginate(featured_apartments, page)
-        return self.get_all(page)
+        return self.get_all(page, order)
 
     @staticmethod
     def get_by_id(apartment_id):
@@ -153,18 +154,32 @@ search_manager = SearchManager(apartment_manager)
 
 
 def list_all(request):
-    order = request.GET.get('order', '-approval_date')
     page = request.GET.get('page')
-    return render(request, 'apartments/list.html', {'apartments': apartment_manager.get_all(page, order=order)})
+    order = request.GET.get('order', False)
+    
+    if order:
+        if order.lower() in ORDER_CHOICES:
+            request.session['order'] = order.lower()
+    if request.session.get('order', None) == None:
+        request.session['order'] = ORDER_CHOICES[2]
+
+    return render(request, 'apartments/list.html', {'apartments': apartment_manager.get_all(page, order=request.session['order'])})
 
 
 def list_featured(request):
     page = request.GET.get('page')
-    return render(request, 'apartments/list.html', {'apartments': apartment_manager.get_featured(page)})
+    return render(request, 'apartments/list.html', {'apartments': apartment_manager.get_featured(page, order=request.session['order'])})
 
 
 def search(request):
     page = request.GET.get('page')
+    order = request.GET.get('order', False)
+    
+    if order:
+        if order.lower() in ORDER_CHOICES:
+            request.session['order'] = order.lower()
+    if request.session.get('order', None) == None:
+        request.session['order'] = ORDER_CHOICES[2]
     context = {
         'search_country_cites': apartment_manager.build_country_city_dict(),
         'search_types'        : Apartment.TYPE_CHOICES,
@@ -184,7 +199,7 @@ def search(request):
             search_object.save()
             return redirect('search_results', search_id=search_object.search_id)
 
-    context['apartments'] = apartment_manager.get_featured(page)
+    context['apartments'] = apartment_manager.get_featured(page, order=request.session['order'])
     return render(request, 'apartments/search.html', context)
 
 
@@ -195,9 +210,14 @@ def search_results(request, search_id):
         return redirect('search')
 
     page = request.GET.get('page')
-    order = request.GET.get('order',  '-approval_date')
+    order = request.GET.get('order', False)
+    if order:
+        if order.lower() in ORDER_CHOICES:
+            request.session['order'] = order.lower()
+    if request.session.get('order', None) == None:
+        request.session['order'] = ORDER_CHOICES[2]
     found_apartments = search_manager.get_results(search_object)
-    paginated_found_apartments = apartment_manager.paginate(found_apartments.order_by(order), page)
+    paginated_found_apartments = apartment_manager.paginate(found_apartments.order_by(request.session['order']), page)
     context = {
         'search_country_cites': apartment_manager.build_country_city_dict(),
         'search_types'        : Apartment.TYPE_CHOICES,

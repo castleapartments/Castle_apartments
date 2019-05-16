@@ -5,14 +5,25 @@
 <div class="album py-5" style="min-height: 100vh;">
   <div class="container">
     <div class="row">
-        <div class="col-sm-6 col-md-6 col-lg-4 text-center">
-            <a href="?order=price" class="btn btn-primary">By Price</a>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-4 text-center">
-            <a href="?order=-size" class="btn btn-primary">By Size</a>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-4 text-center">
-            <a href="?order=-approval_date" class="btn btn-primary">By Date</a>
+          <div class="col-sm-12">
+            <div class="card d-flex justify-content-center">
+                    <div class="btn-group" role="group" style="margin-left:auto; margin-right:auto;">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                SORT BY
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <a class="dropdown-item" href="?order=approval_date">By Date</a>
+                                <a class="dropdown-item" href="?order=-approval_date">By Date desc</a>
+                                <a class="dropdown-item" href="?order=size">By Size</a>
+                                <a class="dropdown-item" href="?order=-size">By Size desc</a>
+                                <a class="dropdown-item" href="?order=price">By Price</a>
+                                <a class="dropdown-item" href="?order=-price">By Pricedesc</a>
+                            </div>
+                            </div>
+                </div>
+                        
+
+              
         </div>
     </div>
     <div class="row">
