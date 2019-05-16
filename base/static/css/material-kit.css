@@ -17479,7 +17479,7 @@ footer .pull-center {
   color: #FFFFFF;
 }
 
-@media all and (max-width: 768px) {
+@media all and (max-width: 767px) {
   [class*="navbar-expand-"]>.container,
   [class*="navbar-expand-"]>.container-fluid {
     padding-left: 15px;
