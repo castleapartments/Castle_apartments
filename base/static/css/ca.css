@@ -330,10 +330,3 @@ body {
 #search_toggler.collapsed .search_collapse {
     display:none;
 }
-@media (min-width: 768px) {
-    .collapse.dont-collapse-sm {
-    display: flex !important;
-      height: auto !important;
-      visibility: visible;
-    }
-  }
