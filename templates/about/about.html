@@ -10,88 +10,101 @@ Castle Apartments - Credit Card Details
 
 {% block content %}
 
-<H1 style="color: white;">CASTLE APARTMENTS</H1>
-<div class="container">
-    <div class="row">
-        <div class="card">
-            <div class="card-body">
-                <p>Have you ever wondered how your personal agent website stacks against the Top 25 agents on the Real Trends 500?</p>
-                <p>Well, wonder no more.</p>
-                <p>In order to see how the masters of the real estate universe roll online, we decided to take a deep dive into their websites and kick the tires a bit.</p>
-                <p>Using a mixture of objective measurements (Domain Authority, Google Pagespeed Insights) combined with subjective measurements (how much we dig how the site looks) we came up with the Close Score; our shiny new system to rank agent websites.</p>
+
+
+<div class="row">
+    <div class="col-md-12 col-lg-4 p-5 p-md-4 p-lg-5">
+        <img class="brand_logo d-block" src="{% static 'logo_light.png'%}" style="max-width:100%;" alt="Castle apartments - find you new shithole here!">
+    </div>
+    <div class="col-md-12 col-lg-8">
+        <div class="container">
+            <div class="card">
+                <div class="card-body">   
+                    <div class="card-header card-header-primary text-center">
+                        <H1>CASTLE APARTMENTS</H1>   
+                    </div>                    
+                    <p class="description text-center">&nbsp;</p>                  
+                    <p>Have you ever wondered how your personal agent website stacks against the Top 25 agents on the Real Trends 500?</p>
+                    <p>Well, wonder no more.</p>
+                    <p>In order to see how the masters of the real estate universe roll online, we decided to take a deep dive into their websites and kick the tires a bit.</p>
+                    <p>Using a mixture of objective measurements (Domain Authority, Google Pagespeed Insights) combined with subjective measurements (how much we dig how the site looks) we came up with the Close Score; our shiny new system to rank agent websites.</p>
+                </div>
             </div>
-        </div>
+        </div>    
     </div>
 </div>
-<div>
-<H2 style="color: white;">OUR HIGHLY TRAINED STAFF</H2>    
-<br>
-    {% for userprofile in staff %}
-    <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-                    <div class="card card-login" id="profile-card">
-                        {% csrf_token %}
-                        <div class="card-header card-header-primary text-center">
-                            <h4 class="card-title">{{userprofile.user.first_name}} {{userprofile.user.last_name}}</h4>
+
+
+    <div class="row p-3 p-md-4 p-lg-5">
+        <div class="col-md-12 text-center mb-4">
+            <H1 style="color: white;">OUR HIGHLY TRAINED STAFF</H1>  
+        </div>
+        {% for userprofile in staff %}    
+        
+            <div class="col-xl-3 col-lg-4 col-md-6 ml-auto mr-auto">
+                <div class="card card-login" id="profile-card">
+                    {% csrf_token %}
+                    <div class="card-header card-header-primary text-center">
+                        <h4 class="card-title">{{userprofile.user.first_name}} {{userprofile.user.last_name}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center profile-image">
+                            {% if userprofile.photo_main %}
+                                <img src="{{ userprofile.photo_main.url }}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
+                            {% else %}
+                                <img src="/media/no_image.png" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
+                            {% endif %}        
                         </div>
-                        <div class="card-body">
-                            <div class="d-flex justify-content-center profile-image">
-                                {% if userprofile.photo_main %}
-                                    <img src="{{ userprofile.photo_main.url }}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
-                                {% else %}
-                                    <img src="/media/no_image.png" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid" style="width:200px; height:200px">
-                                {% endif %}        
+
+                        <div class="row">
+                            {% if userprofile.phone %}
+                            <div class="col-md-12">  
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-phone"></i>
+                                    </span>
+                                    </div>
+                                    <div class="content">
+                                            <span class="input-content-title">
+                                        Phone:
+                                            </span>
+                                        <span class="input-content">
+                                        {{userprofile.phone}}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-    
-                            <div class="row">
-                                {% if userprofile.phone %}
-                                <div class="col-md-12">  
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-phone"></i>
-                                        </span>
-                                        </div>
-                                        <div class="content">
-                                                <span class="input-content-title">
-                                            Phone:
-                                                </span>
-                                            <span class="input-content">
-                                            {{userprofile.phone}}
+                            {% endif %}
+                            {% if userprofile.description %}
+                            <div class="col-md-12">  
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="far fa-address-card"></i>
+                                    </span>
+                                    </div>
+                                    <div class="content">
+                                            <span class="input-content-title">
+                                        About Me:
                                             </span>
-                                        </div>
+                                        <span class="input-content">
+                                        {{userprofile.description}}
+                                        </span>
                                     </div>
                                 </div>
-                                {% endif %}
-                                {% if userprofile.description %}
-                                <div class="col-md-12">  
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="far fa-address-card"></i>
-                                        </span>
-                                        </div>
-                                        <div class="content">
-                                                <span class="input-content-title">
-                                            About Me:
-                                                </span>
-                                            <span class="input-content">
-                                            {{userprofile.description}}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endif %}                                
-                                <div class="footer text-center">
-                                        <a href="mailto:{{ user.email }}"class="btn btn-primary btn-link btn-wd btn-lg">CONTACT</a>
-                                </div>
+                            </div>
+                            {% endif %}                                
+                            <div class="footer text-center">
+                                    <a href="mailto:{{ user.email }}"class="btn btn-primary btn-link btn-wd btn-lg">CONTACT</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        
+        {% endfor %}    
         </div>
-    {% endfor %}    
-</div>
+
+
 {% endblock %}
