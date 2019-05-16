@@ -8,16 +8,16 @@ This is the final product for group 16 in the course SC-T-220-VLN2, spring 2019,
 
 This project was devoloped targeting Python version 3.7.3 and Django 2.2.1. There are a few required environment variables, that can be configured in a .env file in the root folder.
 
-* [EMAIL_HOST_USER] - The user credentials for smtp
-* [EMAIL_HOST_PASSWORD] - The password credentials for smtp
-* [CLOUDINARY_URL] - The credential connection string for a cloudinary account
-* [DB_NAME,DB_USER,DB_PASSWORD,DB_HOST,] - The database connection credentials.
+* **EMAIL_HOST_USER** - The user credentials for smtp
+* **EMAIL_HOST_PASSWORD** - The password credentials for smtp
+* **CLOUDINARY_URL** - The credential connection string for a cloudinary account
+* **DB_NAME,DB_USER,DB_PASSWORD,DB_HOST,** - The database connection credentials.
 
 The default db credentials are :
 
-* [DB_NAME] - castle_apartments
-* [DB_USER] - castle
-* [DB_PASSWORD] - castle.123
+* **DB_NAME** - castle_apartments
+* **DB_USER** - castle
+* **DB_PASSWORD** - castle.123
 
 ## Tools and stuff used 
 
