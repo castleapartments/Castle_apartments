@@ -315,3 +315,25 @@ body {
 .apartment-description, .apartment-description p {
     font-size:1.4rem;
 }
+#search_menu.collapse.show {
+    display: flex !important;
+}
+#search_toggler .search_expand {
+    display:none;
+}
+#search_toggler .search_collapse {
+    display:inline-block;
+}
+#search_toggler.collapsed .search_expand {
+    display:inline-block;
+}
+#search_toggler.collapsed .search_collapse {
+    display:none;
+}
+@media (min-width: 768px) {
+    .collapse.dont-collapse-sm {
+    display: flex !important;
+      height: auto !important;
+      visibility: visible;
+    }
+  }
