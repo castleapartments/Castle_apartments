@@ -15,6 +15,25 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('first_name','last_name', 'username', 'email', 'password')
 
+
+class ProfileFormSignup(forms.ModelForm):
+    #photo_main = forms.ImageField(widget=forms.widgets.FileInput)
+    ssn = forms.CharField()
+    class Meta:
+        model = UserProfile
+        #superuser = forms.BooleanField()
+        #employee = forms.BooleanField()
+        fields = ('ssn',)
+
+    def clean_ssn(self):
+        ssn = self.cleaned_data['ssn']
+        Kennitala(ssn).validate()
+        if not Kennitala(ssn).validate():
+            raise forms.ValidationError("Ssn (kennitala) not correct.")
+        return ssn
+
+
+
 class ProfileForm(forms.ModelForm):
     #photo_main = forms.ImageField(widget=forms.widgets.FileInput)
     class Meta:

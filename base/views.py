@@ -16,7 +16,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from base.models import UserProfile, UserCreditCard
-from base.forms import UserForm, ProfileForm, CreditCardForm
+from base.forms import UserForm, ProfileForm, CreditCardForm, ProfileFormSignup
 
 # Create your views here.
 
@@ -75,10 +75,13 @@ def user_login(request):
 def signup(request):
     registered = False
     if request.method == "POST":
+        profile_form = ProfileFormSignup(data=request.POST)
         user_form = UserForm(data=request.POST)
-        profile_form = ProfileForm(data=request.POST)
+        
 
-        if user_form.is_valid():
+        print(user_form.is_valid())
+        print(profile_form.is_valid())
+        if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save(commit=False)
             user.set_password(user.password)
             username = user.username
@@ -90,6 +93,7 @@ def signup(request):
                 find_user = User.objects.get(username=username)
                 profile = profile_form.save(commit=False)
                 profile.user = user
+                profile.email = user.email
                 profile.country = "US"
                 profile.save()
 
