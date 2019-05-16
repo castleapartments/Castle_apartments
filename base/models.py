@@ -31,7 +31,7 @@ class UserCreditCard(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     credit_card_number = models.CharField(max_length=19, blank=True, null=True, default='', unique=True)
     credit_card_provider = models.CharField(max_length=150, blank=True, null=True, default='')
-    credit_card_security_number = models.IntegerField(max_length=5, blank=True, null=True, default=0)
+    credit_card_security_number = models.CharField(max_length=5, blank=True, null=True, default=0)
     credit_card_name_on_card = models.CharField(max_length=150, blank=True, null=True, default='')
     credit_card_expiry = models.DateField(blank=True, null=True)
 
