@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -10,13 +11,12 @@ from django.core.exceptions import PermissionDenied
 
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-#from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from base.models import Card, UserProfile, UserCreditCard
-from base.forms import UserForm, CardForm, ProfileForm, CreditCardForm
+from base.models import UserProfile, UserCreditCard
+from base.forms import UserForm, ProfileForm, CreditCardForm
 
 
 
@@ -24,70 +24,6 @@ from base.forms import UserForm, CardForm, ProfileForm, CreditCardForm
 
 def index(request):
     return render(request, "index.html")
-
-# ********************************
-# <--TEST - REMOVE IN CLEAN UP -->
-
-#class PersonListView(ListView):
-#    model = Person
-#    context_object_name = 'people'
-
-class CardListView(ListView):
-    model = Card
-    context_object_name = 'cards'
-
-#class PersonCreateView(CreateView):
-#    model = Person
-#    fields = ('name', 'email', 'job_title', 'bio')
-#    success_url = reverse_lazy('person_list')
-
-class CardCreateView(CreateView):
-    model = Card
-    fields = ('name',)
-    success_url = reverse_lazy('card_list')    
-
-def singlecard(request):
-    return render(request, 'base/singlecard.html')
-
-def apartmentlist(request):
-    return render(request, 'base/apartment_list.html')
-
-def apartmentsearch(request):
-    return render(request, 'base/apartment_search.html')
-
-def apartmentedit(request):
-    return render(request, 'base/apartment_edit.html')    
-
-class CardUpdateView(UpdateView):
-    model = Card
-    form_class = CardForm
-    template_name = 'base/card_update_form.html'
-    success_url = reverse_lazy('card_list')    
-
-#class PersonUpdateView(UpdateView):
-#    model = Person
-#    form_class = PersonForm
-#    template_name = 'base/person_update_form.html'
-#    success_url = reverse_lazy('person_list')    
-
-#class PersonAndCardListView(ListView):
-#    context_object_name = 'pc_list'    
-#    template_name = 'base/pc_list.html'
-#    queryset = Person.objects.all()
-#
-#    def get_context_data(self, **kwargs):
-#        context = super(PersonAndCardListView, self).get_context_data(**kwargs)
-#        context['persons'] = Person.objects.all()
-#        context['cards'] = Card.objects.all()
-#        # And so on for more models
-#        return context
-
-
-
-# <-- /TEST - REMOVE IN CLEAN UP -->
-# ********************************
-
-
 
 def forget_password(request):
     return redirect('/users/password_reset/')
@@ -123,11 +59,13 @@ def user_login(request):
                 login(request, user)
                 return HttpResponseRedirect(reverse_lazy('index'))
             else:
-                return HttpResponse("ACCOUNT NOT ACTIVE")
+                messages.error(request,'This account has been deactivated!')
+                return render(request, "login.html")
         else:
 
-            messages.error(request,'username or password not correct')
-            return redirect('/login/')
+            messages.error(request,'Username or password not correct!')
+            return render(request, "login.html")
+            
     else:
         return render(request, "login.html")
 
@@ -158,11 +96,13 @@ def signup(request):
                 profile.save()
 
                 registered = True
-                
-                messages.info(request,'Welcome!')
+                new_user = authenticate(username=user.username,
+                                    password=user.password,)
+                login(request, new_user)
+                messages.success(request,'Welcome to the castle {}!'.format(user.username))
             return redirect('index')
         else:
-            print(user_form.errors)
+            messages.error(request,'There is something wrong with your sign up mate!')
     else:
         user_form = UserForm()
 
@@ -178,17 +118,16 @@ class TestUserCanViewUser(UserPassesTestMixin):
             return True
         raise PermissionDenied('Only Admins can view all users.')
 
-
 @method_decorator(login_required, name='dispatch')
-class ProfileUpdateView(TestUserCanViewUser, UpdateView):
+class ProfileUpdateView(TestUserCanViewUser, SuccessMessageMixin, UpdateView):
     model = UserProfile
     form_class = ProfileForm
     template_name = 'base/profile_edit.html'
+    success_message = "Profile updated successfully!"
     success_url = reverse_lazy('profile') 
 
     def get_object(self):
         return UserProfile.objects.all().get(user_id=self.kwargs['pk'])
-
 
 @method_decorator(login_required, name='dispatch')
 class ProfileDetailView(LoginRequiredMixin, TestUserCanViewUser, DetailView):
@@ -213,16 +152,11 @@ class ProfileDetailView(LoginRequiredMixin, TestUserCanViewUser, DetailView):
 
         return UserProfile.objects.get(user_id=self.kwargs['pk'])
 
-
-
-
 class TestUserIsSuper(UserPassesTestMixin):
     def test_func(self):
         if self.request.user.is_superuser:
             return True
         raise PermissionDenied('Only Admins can view all users.')
-
-
 
 @method_decorator(login_required, name='dispatch')
 class UserListView(LoginRequiredMixin, TestUserIsSuper, ListView):
@@ -238,8 +172,6 @@ class UserListView(LoginRequiredMixin, TestUserIsSuper, ListView):
         # And so on for more models
         return context
 
-
-
 def payment(request):
     if UserCreditCard.objects.filter(user_id = request.user.id).exists():
         return redirect('/payment/{}'.format(request.user.id))
@@ -247,10 +179,11 @@ def payment(request):
         return redirect('/payment/add')
 
 @method_decorator(login_required, name='dispatch')
-class CreateCreditCardView(LoginRequiredMixin, CreateView):
+class CreateCreditCardView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = UserCreditCard
     form_class = CreditCardForm
     template_name = 'payment/creditcard_create.html'
+    success_message = "Credit Card saved successfully!"
     success_url = reverse_lazy('payment_page')
     
     def form_valid(self, form):
@@ -268,15 +201,12 @@ class ViewCreditCardView(LoginRequiredMixin, TestUserCanViewUser, DetailView):
         return UserCreditCard.objects.get(user_id=self.kwargs['pk'])
 
 @method_decorator(login_required, name='dispatch')
-class UpdateCreditCardView(LoginRequiredMixin, TestUserCanViewUser, UpdateView):
+class UpdateCreditCardView(LoginRequiredMixin, TestUserCanViewUser,SuccessMessageMixin, UpdateView):
     model = UserCreditCard
     form_class = CreditCardForm
     template_name = 'payment/creditcard_create.html'
+    success_message = "Credit Card updated successfully!"
     success_url = reverse_lazy('payment_page')   
 
     def get_object(self):
         return UserCreditCard.objects.get(user_id=self.kwargs['pk'])
-
-def test(request):
-    current_user = request.user
-    return HttpResponse(current_user.username)

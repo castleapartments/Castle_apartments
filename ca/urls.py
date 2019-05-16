@@ -8,8 +8,7 @@ admin.autodiscover()
 
 import base.views
 from apartments.views import search
-from base.views import CardListView, CardUpdateView, CardCreateView, \
-        ProfileDetailView, UserListView, ProfileUpdateView, CreateCreditCardView,\
+from base.views import ProfileDetailView, UserListView, ProfileUpdateView, CreateCreditCardView,\
         ViewCreditCardView, UpdateCreditCardView
 import containers.views
 import about.views
@@ -17,15 +16,15 @@ import apartments.views
 
 urlpatterns = [
     path("", search, name="index"),
-    path("login/", base.views.user_login, name="login"),
+    path("users/login/", base.views.user_login, name="login"),
     
     path("forget_password/", base.views.forget_password, name="forget_password"),
-    #path("change_password/", auth_views.PasswordChangeForm, name='change_password'),
+
     path('change_password/', auth_views.PasswordChangeView.as_view(), name='change_password'),
-    path("logout/", base.views.user_logout, name="logout"),
-    path("signup/", base.views.signup, name="signup"),
+    path("users/logout/", base.views.user_logout, name="logout"),
+    path("users/signup/", base.views.signup, name="signup"),
     path('users/', include('django.contrib.auth.urls')),
-    path('users/', UserListView.as_view(), name="user_list"),
+
     path("profile/", base.views.profile, name="profile"),    
     path("profile/<int:pk>", ProfileDetailView.as_view(), name="userprofile_detail"),
     path("profile/<int:pk>/edit", ProfileUpdateView.as_view(), name="userprofile_edit"),
@@ -38,19 +37,8 @@ urlpatterns = [
     path("payment/<int:pk>/edit", UpdateCreditCardView.as_view(), name="view_payment_page"),
 
     path("admin/", admin.site.urls),
-    #path("pc/", PersonAndCardListView.as_view(),  name="pc_list"),
-    path('cards/single', base.views.singlecard, name="singlecard"),
-    path('cards/list', base.views.apartmentlist, name="apartmentlist"),
-    path('cards/search', base.views.apartmentsearch, name="apartmentsearch"),
-    path('cards/edit', base.views.apartmentedit, name="apartmentedit"),
-    path('cards/', CardListView.as_view(), name='card_list'),
-    path('cards/<int:pk>/edit/', CardUpdateView.as_view(), name='card_edit'),
-    path('cards/add', CardCreateView.as_view(), name='card_add'),
-    path('footer/', containers.views.footer_view, name='footer_view'),
+
     path('about/', about.views.about_view, name='about'),
-    path('buy_apartment/<int:apartment_id>', apartments.views.transfer_ownership, name='buy_apartment'),
-    #path('people/', PersonListView.as_view(), name='person_list'),    
-    #path('people/add/', PersonCreateView.as_view(), name='person_add'),
-    #path('people/<int:pk>/edit/', PersonUpdateView.as_view(), name='person_edit'),
-    #path('avatar/', include('avatar.urls')),
+
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

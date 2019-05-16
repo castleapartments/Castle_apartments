@@ -9,21 +9,13 @@ from crispy_forms.layout import Submit
 
 from cloudinary.forms import CloudinaryJsFileField
 
-from base.models import Card, UserProfile, UserCreditCard
+from base.models import UserProfile, UserCreditCard
 
 
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name','last_name', 'username', 'email', 'password')
-
-    #def __init__(self, *args, **kwargs):
-    #    super().__init__(*args, **kwargs)
-    #    self.helper = FormHelper()
-    #    self.helper.form_method = 'post'
-    #    self.helper.add_input(Submit('submit', 'Save person'))
-
-
 
 class ProfileForm(forms.ModelForm):
     #photo_main = forms.ImageField(widget=forms.widgets.FileInput)
@@ -45,7 +37,6 @@ class ProfileForm(forms.ModelForm):
                 'description',
             )
 
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -55,17 +46,6 @@ class ProfileForm(forms.ModelForm):
 class PhotoDirectForm(ProfileForm):
     photo_main = CloudinaryJsFileField()
 
-#class PersonForm(forms.ModelForm):
-#    class Meta:
-#        model = Person
-#        fields = ('name', 'email', 'job_title', 'bio')
-#
-#    def __init__(self, *args, **kwargs):
-#        super().__init__(*args, **kwargs)
-#        self.helper = FormHelper()
-#        self.helper.form_method = 'post'
-#        self.helper.add_input(Submit('submit', 'Save person'))
-#
 class CreditCardForm(forms.ModelForm):
     class Meta:
         model = UserCreditCard
@@ -77,14 +57,3 @@ class CreditCardForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Save creditcard'))
-
-class CardForm(forms.ModelForm):
-    class Meta:
-        model = Card
-        fields = ('name',)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Save card'))

@@ -63,7 +63,7 @@
                             <td class="align-middle">{{ apartment.location }}</td>
                             {% if apartment.status == 'Sold' %}
                             <td class="align-middle"><span class="badge badge-pill badge-danger">{{ apartment.status }}</span></td>
-                            {% elif apartment.status == 'For Sale' %}
+                            {% elif apartment.status == 'Approved' %}
                             <td class="align-middle"><span class="badge badge-pill badge-success ">{{ apartment.status }}</span></td>
                             {% else %}
                             <td class="align-middle"><span class="badge badge-pill badge-warning">{{ apartment.status }}</span></td>

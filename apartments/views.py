@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.contrib.auth.decorators import login_required
@@ -283,6 +283,7 @@ def add(request):
                 apartment_image = ApartmentImages(apartment_id=apartment_object, image=image, primary=primary)
                 apartment_image.save()
 
+            messages.success(request, 'New property: {} added to your apartments!'.format(apartment_object))
             return redirect('my_apartments')
 
 
@@ -373,6 +374,7 @@ class EditApartment(LoginRequiredMixin, CanEditApartment, UpdateView):
                         del_image.delete()
 
         obj.save()
+        messages.success(self.request, 'Your property: {} successfully updated!'.format(obj))
         return redirect('/apartments/view/{}'.format(self.kwargs['apartment_id']))
 
 @login_required
@@ -388,6 +390,7 @@ def delete_apartment(request, apartment_id):
 
     apartment.delete()
 
+    messages.success(request, 'Property: {} was removed!'.format(apartment))
     return redirect('my_apartments')
 
 @login_required
@@ -403,8 +406,8 @@ def approve_apartment(request, apartment_id):
     apartment.approval_date = datetime.now()
     apartment.realtor = request.user
     apartment.save()
-
-    return redirect('my_apartments')
+    messages.success(request, 'Property: {} aproved!'.format(apartment))
+    return redirect(reverse('my_apartments')+"#apartment-approvals")
 
 
 @login_required
@@ -423,7 +426,8 @@ def unapprove_apartment(request, apartment_id):
     apartment.realtor = None
     apartment.save()
 
-    return redirect('my_apartments')
+    messages.success(request, 'Property: {} un-aproved!'.format(apartment))
+    return redirect(reverse('my_apartments')+"#realtor-apartments")
 
 
 @login_required
@@ -440,7 +444,8 @@ def feature_apartment(request, apartment_id):
     apartment.featured = True
     apartment.save()
 
-    return redirect('my_apartments')
+    messages.success(request, 'Property: {} featured!'.format(apartment))
+    return redirect(reverse('my_apartments')+"#realtor-apartments")
 
 
 @login_required
@@ -457,7 +462,8 @@ def unfeature_apartment(request, apartment_id):
     apartment.featured = False
     apartment.save()
 
-    return redirect('my_apartments')
+    messages.success(request, 'Property: {} un-featured!'.format(apartment))
+    return redirect(reverse('my_apartments')+"#realtor-apartments")
 
 
 @login_required
@@ -482,7 +488,8 @@ def approve_sale_apartment(request, apartment_id):
     apartment.sold = False
     apartment.save()
 
-    return redirect('my_apartments')
+    messages.success(request, 'Sale of {} aproved. Congrats to {}!'.format(apartment, buyer))
+    return redirect(reverse('my_apartments')+"#realtor-apartments")
 
 @login_required
 def transfer_ownership(request, apartment_id):
@@ -497,7 +504,7 @@ def transfer_ownership(request, apartment_id):
         # Check if the owner is not the same as the buyer then redirect back to search
         if buyer == owner:
             messages.error(request, 'You are trying to buy your own apartment, that does not work.')
-            return redirect('search')
+            return redirect('/apartments/view/{}'.format(apartment_id))
         #elif len(str(buyer_creditcard.credit_card_number)) < 12:
         #    messages.error(request, 'Length of the creditcard number is incorrect')
         #    return redirect('payment_page')

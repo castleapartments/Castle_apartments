@@ -56,13 +56,13 @@
 
           {% if user.is_authenticated %}
           <li class="nav-item">
-              <a class="nav-link" href="/logout/"><i class="fas fa-sign-out-alt"></i> Sign out</a>
+              <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Sign out</a>
           </li>
           {% else %}
           <li class="nav-item">
-              <a class="nav-link" href="/login/"><i class="fas fa-user-circle"></i> Sign in</a>
+              <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-user-circle"></i> Sign in</a>
           <li class="nav-item">
-              <a id="nav_sign_btn" class="nav-link btn btn-sm btn-outline-light" href="/signup/"> Sign up</a>
+              <a id="nav_sign_btn" class="nav-link btn btn-sm btn-outline-light" href="{% url 'signup' %}"> Sign up</a>
           </li>
           {% endif %}
         </ul>
