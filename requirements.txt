@@ -9,3 +9,4 @@ psycopg2-binary
 django-countries
 django-dotenv
 cloudinary
+kennitala
