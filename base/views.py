@@ -18,8 +18,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from base.models import UserProfile, UserCreditCard
 from base.forms import UserForm, ProfileForm, CreditCardForm, ProfileFormSignup
 
-# Create your views here.
-
 def index(request):
     return render(request, "index.html")
 
@@ -49,7 +47,6 @@ def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-
         user = authenticate(username=username, password=password)
         
         if user:
@@ -62,52 +59,54 @@ def user_login(request):
         else:
 
             messages.error(request,'Username or password not correct!')
-            return render(request, "login.html")
-            
+            return render(request, "login.html")            
     else:
         return render(request, "login.html")
 
+class SignUpView(CreateView):
+    form_class = UserForm
+    template_name = 'registration/signup.html'
+    success_message = "Signup was successfull!"
+    success_url = reverse_lazy('index') 
 
-#login is used internally
-#def login(request):
-#    return render(request, "login.html")
+    def get_second_form(self):
+        if self.request.method == 'POST':
+            return ProfileFormSignup(self.request.POST)
+        else:
+            return ProfileFormSignup()
 
-def signup(request):
-    registered = False
-    if request.method == "POST":
-        profile_form = ProfileFormSignup(data=request.POST)
-        user_form = UserForm(data=request.POST)
-        
+    def form_valid(self, form):
+        self.second_form = self.get_second_form()
+        print("isvalid")
+        if self.second_form.is_valid():
 
-        print(user_form.is_valid())
-        print(profile_form.is_valid())
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save(commit=False)
-            user.set_password(user.password)
-            username = user.username
-            if user:
+                user = form.save(commit=False)
+                user.set_password(user.password)
+                username = user.username
                 user.save()
 
-                # After the user is created the profile must be created
-                # Start by searching the user to get the User instance
-                find_user = User.objects.get(username=username)
-                profile = profile_form.save(commit=False)
+                profile = self.second_form.save(commit=False)
                 profile.user = user
                 profile.email = user.email
-                profile.country = "US"
                 profile.save()
 
-                registered = True
-                user = authenticate(username=user_form.cleaned_data['username'], password=user_form.cleaned_data['password'])
-                login(request, user)
-                messages.success(request,'Welcome to the castle {}!'.format(user.username))
-            return redirect('index')
-        else:
-            messages.error(request,'There is something wrong with your sign up mate!')
-    else:
-        user_form = UserForm()
+                user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+                login(self.request, user)
+                messages.success(self.request,'Welcome to the castle {}!'.format(user.username))
+                return redirect('index')
 
-    return render(request, "signup.html")
+        else:
+            return super(SignUpView, self).form_invalid(form)
+
+    def form_invalid(self, form):
+        self.second_form = self.get_second_form()
+        self.second_form.is_valid()
+        return super(SignUpView, self).form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(SignUpView, self).get_context_data(**kwargs)
+        context['second_form'] = getattr(self, 'second_form', self.get_second_form())
+        return context
 
 def profile(request):
     return redirect('/profile/{}'.format(request.user.id))    
@@ -130,12 +129,19 @@ class ProfileUpdateView(TestUserCanViewUser, SuccessMessageMixin, UpdateView):
     def get_object(self):
         return UserProfile.objects.all().get(user_id=self.kwargs['pk'])
 
+    def form_valid(self, form):
+        obj = form.save()
+        usr = User.objects.get(id=self.kwargs['pk'])
+        usr.email = form.cleaned_data['email']
+        usr.save()
+        return redirect('/profile/{}'.format(self.kwargs['pk']))
+
+
 @method_decorator(login_required, name='dispatch')
 class ProfileDetailView(LoginRequiredMixin, TestUserCanViewUser, DetailView):
     model = UserProfile
 
     def get_object(self):
-        
         # IF a superuser is created via cmd-line, the profile does not excist. 
         # This should rectify that.
         if self.request.user.is_superuser:
@@ -145,10 +151,7 @@ class ProfileDetailView(LoginRequiredMixin, TestUserCanViewUser, DetailView):
                 except UserProfile.DoesNotExist:
                     profile = UserProfile()
                     profile.user_id = self.request.user.id
-                    profile.country = "US"
-                    profile.sex ="Male"
                     profile.email = self.request.user.email
-                    profile.ssn = 12345678
                     profile.save()
 
         return UserProfile.objects.get(user_id=self.kwargs['pk'])

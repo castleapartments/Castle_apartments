@@ -9,7 +9,7 @@ admin.autodiscover()
 import base.views
 from apartments.views import search
 from base.views import ProfileDetailView, UserListView, ProfileUpdateView, CreateCreditCardView,\
-        ViewCreditCardView, UpdateCreditCardView
+        ViewCreditCardView, UpdateCreditCardView, SignUpView
 import containers.views
 import about.views
 import apartments.views
@@ -22,7 +22,7 @@ urlpatterns = [
 
     path('change_password/', auth_views.PasswordChangeView.as_view(), name='change_password'),
     path("users/logout/", base.views.user_logout, name="logout"),
-    path("users/signup/", base.views.signup, name="signup"),
+    path("users/signup/", SignUpView.as_view(), name="signup"),
     path('users/', include('django.contrib.auth.urls')),
 
     path("profile/", base.views.profile, name="profile"),    

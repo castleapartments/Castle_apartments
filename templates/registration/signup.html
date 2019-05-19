@@ -1,5 +1,6 @@
 {% extends "_base.html" %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block title %}
 Castle Apartments - Signup
@@ -7,14 +8,12 @@ Castle Apartments - Signup
 
 {% block content %}
 
-<div class="page-header">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+            <div class="col-lg-4 col-md-6 ml-auto mr-auto" id="signupform">
                 <div class="card card-login">
-                    <form class="form" method="post" action="{% url 'signup' %}">
+                    <form class="form" method="post">
                         {% csrf_token %}                 
-                        {{ user_form.as_p }}
                         <div class="card-header card-header-primary text-center">
                             <h4 class="card-title">Sign up</h4>
                         </div>
@@ -28,7 +27,7 @@ Castle Apartments - Signup
                                             <i class="material-icons">face</i>
                                         </span>
                                         </div>
-                                        <input type="text" id="fname" name="first_name" class="form-control" placeholder="First name...">
+                                        {{ form.first_name|as_crispy_field }}
                                     </div>
                                 </div>
                                 <div class="col-md-5"> 
@@ -38,7 +37,7 @@ Castle Apartments - Signup
                                                 <i class="fas fa-jedi"></i>
                                             </span>
                                         </div>
-                                        <input type="text" id="lname" name="last_name" class="form-control" placeholder="Last name...">
+                                        {{ form.last_name|as_crispy_field }}
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +47,7 @@ Castle Apartments - Signup
                                         <i class="fab fa-slack-hash"></i>
                                     </span>
                                     </div>
-                                    <input type="ssn" id="ssn" name="ssn" class="form-control" placeholder="Social Security Number...">
+                                    {{ second_form.ssn|as_crispy_field }}
                                 </div>
                             <div class="input-group">
                                     <div class="input-group-prepend">
@@ -56,7 +55,7 @@ Castle Apartments - Signup
                                         <i class="material-icons">account_circle</i>
                                     </span>
                                     </div>
-                                    <input type="username" id="username" name="username" class="form-control" placeholder="Username...">
+                                    {{ form.username|as_crispy_field }}
                                 </div>
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -64,7 +63,7 @@ Castle Apartments - Signup
                                     <i class="material-icons">mail</i>
                                 </span>
                                 </div>
-                                <input type="email" id="email" name="email" class="form-control" placeholder="Email...">
+                                {{ form.email|as_crispy_field }}
                             </div>                   
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -72,7 +71,7 @@ Castle Apartments - Signup
                                     <i class="material-icons">lock_outline</i>
                                 </span>
                                 </div>
-                                <input type="password" id="password" name="password" class="form-control" placeholder="Password...">
+                                {{ form.password|as_crispy_field }}
                             </div>
                         </div>
                         <div class="footer text-center">
@@ -86,6 +85,5 @@ Castle Apartments - Signup
             </div>
         </div>
     </div>
-</div>
 
 {% endblock %}

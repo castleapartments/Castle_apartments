@@ -11,10 +11,43 @@ from base.fields import CreditCardField
 
 
 class UserForm(forms.ModelForm):
+    #email = forms.EmailField()
+
     class Meta:
         model = User
         fields = ('first_name','last_name', 'username', 'email', 'password')
 
+    def clean_first_name(self):
+        first_name = self.cleaned_data['first_name']
+        if len(first_name) < 1:
+            raise forms.ValidationError("Please provide a first name")
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data['last_name']
+        if len(last_name) < 1:
+            raise forms.ValidationError("Please provide a last name")
+        return last_name
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("This username is already taken.")
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("This email address is already taken.")
+        elif len(email) < 3:
+            raise forms.ValidationError("Please provide a valid email!")
+        return email 
+
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+        self.fields['email'].required = True
 
 class ProfileFormSignup(forms.ModelForm):
     #photo_main = forms.ImageField(widget=forms.widgets.FileInput)
@@ -30,12 +63,16 @@ class ProfileFormSignup(forms.ModelForm):
         Kennitala(ssn).validate()
         if not Kennitala(ssn).validate():
             raise forms.ValidationError("Ssn (kennitala) not correct.")
+        elif UserProfile.objects.filter(ssn=ssn).exists():
+            raise forms.ValidationError("Ssn already registered!.")
         return ssn
 
 
 
 class ProfileForm(forms.ModelForm):
     #photo_main = forms.ImageField(widget=forms.widgets.FileInput)
+    email = forms.EmailField()
+    phone = forms.IntegerField()
     class Meta:
         model = UserProfile
         #superuser = forms.BooleanField()

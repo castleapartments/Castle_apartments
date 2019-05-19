@@ -330,3 +330,10 @@ body {
 #search_toggler.collapsed .search_collapse {
     display:none;
 }
+#signupform .card-login .input-group {
+    padding-bottom: 7px;
+    margin: 5px 0 0 0;
+}
+#signupform .form-group {
+    margin-bottom: 3px;
+}
