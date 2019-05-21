@@ -93,6 +93,8 @@ WSGI_APPLICATION = "ca.wsgi.application"
 #    }
 #}
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
 DB_NAME=os.environ.get('DB_USER', 'castle_apartments')
 DB_USER=os.environ.get('DB_USER', 'castle')
 DB_PASSWORD=os.environ.get('DB_PASSWORD', 'castle.123')

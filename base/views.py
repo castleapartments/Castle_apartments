@@ -134,6 +134,7 @@ class ProfileUpdateView(TestUserCanViewUser, SuccessMessageMixin, UpdateView):
         usr = User.objects.get(id=self.kwargs['pk'])
         usr.email = form.cleaned_data['email']
         usr.save()
+        messages.success(self.request,"Profile updated successfully!")
         return redirect('/profile/{}'.format(self.kwargs['pk']))
 
 
@@ -194,6 +195,7 @@ class CreateCreditCardView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         obj = form.save(commit=False)
         obj.user = self.request.user
         obj.save()
+        messages.success(self.request,"Credit Card saved successfully!")
         return redirect('/payment/')
 
 @method_decorator(login_required, name='dispatch')
@@ -205,7 +207,7 @@ class ViewCreditCardView(LoginRequiredMixin, TestUserCanViewUser, DetailView):
         return UserCreditCard.objects.get(user_id=self.kwargs['pk'])
 
 @method_decorator(login_required, name='dispatch')
-class UpdateCreditCardView(LoginRequiredMixin, TestUserCanViewUser,SuccessMessageMixin, UpdateView):
+class UpdateCreditCardView(LoginRequiredMixin, TestUserCanViewUser, SuccessMessageMixin, UpdateView):
     model = UserCreditCard
     form_class = CreditCardForm
     template_name = 'payment/creditcard_create.html'
