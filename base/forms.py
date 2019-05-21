@@ -12,7 +12,7 @@ from base.fields import CreditCardField
 
 class UserForm(forms.ModelForm):
     #email = forms.EmailField()
-
+    password = forms.CharField(widget=forms.PasswordInput)
     class Meta:
         model = User
         fields = ('first_name','last_name', 'username', 'email', 'password')
@@ -73,6 +73,7 @@ class ProfileForm(forms.ModelForm):
     #photo_main = forms.ImageField(widget=forms.widgets.FileInput)
     email = forms.EmailField()
     phone = forms.IntegerField()
+
     class Meta:
         model = UserProfile
         #superuser = forms.BooleanField()
